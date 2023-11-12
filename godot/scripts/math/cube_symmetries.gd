@@ -19,8 +19,8 @@ class ColorGroup extends RefCounted:
 class PeerColoring extends RefCounted:
 	var coloring:int
 	var operations:PackedInt32Array
-	var group_id:int
-	#var prev:PeerColoring
+	#var group_id:int
+	var prev:PeerColoring
 
 #Pack list of vertex corners into a single int
 static func bits_to_int(p0:bool, p1:bool, p2:bool, p3:bool, p4:bool, p5:bool, p6:bool, p7:bool)->int:
@@ -70,41 +70,33 @@ static func has_coloring(coloring:int, peer_colorings:Array[PeerColoring])->bool
 			return true
 	return false
 
-static func find_peer_colorings_recursive(cur_coloring:int, operation_list:PackedInt32Array, found_colorings:Array[PeerColoring], group_id:int):
-	#var peer_colorings:PackedInt32Array
-	
-	#peer_colorings
+static func find_peer_colorings_recursive(cur_coloring:PeerColoring, found_colorings:Array[PeerColoring]):
+
 	for op in Operations.size():
-		var new_coloring:int = apply_operation(cur_coloring, op)
+		var new_coloring:int = apply_operation(cur_coloring.coloring, op)
 		if !has_coloring(new_coloring, found_colorings):
 			var peer_coloring:PeerColoring = PeerColoring.new()
 			peer_coloring.coloring = new_coloring
-			peer_coloring.operations = operation_list.duplicate()
-			peer_coloring.group_id = group_id
+			peer_coloring.operations = cur_coloring.operations.duplicate()
 			peer_coloring.operations.append(op)
+			peer_coloring.prev = cur_coloring
 			found_colorings.append(peer_coloring)
 			
-			find_peer_colorings_recursive(new_coloring, peer_coloring.operations, found_colorings, group_id)
-		
-static func find_peer_colorings(coloring:int, found_colorings:Array[PeerColoring], group_id:int)->Array[PeerColoring]:
-	var peer_coloring:PeerColoring = PeerColoring.new()
-	peer_coloring.coloring = coloring
-	peer_coloring.group_id = group_id
-	found_colorings.append(peer_coloring)
-	
-	find_peer_colorings_recursive(coloring, [], found_colorings, group_id)
-	
-	return found_colorings
+			find_peer_colorings_recursive(peer_coloring, found_colorings)
 
 static func find_all_groups()->Array[PeerColoring]:
 	var found_colorings:Array[PeerColoring]
 	
-	var group_id:int = 0
+	#var group_id:int = 0
+	var start_colorings:Array[PeerColoring]
 	
 	for i in 0x100:
 		if !has_coloring(i, found_colorings):
-			find_peer_colorings(i, found_colorings, group_id)
-			group_id += 1
+			var peer_coloring:PeerColoring = PeerColoring.new()
+			peer_coloring.coloring = i
+			start_colorings.append(peer_coloring)
+			
+			find_peer_colorings_recursive(peer_coloring, found_colorings)
 		
 	return found_colorings
 
