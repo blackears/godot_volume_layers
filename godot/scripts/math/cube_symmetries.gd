@@ -11,7 +11,7 @@ class_name CubeSymmetries
 # 6 - z+
 
 #Operations we can apply to the cube to change it's vertex coloring
-enum Operations { INVERT, ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z }
+enum Operations { ROT_X_90, ROT_Y_90, ROT_Z_90, MIRROR_X, MIRROR_Y, MIRROR_Z, INVERT }
 
 class ColorGroup extends RefCounted:
 	var tessellation:PackedVector3Array
@@ -19,8 +19,47 @@ class ColorGroup extends RefCounted:
 class PeerColoring extends RefCounted:
 	var coloring:int
 	var operations:PackedInt32Array
-	#var group_id:int
 	var prev:PeerColoring
+
+	func get_root_coloring()->PeerColoring:
+		if !prev:
+			return self
+		return prev.get_root_coloring()
+
+	func reverse_winding()->bool:
+		var count:int = 0
+		for op in operations:
+			match op:
+				Operations.INVERT:
+					count += 1
+				Operations.MIRROR_X:
+					count += 1
+				Operations.MIRROR_Y:
+					count += 1
+				Operations.MIRROR_Z:
+					count += 1
+		
+		return (count & 1) == 1
+	
+	func calc_tranform()->Transform3D:
+		var xform:Transform3D = Transform3D.IDENTITY
+		
+		for op in operations:
+			match op:
+				Operations.ROT_X_90:
+					xform = xform.rotated(Vector3(1, 0, 0), deg_to_rad(90))
+				Operations.ROT_Y_90:
+					xform = xform.rotated(Vector3(0, 1, 0), deg_to_rad(90))
+				Operations.ROT_Z_90:
+					xform = xform.rotated(Vector3(0, 0, 1), deg_to_rad(90))
+				Operations.MIRROR_X:
+					xform = xform.scaled(Vector3(-1, 1, 1))
+				Operations.MIRROR_Y:
+					xform = xform.scaled(Vector3(1, -1, 1))
+				Operations.MIRROR_Z:
+					xform = xform.scaled(Vector3(1, 1, -1))
+
+		return xform
 
 #Pack list of vertex corners into a single int
 static func bits_to_int(p0:bool, p1:bool, p2:bool, p3:bool, p4:bool, p5:bool, p6:bool, p7:bool)->int:
@@ -94,10 +133,56 @@ static func find_all_groups()->Array[PeerColoring]:
 		if !has_coloring(i, found_colorings):
 			var peer_coloring:PeerColoring = PeerColoring.new()
 			peer_coloring.coloring = i
+			found_colorings.append(peer_coloring)
 			start_colorings.append(peer_coloring)
 			
 			find_peer_colorings_recursive(peer_coloring, found_colorings)
 		
 	return found_colorings
 
+static func format_op_list(op_list:Array[int]):
+	var strn:String = ""
+	for op in op_list:
+		match op:
+			Operations.INVERT:
+				strn += "in"
+			Operations.ROT_X_90:
+				strn += "rx"
+			Operations.ROT_Y_90:
+				strn += "ry"
+			Operations.ROT_Z_90:
+				strn += "rz"
+			Operations.MIRROR_X:
+				strn += "mx"
+			Operations.MIRROR_Y:
+				strn += "my"
+			Operations.MIRROR_Z:
+				strn += "mz"
+		strn += " "
+		
+	return strn
+	
+static func print_table(colorings:Array[PeerColoring]):
+	
+	for coloring in colorings:
+		if !coloring.prev:
+			#Root coloring
+			print("Root coloring: %x" % [coloring.coloring])
+		
+	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
+	for coloring in colorings:
+		print("Coloring: %02x  Source: %02x  Xform: %s  Rev Winding: %s Ops: %s " % [coloring.coloring, coloring.get_root_coloring().coloring, str(coloring.calc_tranform()), coloring.reverse_winding(), format_op_list(coloring.operations)])
+#	CubeTransform.new(0, Transform3D(Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)), false),
+
+static func print_table_as_code(colorings:Array[PeerColoring]):
+	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
+	for coloring in colorings:
+		var xform:Transform3D = coloring.calc_tranform()
+		print("\tCubeTransform.new(0x%02x, Transform3D(Vector3(%d, %d, %d), Vector3(%d, %d, %d), Vector3(%d, %d, %d), Vector3(0, 0, 0)), %s)," % [
+			coloring.get_root_coloring().coloring,
+			xform.basis.x.x, xform.basis.x.y, xform.basis.x.z, 
+			xform.basis.y.x, xform.basis.y.y, xform.basis.y.z, 
+			xform.basis.z.x, xform.basis.z.y, xform.basis.z.z, 
+			coloring.reverse_winding()
+			])
 

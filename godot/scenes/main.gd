@@ -6,6 +6,8 @@ func _ready():
 #	var peers = CubeSymmetries.find_peer_colorings(1)
 	var peers = CubeSymmetries.find_all_groups()
 	
+#	CubeSymmetries.print_table(peers)
+	CubeSymmetries.print_table_as_code(peers)
 	pass # Replace with function body.
 
 
