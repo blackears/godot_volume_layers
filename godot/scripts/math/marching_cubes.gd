@@ -285,7 +285,7 @@ class CubeParams extends RefCounted:
 	var k_frac:float = .5
 	var l_frac:float = .5
 
-func create_root_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
+func create_root_cube_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
 	#Create points based on ratios
 	var pa:Vector3 = Vector3(cube_params.a_frac, 1, -1)
 	var pb:Vector3 = Vector3(1, 1, cube_params.b_frac)
@@ -364,8 +364,9 @@ func create_root_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
 
 func create_cube_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
 	var cube_xform:CubeTransform = cube_transform_table[coloring]
-	var tris_root:PackedVector3Array = create_root_mesh(cube_xform.root_coloring, cube_params)
+	var tris_root:PackedVector3Array = create_root_cube_mesh(cube_xform.root_coloring, cube_params)
 	if cube_xform.root_coloring == coloring:
+		#No need to process is already a root coloring
 		return tris_root
 	
 	var result:PackedVector3Array

@@ -1,6 +1,13 @@
+# This code precomputes the table for cube symmetries.   
+#
+# Since meny of the different arrangements of cube conrer colorings are rotations, reflections or
+# inversions of each other, you can reduce the number of meshes that need to be calculated by
+# finding which colorings are related via a set of these simple operations.  This script
+# calculates the minimal set of root colorings needed, as well as the transforms needed to
+# transform any of the 256 possibilites into one of the root forms.
+
 extends RefCounted
 class_name CubeSymmetries
-
 
 #Bits
 # 1 - x-
