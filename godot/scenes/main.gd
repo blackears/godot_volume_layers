@@ -7,7 +7,10 @@ func _ready():
 	var peers = CubeSymmetries.find_all_groups()
 	
 #	CubeSymmetries.print_table(peers)
-	CubeSymmetries.print_table_as_code(peers)
+	var code:String = CubeSymmetries.format_table_as_code(peers)
+	var file:FileAccess = FileAccess.open("cube_code.txt", FileAccess.WRITE)
+	file.store_string(code)
+	
 	pass # Replace with function body.
 
 
