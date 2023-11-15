@@ -1,6 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=4 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_1dd07"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_pt371"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="Environment" id="Environment_1nlpu"]
+volumetric_fog_enabled = true
+
 [node name="main" type="Node3D"]
 script = ExtResource("1_1dd07")
+source_images = "res://art/iguana/Iguana_png.zip"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.882328, 0)
+mesh = SubResource("BoxMesh_pt371")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1nlpu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.04327)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.809068, -0.125211, -0.574222, 0.587715, 0.17237, 0.790494, 0, -0.977042, 0.213047, -4.43773, 1.72817, 0)
+
+[node name="bn_load" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Load mipmap"
+
+[connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
