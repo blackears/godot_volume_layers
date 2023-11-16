@@ -15,5 +15,8 @@ zip_file = "res://art/iguana/Iguana_png.zip"
 [resource]
 render_priority = 0
 shader = ExtResource("1_jqd0p")
+shader_parameter/zoom = 2.0
+shader_parameter/layers = 256
+shader_parameter/layer_index = 4
 shader_parameter/texture_volume = SubResource("ImageTexture3D_v228f")
 shader_parameter/gradient = SubResource("GradientTexture1D_4fdk4")
