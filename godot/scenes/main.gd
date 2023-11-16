@@ -37,7 +37,7 @@ func add_mipmaps(img_width:int, img_height:int, img_depth:int, img_format:int, p
 				image.set_pixel(x_idx, y_idx, color)
 		
 	add_mipmaps(mip_width, mip_height, mip_depth, img_format, mip_images, img_list)
-	
+
 
 
 func load_image_from_zip(path:String)->Texture3D:

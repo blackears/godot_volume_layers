@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=5 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_1dd07"]
+[ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://scenes/controls/volume_layers.tscn" id="2_y470h"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pt371"]
 size = Vector3(10, 1, 10)
@@ -29,5 +30,7 @@ transform = Transform3D(0.809068, -0.125211, -0.574222, 0.587715, 0.17237, 0.790
 offset_right = 8.0
 offset_bottom = 8.0
 text = "Load mipmap"
+
+[node name="volume_layers" parent="." instance=ExtResource("2_y470h")]
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]

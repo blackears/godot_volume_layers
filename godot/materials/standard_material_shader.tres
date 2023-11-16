@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b474tuur3w8tn"]
+
+[ext_resource type="Shader" path="res://shaders/volume_shader.gdshader" id="1_jqd0p"]
+[ext_resource type="Script" path="res://scripts/resources/zipped_image_archive_Texture3D.gd" id="2_vswpv"]
+
+[sub_resource type="Gradient" id="Gradient_c2fb6"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4fdk4"]
+gradient = SubResource("Gradient_c2fb6")
+
+[sub_resource type="ImageTexture3D" id="ImageTexture3D_v228f"]
+script = ExtResource("2_vswpv")
+zip_file = "res://art/iguana/Iguana_png.zip"
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_jqd0p")
+shader_parameter/texture_volume = SubResource("ImageTexture3D_v228f")
+shader_parameter/gradient = SubResource("GradientTexture1D_4fdk4")

@@ -1,0 +1,42 @@
+[gd_scene load_steps=12 format=3 uid="uid://t0n1mrmltp2k"]
+
+[ext_resource type="Script" path="res://scenes/controls/volume_layers.gd" id="1_3p0bi"]
+[ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://materials/standard_material_shader.tres" id="2_ji444"]
+[ext_resource type="Shader" path="res://shaders/tex3d_slice.gdshader" id="3_cshd5"]
+[ext_resource type="Texture2D" uid="uid://dbg7uqqw40u4p" path="res://icon.svg" id="4_nhgls"]
+[ext_resource type="Script" path="res://scripts/resources/zipped_image_archive_Texture3D.gd" id="5_w7im8"]
+
+[sub_resource type="Gradient" id="Gradient_4ehgp"]
+colors = PackedColorArray(1, 0, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yr4w7"]
+gradient = SubResource("Gradient_4ehgp")
+
+[sub_resource type="BoxMesh" id="BoxMesh_5pn8e"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gt1au"]
+size = Vector2(1, 1)
+
+[sub_resource type="ImageTexture3D" id="ImageTexture3D_gr3hw"]
+script = ExtResource("5_w7im8")
+zip_file = "res://art/iguana/Iguana_png.zip"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0hrj"]
+render_priority = 0
+shader = ExtResource("3_cshd5")
+shader_parameter/texture_flat = ExtResource("4_nhgls")
+shader_parameter/texture_volume = SubResource("ImageTexture3D_gr3hw")
+
+[node name="volume_layers" type="Node3D"]
+script = ExtResource("1_3p0bi")
+num_layers = 12
+gradient = SubResource("GradientTexture1D_yr4w7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5pn8e")
+surface_material_override/0 = ExtResource("2_ji444")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.68878, 0, 0)
+mesh = SubResource("PlaneMesh_gt1au")
+surface_material_override/0 = SubResource("ShaderMaterial_d0hrj")
