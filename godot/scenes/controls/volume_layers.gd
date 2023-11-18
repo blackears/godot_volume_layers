@@ -5,6 +5,9 @@ class_name VolumeLayers
 @export var texture:Texture3D
 @export var size:Vector3 = Vector3.ONE
 
+#@export var density:float
+@export var density:Curve
+
 @export var num_layers:int = 10:
 	get:
 		return num_layers

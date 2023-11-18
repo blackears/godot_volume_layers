@@ -1,0 +1,15 @@
+Hexadecimal and binary
+
+Symmetries
+
+
+Credits:
+
+Iguana test data
+https://github.com/neurolabusc/niivue-images/blob/main/Iguana.nii.gz
+
+Online converter
+https://www.onlineconverter.com/nifti-to-png
+
+Carleton discussion
+https://www.cs.carleton.edu/cs_comps/0405/shape/marching_cubes.html

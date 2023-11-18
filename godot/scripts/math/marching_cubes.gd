@@ -16,7 +16,7 @@ class CubeParams extends RefCounted:
 	var k_frac:float = .5
 	var l_frac:float = .5
 
-func create_cube_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
+static func create_cube_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
 	#Create points based on ratios
 	var pa:Vector3 = Vector3(0, 1, cube_params.a_frac)
 	var pb:Vector3 = Vector3(cube_params.b_frac, 1, 0)
@@ -35,7 +35,7 @@ func create_cube_mesh(coloring:int, cube_params:CubeParams)->PackedVector3Array:
 	
 	
 	var result:PackedVector3Array
-	var edge_list:Array[int] = MarchingCubeTable.meshes[coloring]
+	var edge_list:Array = MarchingCubeTable.get_mesh_table()[coloring]
 
 	for edge in edge_list:
 		match edge:

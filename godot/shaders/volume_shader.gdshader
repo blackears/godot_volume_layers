@@ -5,7 +5,8 @@ uniform sampler3D texture_volume : source_color,filter_linear_mipmap,repeat_disa
 uniform sampler2D gradient: filter_linear_mipmap,repeat_disable;
 uniform float zoom = 2;
 uniform int layers = 2;
-uniform int layer_index = 0;
+uniform float opacity = 1;
+//uniform int layer_index = 0;
 
 varying vec3 pos_local;
 varying vec3 pos_world;
@@ -46,19 +47,19 @@ void fragment() {
 	//	vec4 col = vec4(plane_norm, 1.0);
 	//	vec4 col = vec4(p_world, 1.0);
 		
-		vec4 layer_col = texture(texture_volume, ((p_local * zoom) / 2.0 + vec3(.5, .5, .5)));
-		layer_col = vec4(1.0, 1.0, 1.0, layer_col.r);
-//		col += layer_col;
-//		col = vec4(layer_col.xyz * layer_col.a + col.xyz * col.a * (1.0 - layer_col.a), layer_col.a + col.a);
+		vec3 tex_sample_pt = ((p_local * zoom) / 2.0 + vec3(.5, .5, .5));
+		vec4 layer_col = texture(texture_volume, tex_sample_pt);
+		if (tex_sample_pt.x < 0.0 || tex_sample_pt.x > 1.0 
+			|| tex_sample_pt.y < 0.0 || tex_sample_pt.y > 1.0 
+			|| tex_sample_pt.z < 0.0 || tex_sample_pt.z > 1.0)
+			layer_col = vec4(0.0, 0.0, 0.0, 0.0);
+		
+		layer_col = texture(gradient, vec2(layer_col.r, 0));
+		//layer_col = vec4(1.0, 1.0, 1.0, layer_col.r);
+
 		col = layer_col * layer_col.a + col * (1.0 - layer_col.a);
-//		col = vec4(layer_col.xyz * layer_col.a, layer_col.a) + vec4(col.xyz * (1.0 - layer_col.a), 1.0 - layer_col.a);
 	}
 	
-//	vec4 col = texture(texture_volume, p_local);
-//	vec4 col = texture(texture_volume, p_local + vec3(1, 1, 1));
-//	vec4 col = vec4(p_world, 1.0);
-//	vec4 col = texture(texture_volume, pos);
-
 	ALBEDO = col.xyz;
 //	ALBEDO = col.xyz;
 	//ALBEDO = vec3(1, 0 ,0);

@@ -75,8 +75,6 @@ func load_image_from_zip(path:String):
 				img_format = cur_format
 				img_list.append(image)
 				
-				#break
-	
 	var img_depth:int = img_list.size()
 	#print("num images ", img_list.size())
 	

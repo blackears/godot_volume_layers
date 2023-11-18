@@ -1,5 +1,9 @@
-extends Node
+@tool
+extends Resource
 class_name MarchingCubeTable
+
+static func get_mesh_table()->Array:
+	return meshes
 
 static var meshes = [
 	[ # 00 (root 00, rev winding false)

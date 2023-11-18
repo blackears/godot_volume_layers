@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://t0n1mrmltp2k"]
+[gd_scene load_steps=7 format=3 uid="uid://t0n1mrmltp2k"]
 
 [ext_resource type="Script" path="res://scenes/controls/volume_layers.gd" id="1_3p0bi"]
 [ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://materials/standard_material_shader.tres" id="2_ji444"]
+
+[sub_resource type="Curve" id="Curve_gkj7p"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_4ehgp"]
 colors = PackedColorArray(1, 0, 1, 0, 1, 1, 1, 1)
@@ -13,10 +17,11 @@ gradient = SubResource("Gradient_4ehgp")
 
 [node name="volume_layers" type="Node3D"]
 script = ExtResource("1_3p0bi")
+density = SubResource("Curve_gkj7p")
 num_layers = 12
 gradient = SubResource("GradientTexture1D_yr4w7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.19681)
+transform = Transform3D(0.647279, -1.4036, -0.645418, 0.634925, -0.396253, 1.49849, -1.40838, -0.823722, 0.378922, 0.606535, 0.51228, 1.19681)
 mesh = SubResource("BoxMesh_5pn8e")
 surface_material_override/0 = ExtResource("2_ji444")

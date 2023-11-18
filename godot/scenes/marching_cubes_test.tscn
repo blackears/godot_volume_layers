@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2px2a3g8hml8"]
+
+[ext_resource type="PackedScene" uid="uid://c50dh8vftkubt" path="res://scenes/controls/marching_cubes_viewer.tscn" id="1_vhxtb"]
+[ext_resource type="Script" path="res://scripts/resources/zipped_image_stack.gd" id="2_phlti"]
+
+[sub_resource type="Environment" id="Environment_quqib"]
+volumetric_fog_enabled = true
+
+[sub_resource type="Resource" id="Resource_icd6x"]
+script = ExtResource("2_phlti")
+zip_file = "res://art/iguana/Iguana_png.zip"
+
+[node name="marching_cubes_test" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_quqib")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.04327)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.809068, -0.125211, -0.574222, 0.587715, 0.17237, 0.790494, 0, -0.977042, 0.213047, -4.43773, 1.72817, 0)
+
+[node name="marching_cubes" parent="." instance=ExtResource("1_vhxtb")]
+image_data = SubResource("Resource_icd6x")
+threshold = 0.2
+step_size = Vector3(4, 4, 4)

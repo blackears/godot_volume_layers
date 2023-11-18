@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=8 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_1dd07"]
 [ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://scenes/controls/volume_layers.tscn" id="2_y470h"]
+[ext_resource type="PackedScene" uid="uid://c50dh8vftkubt" path="res://scenes/controls/marching_cubes_viewer.tscn" id="3_4g5nj"]
+[ext_resource type="Script" path="res://scripts/resources/zipped_image_stack.gd" id="4_v2j8a"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_pt371"]
 size = Vector3(10, 1, 10)
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 volumetric_fog_enabled = true
+
+[sub_resource type="Resource" id="Resource_i6ucd"]
+script = ExtResource("4_v2j8a")
+zip_file = "res://art/iguana/Iguana_png.zip"
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_1dd07")
@@ -32,5 +38,10 @@ offset_bottom = 8.0
 text = "Load mipmap"
 
 [node name="volume_layers" parent="." instance=ExtResource("2_y470h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.768635, 0.0284872, -0.602872)
+
+[node name="marching_cubes" parent="." instance=ExtResource("3_4g5nj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.567079, 2.38419e-07, 0.497808)
+image_data = SubResource("Resource_i6ucd")
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
