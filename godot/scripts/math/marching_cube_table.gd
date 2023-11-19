@@ -2,1252 +2,1340 @@
 extends Resource
 class_name MarchingCubeTable
 
-static func get_mesh_table()->Array:
-	return meshes
+static func get_tessellation_table()->Array:
+	return triangles
 
-static var meshes = [
-	[ # 00 (root 00, rev winding false)
-	],
-	[ # 01 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 02 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 03 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 04 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 05 (root 03, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 06 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 07 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 08 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 09 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 0a (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 0b (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 0c (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 0d (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 0e (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 0f (root 0f, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 10 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 11 (root 03, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 12 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 13 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 14 (root 06, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 15 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 16 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 17 (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 18 (root 18, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 19 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 1a (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 1b (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 1c (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 1d (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 1e (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 1f (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 20 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 21 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 22 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 23 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 24 (root 18, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 25 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 26 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 27 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 28 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 29 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 2a (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 2b (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 2c (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 2d (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 2e (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 2f (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 30 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 31 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 32 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 33 (root 0f, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 34 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 35 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 36 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 37 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 38 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 39 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 3a (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 3b (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 3c (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 3d (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 3e (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 3f (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 40 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 41 (root 06, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 42 (root 18, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 43 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 44 (root 03, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 45 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 46 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 47 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 48 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 49 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 4a (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 4b (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 4c (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 4d (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 4e (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 4f (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 50 (root 03, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 51 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 52 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 53 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 54 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 55 (root 0f, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 56 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 57 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 58 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 59 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 5a (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 5b (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 5c (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 5d (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 5e (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 5f (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 60 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 61 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 62 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 63 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 64 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 65 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 66 (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 67 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 68 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 69 (root 69, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 6a (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 6b (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 6c (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 6d (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 6e (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 6f (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 70 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 71 (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 72 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 73 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 74 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 75 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 76 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 77 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 78 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 79 (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 7a (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 7b (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 7c (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # 7d (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 7e (root 18, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 7f (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 80 (root 01, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 81 (root 18, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 82 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # 83 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 84 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 85 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 86 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 87 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 88 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 89 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 8a (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # 8b (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # 8c (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # 8d (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 8e (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 8f (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 90 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 91 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 92 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # 93 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 94 (root 16, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # 95 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # 96 (root 69, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 97 (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 98 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 99 (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 9a (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 9b (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # 9c (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # 9d (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # 9e (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # 9f (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # a0 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # a1 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # a2 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # a3 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # a4 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # a5 (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # a6 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # a7 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # a8 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # a9 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # aa (root 0f, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # ab (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # ac (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # ad (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # ae (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # af (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # b0 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # b1 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # b2 (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # b3 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # b4 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # b5 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # b6 (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # b7 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # b8 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # b9 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # ba (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # bb (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # bc (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # bd (root 18, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # be (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, 
-	],
-	[ # bf (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.D, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # c0 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # c1 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # c2 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # c3 (root 3c, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # c4 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # c5 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # c6 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # c7 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # c8 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # c9 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # ca (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # cb (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # cc (root 0f, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # cd (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # ce (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # cf (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # d0 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # d1 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # d2 (root 1e, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # d3 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # d4 (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # d5 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # d6 (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # d7 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # d8 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # d9 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # da (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # db (root 18, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, 
-	],
-	[ # dc (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.H, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # dd (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # de (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # df (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.H, 
-	],
-	[ # e0 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # e1 (root 1e, rev winding false)
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # e2 (root 1b, rev winding true)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # e3 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # e4 (root 1b, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # e5 (root 19, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # e6 (root 19, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # e7 (root 18, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # e8 (root 17, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # e9 (root 16, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # ea (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # eb (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-	],
-	[ # ec (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.E, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # ed (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # ee (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.E, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # ef (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.L, CubeSymmetries.CubeEdge.E, 
-	],
-	[ # f0 (root 0f, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # f1 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.J, 
-	],
-	[ # f2 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # f3 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.A, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # f4 (root 07, rev winding false)
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # f5 (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # f6 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, 
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, 
-	],
-	[ # f7 (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.C, CubeSymmetries.CubeEdge.G, 
-	],
-	[ # f8 (root 07, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.K, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # f9 (root 06, rev winding false)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # fa (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.B, 
-		CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.I, CubeSymmetries.CubeEdge.A, 
-	],
-	[ # fb (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.A, CubeSymmetries.CubeEdge.B, CubeSymmetries.CubeEdge.F, 
-	],
-	[ # fc (root 03, rev winding false)
-		CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.F, 
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.K, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # fd (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.G, CubeSymmetries.CubeEdge.K, 
-	],
-	[ # fe (root 01, rev winding true)
-		CubeSymmetries.CubeEdge.F, CubeSymmetries.CubeEdge.J, CubeSymmetries.CubeEdge.I, 
-	],
-	[ # ff (root 00, rev winding true)
+static var triangles = [
+	[ # 00
+	],
+	[ # 01
+		0, 4, 3, 
+	],
+	[ # 02
+		5, 0, 1, 
+	],
+	[ # 03
+		1, 5, 3, 
+		3, 5, 4, 
+	],
+	[ # 04
+		8, 11, 4, 
+	],
+	[ # 05
+		11, 3, 8, 
+		3, 0, 8, 
+	],
+	[ # 06
+		0, 1, 5, 
+		4, 8, 11, 
+	],
+	[ # 07
+		1, 11, 3, 
+		1, 5, 11, 
+		5, 8, 11, 
+	],
+	[ # 08
+		9, 8, 5, 
+	],
+	[ # 09
+		5, 9, 8, 
+		0, 4, 3, 
+	],
+	[ # 0a
+		9, 8, 1, 
+		1, 8, 0, 
+	],
+	[ # 0b
+		9, 3, 1, 
+		9, 8, 3, 
+		8, 4, 3, 
+	],
+	[ # 0c
+		5, 9, 4, 
+		4, 9, 11, 
+	],
+	[ # 0d
+		3, 9, 11, 
+		3, 0, 9, 
+		0, 5, 9, 
+	],
+	[ # 0e
+		1, 9, 11, 
+		1, 11, 0, 
+		0, 11, 4, 
+	],
+	[ # 0f
+		1, 9, 3, 
+		3, 9, 11, 
+	],
+	[ # 10
+		2, 3, 7, 
+	],
+	[ # 11
+		4, 7, 0, 
+		7, 2, 0, 
+	],
+	[ # 12
+		1, 5, 0, 
+		2, 3, 7, 
+	],
+	[ # 13
+		7, 5, 4, 
+		7, 2, 5, 
+		2, 1, 5, 
+	],
+	[ # 14
+		11, 4, 8, 
+		7, 2, 3, 
+	],
+	[ # 15
+		2, 0, 8, 
+		2, 8, 7, 
+		7, 8, 11, 
+	],
+	[ # 16
+		0, 1, 5, 
+		2, 3, 7, 
+		4, 8, 11, 
+	],
+	[ # 17
+		1, 5, 2, 
+		2, 5, 7, 
+		5, 8, 7, 
+		7, 8, 11, 
+	],
+	[ # 18
+		2, 3, 7, 
+		5, 9, 8, 
+	],
+	[ # 19
+		0, 4, 2, 
+		2, 4, 7, 
+		5, 9, 8, 
+	],
+	[ # 1a
+		1, 9, 0, 
+		9, 8, 0, 
+		2, 3, 7, 
+	],
+	[ # 1b
+		1, 9, 2, 
+		2, 9, 7, 
+		7, 9, 4, 
+		4, 9, 8, 
+	],
+	[ # 1c
+		4, 5, 11, 
+		5, 9, 11, 
+		3, 7, 2, 
+	],
+	[ # 1d
+		11, 7, 9, 
+		7, 2, 9, 
+		2, 0, 9, 
+		0, 5, 9, 
+	],
+	[ # 1e
+		0, 1, 9, 
+		0, 9, 4, 
+		4, 9, 11, 
+		2, 3, 7, 
+	],
+	[ # 1f
+		1, 9, 2, 
+		2, 9, 7, 
+		7, 9, 11, 
+	],
+	[ # 20
+		1, 2, 6, 
+	],
+	[ # 21
+		2, 6, 1, 
+		3, 0, 4, 
+	],
+	[ # 22
+		5, 0, 6, 
+		6, 0, 2, 
+	],
+	[ # 23
+		6, 5, 4, 
+		6, 4, 2, 
+		2, 4, 3, 
+	],
+	[ # 24
+		8, 11, 4, 
+		6, 1, 2, 
+	],
+	[ # 25
+		3, 0, 11, 
+		11, 0, 8, 
+		2, 6, 1, 
+	],
+	[ # 26
+		5, 0, 6, 
+		6, 0, 2, 
+		8, 11, 4, 
+	],
+	[ # 27
+		5, 8, 6, 
+		8, 11, 6, 
+		11, 3, 6, 
+		3, 2, 6, 
+	],
+	[ # 28
+		9, 8, 5, 
+		6, 1, 2, 
+	],
+	[ # 29
+		5, 9, 8, 
+		6, 1, 2, 
+		0, 4, 3, 
+	],
+	[ # 2a
+		2, 8, 0, 
+		2, 6, 8, 
+		6, 9, 8, 
+	],
+	[ # 2b
+		9, 8, 6, 
+		6, 8, 2, 
+		8, 4, 2, 
+		2, 4, 3, 
+	],
+	[ # 2c
+		5, 9, 4, 
+		4, 9, 11, 
+		1, 2, 6, 
+	],
+	[ # 2d
+		5, 9, 11, 
+		5, 11, 0, 
+		0, 11, 3, 
+		6, 1, 2, 
+	],
+	[ # 2e
+		9, 11, 6, 
+		6, 11, 2, 
+		2, 11, 0, 
+		0, 11, 4, 
+	],
+	[ # 2f
+		9, 11, 6, 
+		6, 11, 2, 
+		2, 11, 3, 
+	],
+	[ # 30
+		6, 1, 7, 
+		7, 1, 3, 
+	],
+	[ # 31
+		6, 4, 7, 
+		6, 1, 4, 
+		1, 0, 4, 
+	],
+	[ # 32
+		5, 7, 6, 
+		5, 0, 7, 
+		0, 3, 7, 
+	],
+	[ # 33
+		6, 5, 7, 
+		7, 5, 4, 
+	],
+	[ # 34
+		7, 6, 3, 
+		6, 1, 3, 
+		11, 4, 8, 
+	],
+	[ # 35
+		0, 8, 1, 
+		1, 8, 6, 
+		6, 8, 7, 
+		7, 8, 11, 
+	],
+	[ # 36
+		3, 7, 6, 
+		3, 6, 0, 
+		0, 6, 5, 
+		11, 4, 8, 
+	],
+	[ # 37
+		7, 6, 11, 
+		11, 6, 8, 
+		8, 6, 5, 
+	],
+	[ # 38
+		6, 1, 7, 
+		7, 1, 3, 
+		9, 8, 5, 
+	],
+	[ # 39
+		1, 7, 6, 
+		1, 0, 7, 
+		0, 4, 7, 
+		9, 8, 5, 
+	],
+	[ # 3a
+		0, 3, 8, 
+		3, 7, 8, 
+		7, 6, 8, 
+		6, 9, 8, 
+	],
+	[ # 3b
+		6, 9, 7, 
+		9, 8, 7, 
+		8, 4, 7, 
+	],
+	[ # 3c
+		1, 3, 6, 
+		3, 7, 6, 
+		4, 5, 9, 
+		4, 9, 11, 
+	],
+	[ # 3d
+		0, 6, 1, 
+		0, 7, 6, 
+		0, 11, 7, 
+		0, 5, 11, 
+		5, 9, 11, 
+	],
+	[ # 3e
+		0, 3, 7, 
+		0, 7, 6, 
+		0, 6, 9, 
+		0, 9, 4, 
+		4, 9, 11, 
+	],
+	[ # 3f
+		6, 9, 7, 
+		7, 9, 11, 
+	],
+	[ # 40
+		10, 7, 11, 
+	],
+	[ # 41
+		7, 11, 10, 
+		3, 0, 4, 
+	],
+	[ # 42
+		10, 7, 11, 
+		1, 5, 0, 
+	],
+	[ # 43
+		3, 1, 4, 
+		1, 5, 4, 
+		7, 11, 10, 
+	],
+	[ # 44
+		7, 4, 10, 
+		4, 8, 10, 
+	],
+	[ # 45
+		0, 8, 10, 
+		0, 10, 3, 
+		3, 10, 7, 
+	],
+	[ # 46
+		4, 8, 7, 
+		7, 8, 10, 
+		0, 1, 5, 
+	],
+	[ # 47
+		8, 10, 5, 
+		5, 10, 1, 
+		1, 10, 3, 
+		3, 10, 7, 
+	],
+	[ # 48
+		8, 5, 9, 
+		11, 10, 7, 
+	],
+	[ # 49
+		8, 5, 9, 
+		0, 4, 3, 
+		11, 10, 7, 
+	],
+	[ # 4a
+		9, 8, 1, 
+		1, 8, 0, 
+		10, 7, 11, 
+	],
+	[ # 4b
+		4, 3, 1, 
+		4, 1, 8, 
+		8, 1, 9, 
+		7, 11, 10, 
+	],
+	[ # 4c
+		5, 7, 4, 
+		5, 9, 7, 
+		9, 10, 7, 
+	],
+	[ # 4d
+		5, 9, 0, 
+		0, 9, 3, 
+		9, 10, 3, 
+		3, 10, 7, 
+	],
+	[ # 4e
+		9, 10, 1, 
+		10, 7, 1, 
+		7, 4, 1, 
+		4, 0, 1, 
+	],
+	[ # 4f
+		3, 1, 7, 
+		7, 1, 10, 
+		10, 1, 9, 
+	],
+	[ # 50
+		3, 11, 2, 
+		11, 10, 2, 
+	],
+	[ # 51
+		10, 2, 0, 
+		10, 0, 11, 
+		11, 0, 4, 
+	],
+	[ # 52
+		2, 3, 10, 
+		10, 3, 11, 
+		1, 5, 0, 
+	],
+	[ # 53
+		4, 11, 5, 
+		11, 10, 5, 
+		10, 2, 5, 
+		2, 1, 5, 
+	],
+	[ # 54
+		8, 10, 2, 
+		8, 2, 4, 
+		4, 2, 3, 
+	],
+	[ # 55
+		10, 2, 8, 
+		2, 0, 8, 
+	],
+	[ # 56
+		3, 10, 2, 
+		3, 4, 10, 
+		4, 8, 10, 
+		1, 5, 0, 
+	],
+	[ # 57
+		2, 1, 10, 
+		1, 5, 10, 
+		5, 8, 10, 
+	],
+	[ # 58
+		11, 10, 3, 
+		3, 10, 2, 
+		8, 5, 9, 
+	],
+	[ # 59
+		4, 2, 0, 
+		4, 11, 2, 
+		11, 10, 2, 
+		5, 9, 8, 
+	],
+	[ # 5a
+		3, 11, 2, 
+		11, 10, 2, 
+		8, 0, 1, 
+		8, 1, 9, 
+	],
+	[ # 5b
+		4, 11, 10, 
+		4, 10, 2, 
+		4, 2, 1, 
+		4, 1, 8, 
+		8, 1, 9, 
+	],
+	[ # 5c
+		10, 2, 9, 
+		9, 2, 5, 
+		5, 2, 4, 
+		4, 2, 3, 
+	],
+	[ # 5d
+		0, 5, 2, 
+		5, 9, 2, 
+		9, 10, 2, 
+	],
+	[ # 5e
+		4, 0, 1, 
+		4, 1, 9, 
+		4, 9, 10, 
+		4, 10, 3, 
+		3, 10, 2, 
+	],
+	[ # 5f
+		10, 2, 9, 
+		2, 1, 9, 
+	],
+	[ # 60
+		6, 1, 2, 
+		10, 7, 11, 
+	],
+	[ # 61
+		2, 6, 1, 
+		10, 7, 11, 
+		3, 0, 4, 
+	],
+	[ # 62
+		6, 5, 2, 
+		5, 0, 2, 
+		10, 7, 11, 
+	],
+	[ # 63
+		2, 6, 5, 
+		2, 5, 3, 
+		3, 5, 4, 
+		10, 7, 11, 
+	],
+	[ # 64
+		10, 7, 8, 
+		8, 7, 4, 
+		6, 1, 2, 
+	],
+	[ # 65
+		7, 8, 10, 
+		7, 3, 8, 
+		3, 0, 8, 
+		6, 1, 2, 
+	],
+	[ # 66
+		7, 4, 10, 
+		4, 8, 10, 
+		0, 2, 6, 
+		0, 6, 5, 
+	],
+	[ # 67
+		3, 2, 6, 
+		3, 6, 5, 
+		3, 5, 8, 
+		3, 8, 7, 
+		7, 8, 10, 
+	],
+	[ # 68
+		6, 1, 2, 
+		5, 9, 8, 
+		10, 7, 11, 
+	],
+	[ # 69
+		0, 4, 3, 
+		1, 2, 6, 
+		5, 9, 8, 
+		7, 11, 10, 
+	],
+	[ # 6a
+		9, 8, 0, 
+		9, 0, 6, 
+		6, 0, 2, 
+		11, 10, 7, 
+	],
+	[ # 6b
+		2, 6, 3, 
+		3, 6, 4, 
+		4, 6, 9, 
+		4, 9, 8, 
+		7, 11, 10, 
+	],
+	[ # 6c
+		9, 4, 5, 
+		9, 10, 4, 
+		10, 7, 4, 
+		1, 2, 6, 
+	],
+	[ # 6d
+		0, 5, 3, 
+		5, 9, 3, 
+		9, 7, 3, 
+		9, 10, 7, 
+		1, 2, 6, 
+	],
+	[ # 6e
+		9, 2, 6, 
+		9, 0, 2, 
+		9, 4, 0, 
+		9, 10, 4, 
+		10, 7, 4, 
+	],
+	[ # 6f
+		2, 6, 3, 
+		3, 6, 9, 
+		3, 9, 7, 
+		7, 9, 10, 
+	],
+	[ # 70
+		11, 1, 3, 
+		11, 10, 1, 
+		10, 6, 1, 
+	],
+	[ # 71
+		6, 1, 10, 
+		10, 1, 11, 
+		1, 0, 11, 
+		11, 0, 4, 
+	],
+	[ # 72
+		6, 5, 10, 
+		10, 5, 11, 
+		11, 5, 3, 
+		3, 5, 0, 
+	],
+	[ # 73
+		6, 5, 10, 
+		10, 5, 11, 
+		11, 5, 4, 
+	],
+	[ # 74
+		3, 4, 1, 
+		4, 8, 1, 
+		8, 10, 1, 
+		10, 6, 1, 
+	],
+	[ # 75
+		10, 6, 8, 
+		6, 1, 8, 
+		1, 0, 8, 
+	],
+	[ # 76
+		3, 4, 8, 
+		3, 8, 10, 
+		3, 10, 6, 
+		3, 6, 0, 
+		0, 6, 5, 
+	],
+	[ # 77
+		8, 10, 5, 
+		10, 6, 5, 
+	],
+	[ # 78
+		6, 1, 3, 
+		6, 3, 10, 
+		10, 3, 11, 
+		5, 9, 8, 
+	],
+	[ # 79
+		10, 6, 11, 
+		6, 1, 11, 
+		1, 4, 11, 
+		1, 0, 4, 
+		9, 8, 5, 
+	],
+	[ # 7a
+		6, 11, 10, 
+		6, 3, 11, 
+		6, 0, 3, 
+		6, 9, 0, 
+		9, 8, 0, 
+	],
+	[ # 7b
+		9, 8, 6, 
+		6, 8, 4, 
+		6, 4, 10, 
+		10, 4, 11, 
+	],
+	[ # 7c
+		10, 5, 9, 
+		10, 4, 5, 
+		10, 3, 4, 
+		10, 6, 3, 
+		6, 1, 3, 
+	],
+	[ # 7d
+		9, 10, 5, 
+		10, 0, 5, 
+		10, 6, 0, 
+		6, 1, 0, 
+	],
+	[ # 7e
+		0, 3, 4, 
+		6, 9, 10, 
+	],
+	[ # 7f
+		6, 9, 10, 
+	],
+	[ # 80
+		6, 10, 9, 
+	],
+	[ # 81
+		0, 4, 3, 
+		9, 6, 10, 
+	],
+	[ # 82
+		5, 0, 1, 
+		9, 6, 10, 
+	],
+	[ # 83
+		1, 5, 3, 
+		3, 5, 4, 
+		6, 10, 9, 
+	],
+	[ # 84
+		9, 6, 10, 
+		8, 11, 4, 
+	],
+	[ # 85
+		8, 11, 0, 
+		0, 11, 3, 
+		9, 6, 10, 
+	],
+	[ # 86
+		9, 6, 10, 
+		1, 5, 0, 
+		8, 11, 4, 
+	],
+	[ # 87
+		5, 3, 1, 
+		5, 8, 3, 
+		8, 11, 3, 
+		6, 10, 9, 
+	],
+	[ # 88
+		6, 10, 5, 
+		5, 10, 8, 
+	],
+	[ # 89
+		5, 6, 8, 
+		6, 10, 8, 
+		0, 4, 3, 
+	],
+	[ # 8a
+		0, 10, 8, 
+		0, 1, 10, 
+		1, 6, 10, 
+	],
+	[ # 8b
+		8, 4, 10, 
+		4, 3, 10, 
+		3, 1, 10, 
+		1, 6, 10, 
+	],
+	[ # 8c
+		6, 4, 5, 
+		6, 10, 4, 
+		10, 11, 4, 
+	],
+	[ # 8d
+		5, 6, 0, 
+		0, 6, 3, 
+		3, 6, 11, 
+		11, 6, 10, 
+	],
+	[ # 8e
+		6, 10, 1, 
+		1, 10, 0, 
+		10, 11, 0, 
+		0, 11, 4, 
+	],
+	[ # 8f
+		1, 6, 3, 
+		6, 10, 3, 
+		10, 11, 3, 
+	],
+	[ # 90
+		10, 9, 6, 
+		7, 2, 3, 
+	],
+	[ # 91
+		7, 2, 4, 
+		4, 2, 0, 
+		10, 9, 6, 
+	],
+	[ # 92
+		1, 5, 0, 
+		9, 6, 10, 
+		2, 3, 7, 
+	],
+	[ # 93
+		1, 5, 4, 
+		1, 4, 2, 
+		2, 4, 7, 
+		9, 6, 10, 
+	],
+	[ # 94
+		10, 9, 6, 
+		8, 11, 4, 
+		7, 2, 3, 
+	],
+	[ # 95
+		11, 0, 8, 
+		11, 7, 0, 
+		7, 2, 0, 
+		9, 6, 10, 
+	],
+	[ # 96
+		8, 11, 4, 
+		5, 0, 1, 
+		9, 6, 10, 
+		3, 7, 2, 
+	],
+	[ # 97
+		2, 1, 7, 
+		1, 5, 7, 
+		5, 11, 7, 
+		5, 8, 11, 
+		6, 10, 9, 
+	],
+	[ # 98
+		6, 10, 5, 
+		5, 10, 8, 
+		2, 3, 7, 
+	],
+	[ # 99
+		4, 7, 0, 
+		7, 2, 0, 
+		10, 8, 5, 
+		10, 5, 6, 
+	],
+	[ # 9a
+		6, 10, 8, 
+		6, 8, 1, 
+		1, 8, 0, 
+		7, 2, 3, 
+	],
+	[ # 9b
+		1, 7, 2, 
+		1, 4, 7, 
+		1, 8, 4, 
+		1, 6, 8, 
+		6, 10, 8, 
+	],
+	[ # 9c
+		11, 4, 5, 
+		11, 5, 10, 
+		10, 5, 6, 
+		3, 7, 2, 
+	],
+	[ # 9d
+		11, 7, 2, 
+		11, 2, 0, 
+		11, 0, 5, 
+		11, 5, 10, 
+		10, 5, 6, 
+	],
+	[ # 9e
+		0, 1, 4, 
+		4, 1, 11, 
+		11, 1, 6, 
+		11, 6, 10, 
+		3, 7, 2, 
+	],
+	[ # 9f
+		6, 10, 1, 
+		1, 10, 11, 
+		1, 11, 2, 
+		2, 11, 7, 
+	],
+	[ # a0
+		1, 2, 9, 
+		9, 2, 10, 
+	],
+	[ # a1
+		1, 2, 9, 
+		9, 2, 10, 
+		0, 4, 3, 
+	],
+	[ # a2
+		10, 0, 2, 
+		10, 9, 0, 
+		9, 5, 0, 
+	],
+	[ # a3
+		5, 4, 9, 
+		9, 4, 10, 
+		10, 4, 2, 
+		2, 4, 3, 
+	],
+	[ # a4
+		9, 1, 10, 
+		1, 2, 10, 
+		8, 11, 4, 
+	],
+	[ # a5
+		11, 3, 8, 
+		3, 0, 8, 
+		2, 10, 9, 
+		2, 9, 1, 
+	],
+	[ # a6
+		5, 0, 2, 
+		5, 2, 9, 
+		9, 2, 10, 
+		4, 8, 11, 
+	],
+	[ # a7
+		5, 10, 9, 
+		5, 2, 10, 
+		5, 3, 2, 
+		5, 8, 3, 
+		8, 11, 3, 
+	],
+	[ # a8
+		8, 2, 10, 
+		8, 5, 2, 
+		5, 1, 2, 
+	],
+	[ # a9
+		1, 2, 10, 
+		1, 10, 5, 
+		5, 10, 8, 
+		3, 0, 4, 
+	],
+	[ # aa
+		10, 8, 2, 
+		2, 8, 0, 
+	],
+	[ # ab
+		2, 10, 3, 
+		3, 10, 4, 
+		4, 10, 8, 
+	],
+	[ # ac
+		10, 11, 2, 
+		11, 4, 2, 
+		4, 5, 2, 
+		5, 1, 2, 
+	],
+	[ # ad
+		5, 3, 0, 
+		5, 11, 3, 
+		5, 10, 11, 
+		5, 1, 10, 
+		1, 2, 10, 
+	],
+	[ # ae
+		0, 2, 4, 
+		4, 2, 11, 
+		11, 2, 10, 
+	],
+	[ # af
+		10, 11, 2, 
+		2, 11, 3, 
+	],
+	[ # b0
+		9, 1, 3, 
+		9, 3, 10, 
+		10, 3, 7, 
+	],
+	[ # b1
+		1, 0, 9, 
+		0, 4, 9, 
+		4, 7, 9, 
+		7, 10, 9, 
+	],
+	[ # b2
+		5, 0, 9, 
+		9, 0, 10, 
+		0, 3, 10, 
+		10, 3, 7, 
+	],
+	[ # b3
+		5, 4, 9, 
+		9, 4, 10, 
+		10, 4, 7, 
+	],
+	[ # b4
+		10, 9, 1, 
+		10, 1, 7, 
+		7, 1, 3, 
+		8, 11, 4, 
+	],
+	[ # b5
+		7, 10, 9, 
+		7, 9, 1, 
+		7, 1, 0, 
+		7, 0, 11, 
+		11, 0, 8, 
+	],
+	[ # b6
+		10, 9, 7, 
+		7, 9, 3, 
+		3, 9, 5, 
+		3, 5, 0, 
+		11, 4, 8, 
+	],
+	[ # b7
+		10, 9, 7, 
+		7, 9, 5, 
+		7, 5, 11, 
+		11, 5, 8, 
+	],
+	[ # b8
+		1, 3, 5, 
+		5, 3, 8, 
+		8, 3, 10, 
+		10, 3, 7, 
+	],
+	[ # b9
+		1, 8, 5, 
+		1, 10, 8, 
+		1, 7, 10, 
+		1, 0, 7, 
+		0, 4, 7, 
+	],
+	[ # ba
+		10, 8, 7, 
+		7, 8, 3, 
+		3, 8, 0, 
+	],
+	[ # bb
+		8, 4, 10, 
+		10, 4, 7, 
+	],
+	[ # bc
+		10, 11, 4, 
+		10, 4, 5, 
+		10, 5, 1, 
+		10, 1, 7, 
+		7, 1, 3, 
+	],
+	[ # bd
+		10, 11, 7, 
+		5, 1, 0, 
+	],
+	[ # be
+		11, 4, 10, 
+		10, 4, 0, 
+		10, 0, 7, 
+		7, 0, 3, 
+	],
+	[ # bf
+		10, 11, 7, 
+	],
+	[ # c0
+		9, 6, 11, 
+		11, 6, 7, 
+	],
+	[ # c1
+		11, 9, 7, 
+		9, 6, 7, 
+		4, 3, 0, 
+	],
+	[ # c2
+		9, 6, 11, 
+		11, 6, 7, 
+		5, 0, 1, 
+	],
+	[ # c3
+		5, 4, 1, 
+		4, 3, 1, 
+		11, 9, 6, 
+		11, 6, 7, 
+	],
+	[ # c4
+		4, 6, 7, 
+		4, 8, 6, 
+		8, 9, 6, 
+	],
+	[ # c5
+		7, 3, 6, 
+		3, 0, 6, 
+		0, 8, 6, 
+		8, 9, 6, 
+	],
+	[ # c6
+		9, 6, 7, 
+		9, 7, 8, 
+		8, 7, 4, 
+		1, 5, 0, 
+	],
+	[ # c7
+		8, 1, 5, 
+		8, 3, 1, 
+		8, 7, 3, 
+		8, 9, 7, 
+		9, 6, 7, 
+	],
+	[ # c8
+		5, 6, 7, 
+		5, 7, 8, 
+		8, 7, 11, 
+	],
+	[ # c9
+		8, 5, 6, 
+		8, 6, 11, 
+		11, 6, 7, 
+		0, 4, 3, 
+	],
+	[ # ca
+		6, 7, 1, 
+		1, 7, 0, 
+		0, 7, 8, 
+		8, 7, 11, 
+	],
+	[ # cb
+		8, 4, 3, 
+		8, 3, 1, 
+		8, 1, 6, 
+		8, 6, 11, 
+		11, 6, 7, 
+	],
+	[ # cc
+		5, 6, 4, 
+		4, 6, 7, 
+	],
+	[ # cd
+		5, 6, 0, 
+		0, 6, 3, 
+		3, 6, 7, 
+	],
+	[ # ce
+		6, 7, 1, 
+		1, 7, 0, 
+		0, 7, 4, 
+	],
+	[ # cf
+		1, 6, 3, 
+		3, 6, 7, 
+	],
+	[ # d0
+		9, 3, 11, 
+		9, 6, 3, 
+		6, 2, 3, 
+	],
+	[ # d1
+		2, 0, 6, 
+		6, 0, 9, 
+		9, 0, 11, 
+		11, 0, 4, 
+	],
+	[ # d2
+		6, 11, 9, 
+		6, 2, 11, 
+		2, 3, 11, 
+		5, 0, 1, 
+	],
+	[ # d3
+		2, 9, 6, 
+		2, 11, 9, 
+		2, 4, 11, 
+		2, 1, 4, 
+		1, 5, 4, 
+	],
+	[ # d4
+		9, 6, 8, 
+		8, 6, 4, 
+		6, 2, 4, 
+		4, 2, 3, 
+	],
+	[ # d5
+		8, 9, 0, 
+		9, 6, 0, 
+		6, 2, 0, 
+	],
+	[ # d6
+		8, 9, 4, 
+		9, 6, 4, 
+		6, 3, 4, 
+		6, 2, 3, 
+		5, 0, 1, 
+	],
+	[ # d7
+		6, 2, 9, 
+		2, 8, 9, 
+		2, 1, 8, 
+		1, 5, 8, 
+	],
+	[ # d8
+		6, 2, 5, 
+		2, 3, 5, 
+		3, 11, 5, 
+		11, 8, 5, 
+	],
+	[ # d9
+		11, 8, 5, 
+		11, 5, 6, 
+		11, 6, 2, 
+		11, 2, 4, 
+		4, 2, 0, 
+	],
+	[ # da
+		6, 0, 1, 
+		6, 8, 0, 
+		6, 11, 8, 
+		6, 2, 11, 
+		2, 3, 11, 
+	],
+	[ # db
+		8, 4, 11, 
+		1, 6, 2, 
+	],
+	[ # dc
+		4, 5, 3, 
+		3, 5, 2, 
+		2, 5, 6, 
+	],
+	[ # dd
+		2, 0, 6, 
+		0, 5, 6, 
+	],
+	[ # de
+		0, 1, 4, 
+		4, 1, 6, 
+		4, 6, 3, 
+		3, 6, 2, 
+	],
+	[ # df
+		1, 6, 2, 
+	],
+	[ # e0
+		1, 11, 9, 
+		1, 2, 11, 
+		2, 7, 11, 
+	],
+	[ # e1
+		7, 11, 9, 
+		7, 9, 2, 
+		2, 9, 1, 
+		4, 3, 0, 
+	],
+	[ # e2
+		2, 7, 0, 
+		7, 11, 0, 
+		11, 9, 0, 
+		9, 5, 0, 
+	],
+	[ # e3
+		2, 7, 11, 
+		2, 11, 9, 
+		2, 9, 5, 
+		2, 5, 3, 
+		3, 5, 4, 
+	],
+	[ # e4
+		9, 1, 8, 
+		8, 1, 4, 
+		4, 1, 7, 
+		7, 1, 2, 
+	],
+	[ # e5
+		7, 3, 0, 
+		7, 0, 8, 
+		7, 8, 9, 
+		7, 9, 2, 
+		2, 9, 1, 
+	],
+	[ # e6
+		9, 4, 8, 
+		9, 7, 4, 
+		9, 2, 7, 
+		9, 5, 2, 
+		5, 0, 2, 
+	],
+	[ # e7
+		2, 7, 3, 
+		9, 5, 8, 
+	],
+	[ # e8
+		1, 2, 5, 
+		5, 2, 8, 
+		2, 7, 8, 
+		8, 7, 11, 
+	],
+	[ # e9
+		8, 5, 11, 
+		11, 5, 7, 
+		7, 5, 1, 
+		7, 1, 2, 
+		4, 3, 0, 
+	],
+	[ # ea
+		8, 0, 11, 
+		11, 0, 7, 
+		7, 0, 2, 
+	],
+	[ # eb
+		4, 3, 8, 
+		8, 3, 2, 
+		8, 2, 11, 
+		11, 2, 7, 
+	],
+	[ # ec
+		5, 1, 4, 
+		1, 2, 4, 
+		2, 7, 4, 
+	],
+	[ # ed
+		1, 2, 5, 
+		5, 2, 7, 
+		5, 7, 0, 
+		0, 7, 3, 
+	],
+	[ # ee
+		2, 7, 0, 
+		0, 7, 4, 
+	],
+	[ # ef
+		2, 7, 3, 
+	],
+	[ # f0
+		9, 1, 11, 
+		11, 1, 3, 
+	],
+	[ # f1
+		11, 9, 4, 
+		4, 9, 0, 
+		0, 9, 1, 
+	],
+	[ # f2
+		9, 5, 11, 
+		5, 0, 11, 
+		0, 3, 11, 
+	],
+	[ # f3
+		9, 5, 11, 
+		11, 5, 4, 
+	],
+	[ # f4
+		9, 1, 8, 
+		8, 1, 4, 
+		4, 1, 3, 
+	],
+	[ # f5
+		0, 8, 1, 
+		8, 9, 1, 
+	],
+	[ # f6
+		5, 0, 9, 
+		9, 0, 3, 
+		9, 3, 8, 
+		8, 3, 4, 
+	],
+	[ # f7
+		9, 5, 8, 
+	],
+	[ # f8
+		1, 3, 5, 
+		5, 3, 8, 
+		8, 3, 11, 
+	],
+	[ # f9
+		8, 5, 11, 
+		11, 5, 1, 
+		11, 1, 4, 
+		4, 1, 0, 
+	],
+	[ # fa
+		0, 3, 8, 
+		8, 3, 11, 
+	],
+	[ # fb
+		8, 4, 11, 
+	],
+	[ # fc
+		5, 1, 4, 
+		4, 1, 3, 
+	],
+	[ # fd
+		5, 1, 0, 
+	],
+	[ # fe
+		0, 3, 4, 
+	],
+	[ # ff
 	],
 ]
