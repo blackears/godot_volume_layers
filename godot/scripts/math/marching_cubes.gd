@@ -174,8 +174,10 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 					mesh_tri_verts.append(point)
 					
 #					var lookup:Vector3 = xform_grid * cube_tris[p_idx]
-#					var grad:Vector3 = gradients.get_gradient(lookup)
+#					var grad:Vector3 = image_data.get_gradient(lookup)
 #					mesh_tri_norms.append(grad.normalized())
+					
+#					var grad:Vector3 = gradients.get_gradient(lookup)
 					
 					
 					#var norm:Vector3 = 

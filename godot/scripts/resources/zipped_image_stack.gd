@@ -64,8 +64,16 @@ func get_cell_value(pos:Vector3i)->float:
 		|| pos.y < 0 || pos.y >= data_size.y \
 		|| pos.z < 0 || pos.z >= data_size.z:
 		return 0
-		
-	return data[((pos.z * data_size.y) + pos.y) * data_size.x + pos.x]
+	
+	var val:float = data[((pos.z * data_size.y) + pos.y) * data_size.x + pos.x]
+	return val
+
+func get_gradient(pos:Vector3)->Vector3:
+	var dx:float = get_cell_value(pos + Vector3(1, 0, 0)) - get_cell_value(pos + Vector3(-1, 0, 0))
+	var dy:float = get_cell_value(pos + Vector3(0, 1, 0)) - get_cell_value(pos + Vector3(0, -1, 0))
+	var dz:float = get_cell_value(pos + Vector3(0, 0, 1)) - get_cell_value(pos + Vector3(0, 0, -1))
+	
+	return Vector3(dx, dy, dz)
 
 func calc_gradients()->ImageGradient:
 	if gradient:
