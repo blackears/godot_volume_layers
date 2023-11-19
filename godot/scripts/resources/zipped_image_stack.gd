@@ -14,6 +14,8 @@ class_name ZippedImageStack
 var data:PackedFloat32Array
 var data_size:Vector3i
 
+var gradient:ImageGradient
+
 
 func load_image_from_zip(path:String):
 	var reader:ZIPReader = ZIPReader.new()
@@ -64,7 +66,31 @@ func get_cell_value(pos:Vector3i)->float:
 		return 0
 		
 	return data[((pos.z * data_size.y) + pos.y) * data_size.x + pos.x]
-		
-		
+
+func calc_gradients()->ImageGradient:
+	if gradient:
+		return gradient
+	
+#	var grad_list:PackedVector3Array
+	var grad_list:Array[Vector3]
+	
+	#Convolve with a simple 3x1 kernel for each dimension
+	for k in data_size.z - 1:
+		for j in data_size.y - 1:
+			for i in data_size.x - 1:
+				
+				var dx:float = get_cell_value(Vector3i(i + 1, j, k)) - get_cell_value(Vector3i(i - 1, j, k))
+				var dy:float = get_cell_value(Vector3i(i, j + 1, k)) - get_cell_value(Vector3i(i, j - 1, k))
+				var dz:float = get_cell_value(Vector3i(i, j, k + 1)) - get_cell_value(Vector3i(i, j, k - 1))
+				
+				var grad:Vector3 = Vector3(dx, dy, dz)
+				if !grad.is_zero_approx():
+					pass
+				grad_list.append(grad)
+				
+	gradient = ImageGradient.new()
+	gradient.gradients = grad_list
+	gradient.size = data_size
+	return gradient
 		
 		
