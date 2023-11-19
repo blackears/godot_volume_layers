@@ -142,13 +142,16 @@ func build_mesh(threshold:float, step_size:Vector3):
 	print("num_steps_y ", num_steps_y)
 	print("num_steps_z ", num_steps_z)
 	
-	for cell_z in num_steps_z:
-		for cell_y in num_steps_y:
-			for cell_x in num_steps_x:
-				if cell_x < cell_min.x || cell_x >= cell_max.x \
-					|| cell_y < cell_min.y || cell_y >= cell_max.y \
-					|| cell_z < cell_min.z || cell_z >= cell_max.z:
-					continue
+#	for cell_z in num_steps_z:
+#		for cell_y in num_steps_y:
+#			for cell_x in num_steps_x:
+	for cell_z in range(-1, num_steps_z + 1):
+		for cell_y in range(-1, num_steps_y + 1):
+			for cell_x in range(-1, num_steps_x + 1):
+#				if cell_x < cell_min.x || cell_x >= cell_max.x \
+#					|| cell_y < cell_min.y || cell_y >= cell_max.y \
+#					|| cell_z < cell_min.z || cell_z >= cell_max.z:
+#					continue
 					
 				var cx0 = cell_x * step_size.x
 				var cx1 = (cell_x + 1) * step_size.x
@@ -175,23 +178,23 @@ func build_mesh(threshold:float, step_size:Vector3):
 					| (0x40 if s6 > threshold else 0) \
 					| (0x80 if s7 > threshold else 0)
 				
-				var edge_weights:Array[float] = [.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, ]
-#				var edge_weights:Array[float] = [
-#					calc_edge_weight(threshold, s0, s1),
-#					calc_edge_weight(threshold, s1, s5),
-#					calc_edge_weight(threshold, s4, s5),
-#					calc_edge_weight(threshold, s0, s4),
-#
-#					calc_edge_weight(threshold, s0, s2),
-#					calc_edge_weight(threshold, s1, s3),
-#					calc_edge_weight(threshold, s5, s7),
-#					calc_edge_weight(threshold, s4, s6),
-#
-#					calc_edge_weight(threshold, s2, s3),
-#					calc_edge_weight(threshold, s3, s7),
-#					calc_edge_weight(threshold, s6, s7),
-#					calc_edge_weight(threshold, s2, s6),
-#				]
+#				var edge_weights:Array[float] = [.5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, .5, ]
+				var edge_weights:Array[float] = [
+					calc_edge_weight(threshold, s0, s1),
+					calc_edge_weight(threshold, s1, s5),
+					calc_edge_weight(threshold, s4, s5),
+					calc_edge_weight(threshold, s0, s4),
+
+					calc_edge_weight(threshold, s0, s2),
+					calc_edge_weight(threshold, s1, s3),
+					calc_edge_weight(threshold, s5, s7),
+					calc_edge_weight(threshold, s4, s6),
+
+					calc_edge_weight(threshold, s2, s3),
+					calc_edge_weight(threshold, s3, s7),
+					calc_edge_weight(threshold, s6, s7),
+					calc_edge_weight(threshold, s2, s6),
+				]
 				
 #				print("Loading cube ", Vector3i(cell_x, cell_y, cell_z))
 				if cube_index != 0 && cube_index != 0xff:

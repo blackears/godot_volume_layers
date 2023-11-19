@@ -62,6 +62,7 @@ func get_cell_value(pos:Vector3i)->float:
 		|| pos.y < 0 || pos.y >= data_size.y \
 		|| pos.z < 0 || pos.z >= data_size.z:
 		return 0
+		
 	return data[((pos.z * data_size.y) + pos.y) * data_size.x + pos.x]
 		
 		
