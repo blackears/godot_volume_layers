@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode unshaded;
+render_mode unshaded, cull_front;
 
 uniform sampler3D texture_volume : source_color,filter_linear_mipmap,repeat_disable;
 uniform sampler2D gradient: filter_linear_mipmap,repeat_disable;

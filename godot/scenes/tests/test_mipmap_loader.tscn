@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs81rsxfkfp6g"]
+
+[ext_resource type="Script" path="res://scenes/tests/test_mipmap_loader.gd" id="1_31oro"]
+
+[node name="test_mipmap_loader" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_31oro")
+zip_file = "res://art/iguana/Iguana_png.zip"
+
+[node name="bn_load_mipmaps" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Load mipmaps"
+
+[connection signal="pressed" from="bn_load_mipmaps" to="." method="_on_bn_load_mipmaps_pressed"]

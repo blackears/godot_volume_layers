@@ -1,6 +1,6 @@
 @tool
 extends ImageTexture3D
-class_name ZippedImageArchiveTexture3D
+class_name ZippedImageArchiveCpuTexture3D
 
 @export_file("*.zip") var zip_file:String:
 	get:
