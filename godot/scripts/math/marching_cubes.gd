@@ -96,16 +96,6 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 	var num_steps_y:float = data_size.y / step_size.y
 	var num_steps_z:float = data_size.z / step_size.z
 
-	#var gradients:ImageGradient = image_data.calc_gradients()
-	
-#	print("data_size ", image_data.data_size)
-#	print("num_steps_x ", num_steps_x)
-#	print("num_steps_y ", num_steps_y)
-#	print("num_steps_z ", num_steps_z)
-#
-#	for cell_z in num_steps_z:
-#		for cell_y in num_steps_y:
-#			for cell_x in num_steps_x:
 	for cell_z in range(-1, num_steps_z + 1):
 		for cell_y in range(-1, num_steps_y + 1):
 			for cell_x in range(-1, num_steps_x + 1):
@@ -173,18 +163,6 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 					cube_tris[p_idx] = point
 					mesh_tri_verts.append(point)
 					
-#					var lookup:Vector3 = xform_grid * cube_tris[p_idx]
-#					var grad:Vector3 = image_data.get_gradient(lookup)
-#					mesh_tri_norms.append(grad.normalized())
-					
-#					var grad:Vector3 = gradients.get_gradient(lookup)
-					
-					
-					#var norm:Vector3 = 
-				#mesh_tri_verts.append_array(cube_tris)
-				
-
-#		print("Loading cube ", cell_z)
 				
 	print("Cubes loaded")
 	
@@ -202,7 +180,6 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 	return {
 		"points": mesh_tri_verts,
 		"normals": mesh_tri_norms
-		
 	}
 
 static func build_mesh_points(image_data:ZippedImageStack, threshold:float, step_size:Vector3):

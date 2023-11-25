@@ -1,6 +1,6 @@
 @tool
 extends Resource
-class_name GradientGenerator
+class_name SobelGradientGenerator
 
 var rd:RenderingDevice
 var shader:RID

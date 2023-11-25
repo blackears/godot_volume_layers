@@ -11,9 +11,9 @@ size = Vector3(10, 1, 10)
 [sub_resource type="Environment" id="Environment_1nlpu"]
 volumetric_fog_enabled = true
 
-[sub_resource type="Resource" id="Resource_i6ucd"]
+[sub_resource type="Resource" id="Resource_emu17"]
 script = ExtResource("4_v2j8a")
-zip_file = "res://art/iguana/Iguana_png.zip"
+zip_file = ""
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_1dd07")
@@ -42,6 +42,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.768635, 0.0284872, -0.60287
 
 [node name="marching_cubes" parent="." instance=ExtResource("3_4g5nj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.567079, 2.38419e-07, 0.497808)
-image_data = SubResource("Resource_i6ucd")
+image_data = SubResource("Resource_emu17")
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]

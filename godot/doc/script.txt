@@ -1,0 +1,52 @@
+topics:
+------
+
+marching cubes algorithm
+	14 face arrangments taking rotations, reflections and inversions into account
+		Root coloring: 0
+		Root coloring: 1
+		Root coloring: 3
+		Root coloring: 6
+		Root coloring: 7
+		Root coloring: f
+		Root coloring: 16
+		Root coloring: 17
+		Root coloring: 18
+		Root coloring: 19
+		Root coloring: 1b
+		Root coloring: 1e
+		Root coloring: 3c
+		Root coloring: 69
+	
+	docs are INCORRRECT!
+	add face coloring as well; inversions cannot be used for determining face set
+	22 possibilities
+	
+		0
+		1
+		3
+		6
+		7
+		f
+		16
+		17
+		18
+		19
+		1b
+		1e
+		1f
+		3c
+		3d
+		3f
+		69
+		6b
+		6f
+		7e
+		7f
+		ff
+	
+	
+mipmap generation & compute shaders
+sobel operator & gradients
+
+nifti c++ wrapper
