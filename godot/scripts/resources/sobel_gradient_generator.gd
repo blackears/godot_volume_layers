@@ -84,14 +84,14 @@ func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
 	fmt_tex_out.width = size.x
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
-	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
+	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	
 
 	#var output_image:Image = Image.create(image_size.x, image_size.y, false, Image.FORMAT_RGBAF)
 	var data:PackedByteArray
-	data.resize(size.x * size.y * size.z * 4)
+	data.resize(size.x * size.y * size.z * 4 * 4)
 	data.fill(0)
 	var dest_tex:RID = rd.texture_create(fmt_tex_out, view, [data])
 
@@ -109,7 +109,6 @@ func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
 	var compute_list = rd.compute_list_begin()
 	rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
 	rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
-#	rd.compute_list_dispatch(compute_list, image_size.x / 8, image_size.y / 8, 1)
 	@warning_ignore("integer_division")
 	rd.compute_list_dispatch(compute_list, (size.x - 1) / 4 + 1, (size.y - 1) / 4 + 1, (size.z - 1) / 4 + 1)
 	rd.compute_list_end()
@@ -117,13 +116,12 @@ func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
 	rd.sync()
 	
 	var byte_data:PackedByteArray = rd.texture_get_data(dest_tex, 0)
-#	var float_data:PackedFloat32Array = byte_data.to_float32_array()
 	
 	var result_img_list:Array[Image]
 	var num_image_pixels:int = size.x * size.y
 	for i in size.z:
-		var image_data:PackedByteArray = byte_data.slice(num_image_pixels * 4 * i, num_image_pixels * 4 * (i + 1))
-		var img:Image = Image.create_from_data(size.x, size.y, false, Image.FORMAT_RGBA8, image_data)
+		var image_data:PackedByteArray = byte_data.slice(num_image_pixels * 4 * 4 * i, num_image_pixels * 4 * 4 * (i + 1))
+		var img:Image = Image.create_from_data(size.x, size.y, false, Image.FORMAT_RGBAF, image_data)
 		result_img_list.append(img)
 
 	rd.free_rid(pipeline)

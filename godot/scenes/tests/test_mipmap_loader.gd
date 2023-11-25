@@ -8,13 +8,13 @@ extends Control
 			return
 		zip_file = value
 
-@export var tex:ZippedImageArchiveTexture3D:
-	get:
-		return tex
-	set(value):
-		if value == tex:
-			return
-		tex = value
+#@export var tex:ZippedImageArchiveTexture3D:
+#	get:
+#		return tex
+#	set(value):
+#		if value == tex:
+#			return
+#		tex = value
 
 
 # Called when the node enters the scene tree for the first time.
@@ -45,7 +45,26 @@ func _on_bn_calc_gradient_pressed():
 	ar.zip_file = zip_file
 	
 	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new()
+	var img_size:Vector3i = ar.get_size()
+	var image_list:Array[Image] = ar.get_image_list()
+	var image_list_base:Array[Image] = image_list.slice(0, img_size.z)
+	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list_base)
+
+#	for i in image_list_base.size():
+#		image_list_base[i].save_exr("../export/base_%d.exr" % i, true)
+	
 	#grad_gen.calculate_gradient_from_image_stack()
+#	var strn:String
+#	for j in img_size.y:
+#		for i in img_size.x:
+#			var color = image_list[120].get_pixel(i, j)
+#			strn += "(%f %f %f %f) " % [color.r, color.g, color.b, color.a]
+#		strn += "\n"
+#	print(strn)
+			
+	
+	for i in grad_image_list.size():
+		grad_image_list[i].save_exr("../export/grad_%d.exr" % i, false)
 	
 	pass # Replace with function body.
 
