@@ -1,6 +1,6 @@
 @tool
 extends Resource
-class_name MipmapGenerator
+class_name MipmapGenerator_rf_3d
 
 var rd:RenderingDevice
 var shader:RID
@@ -8,7 +8,7 @@ var shader:RID
 func _init():
 	rd = RenderingServer.create_local_rendering_device()
 
-	var shader_file:RDShaderFile = load("res://shaders/mipmap_generator_3d.glsl")
+	var shader_file:RDShaderFile = load("res://shaders/mipmap_generator_rf_3d.glsl")
 	if !shader_file.base_error.is_empty():
 		push_error("Error loading shader\n", shader_file.base_error)
 		return
@@ -24,8 +24,6 @@ func _init():
 func dispose():
 	rd.free_rid(shader)
 
-#var texture_rid_list:Array[RID]
-
 
 func calculate(img_list:Array[Image])->Array[Image]:
 	var mipmap_img_list:Array[Image]
@@ -36,22 +34,17 @@ func calculate(img_list:Array[Image])->Array[Image]:
 	fmt_tex_out.width = size.x
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
-	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
+	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	
 	var data_buffer:PackedByteArray
-#	var count:int = 0
 	for img in img_list:
-#		var s = img.get_size()
-#		var h = img.get_data().size()
+		if img.get_format() != Image.FORMAT_RF:
+			push_error("Images must be in RF format")
 		data_buffer.append_array(img.get_data())
-#		print("count %d  buf size %d  dbuf %d" % [count, h, data_buffer.size()])
-#		count += 1
 		
-	#var output_image:Image = Image.create(image_size.x, image_size.y, false, Image.FORMAT_RGBAF)
 	var tex_layer_rid:RID = rd.texture_create(fmt_tex_out, view, [data_buffer])
-	#texture_rid_list.append(tex_layer_rid)
 	
 	calc_mipmap_recursive(tex_layer_rid, size, mipmap_img_list)
 	
@@ -82,7 +75,7 @@ func calc_mipmap_recursive(tex_layer_rid:RID, size:Vector3i, mipmap_img_list:Arr
 	fmt_tex_out.width = size.x
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
-	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R8G8B8A8_UNORM
+	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
 	
@@ -119,7 +112,7 @@ func calc_mipmap_recursive(tex_layer_rid:RID, size:Vector3i, mipmap_img_list:Arr
 	var num_image_pixels:int = size.x * size.y
 	for i in size.z:
 		var image_data:PackedByteArray = byte_data.slice(num_image_pixels * 4 * i, num_image_pixels * 4 * (i + 1))
-		var img:Image = Image.create_from_data(size.x, size.y, false, Image.FORMAT_RGBA8, image_data)
+		var img:Image = Image.create_from_data(size.x, size.y, false, Image.FORMAT_RF, image_data)
 		mipmap_img_list.append(img)
 		
 #		img.save_png("art/mipmap/map_%d.png" % mip_img_idx)

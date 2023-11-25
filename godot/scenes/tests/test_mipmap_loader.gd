@@ -25,3 +25,30 @@ func _on_bn_load_mipmaps_pressed():
 	print("Done")
 
 	pass # Replace with function body.
+
+
+func _on_bn_gen_gradient_kernel_pressed():
+	var s:PackedInt32Array = [1, 2, 1]
+	var t:PackedInt32Array = [-1, 0, 1]
+	
+#	var values:PackedInt32Array
+	var values:Array[int]
+	for k in 3:
+		for j in 3:
+			for i in 3:
+				var x:int = t[i] * s[j] * s[k]
+				var y:int = s[i] * t[j] * s[k]
+				var z:int = s[i] * s[j] * t[k]
+				
+				values.append(x)
+				values.append(y)
+				values.append(z)
+	
+	var code:String
+	for i in range(0, values.size(), 9):
+		var line_vals:Array[int] = values.slice(i, i + 9)
+		
+		code += "\tvec3(%d.0, %d.0, %d.0), vec3(%d.0, %d.0, %d.0), vec3(%d.0, %d.0, %d.0),\n" \
+			% line_vals
+				
+	print(code)

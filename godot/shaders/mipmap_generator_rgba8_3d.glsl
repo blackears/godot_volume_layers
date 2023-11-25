@@ -24,7 +24,6 @@ void main() {
 
 	vec4 color = (c000 + c100 + c010 + c110 + c001 + c101 + c011 + c111) / 8;
 
-//	vec4 color = vec4(1.0, 1.0, 1.0, 1.0);
 	imageStore(mipmap_image, ivec3(gl_GlobalInvocationID.xyz), color);
 }
 

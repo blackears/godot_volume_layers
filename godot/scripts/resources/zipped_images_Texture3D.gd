@@ -21,7 +21,8 @@ func load_image_from_zip(path:String):
 	
 	var img_width:int = -1
 	var img_height:int = -1
-	var img_format:int = Image.FORMAT_RGBA8
+#	var img_format:int = Image.FORMAT_RGBA8
+	var img_format:int = Image.FORMAT_RF
 	var img_list:Array[Image]
 	
 	for filename in reader.get_files():
@@ -45,44 +46,45 @@ func load_image_from_zip(path:String):
 	
 	reader.close()
 
-	var gen:MipmapGenerator = MipmapGenerator.new()
+	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new()
 	var mipmap_images:Array[Image] = gen.calculate(img_list)
 	
 	img_list.append_array(mipmap_images)
 	create(img_format, img_width, img_height, img_depth, true, img_list)
 
-
-func add_mipmaps(img_width:int, img_height:int, img_depth:int, img_format:int, parent_images:Array[Image], img_list:Array[Image]):
-	
-	if img_width == 1 && img_height == 1 && img_depth == 1:
-		return
-	
-	var mip_width:int = max(1, img_width >> 1)
-	var mip_height:int = max(1, img_height >> 1)
-	var mip_depth:int = max(1, img_depth >> 1)
-	
-	var mip_images:Array[Image]
-	
-	for z_idx in mip_depth:
-		var image:Image = Image.create(mip_width, mip_height, false, img_format)
-		
-		img_list.append(image)
-		mip_images.append(image)
-		
-		#print("adding mip idx %d w %d h %d img_depth %d" % [img_list.size(), mip_width, mip_height, img_depth])
-		
-		for y_idx in mip_height:
-			for x_idx in mip_width:
-				var color:Color
-
-				for zz in 2:
-					var src_image:Image = parent_images[min(z_idx * 2 + zz, img_depth - 1)]
-
-					for yy in 2:
-						for xx in 2:
-							color += src_image.get_pixel(min(x_idx * 2 + xx, img_width - 1), min(y_idx * 2 + yy, img_height - 1))
-
-				color /= 8
-				image.set_pixel(x_idx, y_idx, color)
-		
-	add_mipmaps(mip_width, mip_height, mip_depth, img_format, mip_images, img_list)
+#
+#func add_mipmaps(img_width:int, img_height:int, img_depth:int, img_format:int, parent_images:Array[Image], img_list:Array[Image]):
+#
+#	if img_width == 1 && img_height == 1 && img_depth == 1:
+#		return
+#
+#	var mip_width:int = max(1, img_width >> 1)
+#	var mip_height:int = max(1, img_height >> 1)
+#	var mip_depth:int = max(1, img_depth >> 1)
+#
+#	var mip_images:Array[Image]
+#
+#	for z_idx in mip_depth:
+#		var image:Image = Image.create(mip_width, mip_height, false, img_format)
+#
+#		img_list.append(image)
+#		mip_images.append(image)
+#
+#		#print("adding mip idx %d w %d h %d img_depth %d" % [img_list.size(), mip_width, mip_height, img_depth])
+#
+#		for y_idx in mip_height:
+#			for x_idx in mip_width:
+#				var color:Color
+#
+#				for zz in 2:
+#					var src_image:Image = parent_images[min(z_idx * 2 + zz, img_depth - 1)]
+#
+#					for yy in 2:
+#						for xx in 2:
+#							color += src_image.get_pixel(min(x_idx * 2 + xx, img_width - 1), min(y_idx * 2 + yy, img_height - 1))
+#
+#				color /= 8
+#				image.set_pixel(x_idx, y_idx, color)
+#
+#	add_mipmaps(mip_width, mip_height, mip_depth, img_format, mip_images, img_list)
+#
