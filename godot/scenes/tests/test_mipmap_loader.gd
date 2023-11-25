@@ -50,6 +50,10 @@ func _on_bn_calc_gradient_pressed():
 	var image_list_base:Array[Image] = image_list.slice(0, img_size.z)
 	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list_base)
 
+	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new()
+	var grad_image_mipmaps = mipmap_gen.calculate(grad_image_list)
+
+	grad_image_list.append(grad_image_mipmaps)
 #	for i in image_list_base.size():
 #		image_list_base[i].save_exr("../export/base_%d.exr" % i, true)
 	
@@ -63,9 +67,10 @@ func _on_bn_calc_gradient_pressed():
 #	print(strn)
 			
 	
-	for i in grad_image_list.size():
-		grad_image_list[i].save_exr("../export/grad_%d.exr" % i, false)
+#	for i in grad_image_list.size():
+#		grad_image_list[i].save_exr("../export/grad_%d.exr" % i, false)
 	
+	print("done")
 	pass # Replace with function body.
 
 func _on_bn_gen_gradient_kernel_pressed():

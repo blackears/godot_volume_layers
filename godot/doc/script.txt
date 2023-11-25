@@ -47,6 +47,8 @@ marching cubes algorithm
 	
 	
 mipmap generation & compute shaders
+	- mipmap necessary for 3d textures
+	
 sobel operator & gradients
 
 nifti c++ wrapper
