@@ -16,8 +16,8 @@ params;
 layout(set = 0, binding = 1) uniform sampler3D density_tex;
 layout(set = 0, binding = 2) uniform sampler3D gradient_tex;
 
-layout(rgba32f, set = 0, binding = 3) uniform image3D result_points;
-layout(rgba32f, set = 0, binding = 4) uniform image3D result_normals;
+layout(rgba32f, set = 0, binding = 3) uniform image1D result_points;
+layout(rgba32f, set = 0, binding = 4) uniform image1D result_normals;
 
 float calc_edge_weight(float threshold, float p0_val, float p1_val) {
 	return (threshold - p0_val) / (p1_val - p0_val);
@@ -142,26 +142,7 @@ void main() {
 	vec3[15] points = create_cube_mesh(cube_index, edge_weights);
 	for (int i = 0; i < 15; ++i) {
 		vec3 local_pos = (points[i] + pos) / params.grid_size;
-		//imageStore(result_points, ivec3(gl_GlobalInvocationID.xyz), local_pos);
+		imageStore(result_points, int(gl_LocalInvocationIndex) * 15 + i, vec4(local_pos, 1.0));
 	}
 	
-	
-	/*
-	ivec3 pos = ivec3(gl_GlobalInvocationID.xyz);
-	ivec3 offset = -params.kernel_radius;
-	ivec3 kernel_size = params.kernel_radius * 2 + 1;
-
-	vec4 value;
-	for (int k = 0; k < kernel_size.z; ++k) {
-		for (int j = 0; j < kernel_size.y; ++j) {
-			for (int i = 0; i < kernel_size.x; ++i) {
-				vec4 samp = imageLoad(source_image, pos + offset + ivec3(i, j, k));
-				int kernel_index = (k * kernel_size.y + j) * kernel_size.x + i;
-				value += params.kernel[kernel_index] * samp;
-			}
-		}
-	}
-	
-	imageStore(result_image, ivec3(gl_GlobalInvocationID.xyz), value);
-	*/
 }
