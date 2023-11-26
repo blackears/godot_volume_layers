@@ -83,8 +83,8 @@ static func calc_normal_at_point(p:Vector3, image_data:ZippedImageStack)->Vector
 	return Vector3()
 	
 
-static func calc_edge_weight(threashold, p0_val, p1_val):
-	return (threashold - p0_val) / (p1_val - p0_val)
+static func calc_edge_weight(threshold:float, p0_val:float, p1_val:float)->float:
+	return (threshold - p0_val) / (p1_val - p0_val)
 
 static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:Vector3):
 	
@@ -153,9 +153,9 @@ static func build_mesh(image_data:ZippedImageStack, threshold:float, step_size:V
 				xform_local = xform_local.translated_local(Vector3(cx0, cy0, cz0))
 				xform_local = xform_local.scaled_local(Vector3(cx1 - cx0, cy1 - cy0, cz1 - cz0))
 
-				var xform_grid:Transform3D = Transform3D.IDENTITY
-				xform_grid = xform_grid.translated_local(Vector3(cx0, cy0, cz0))
-				xform_grid = xform_grid.scaled_local(Vector3(cx1 - cx0, cy1 - cy0, cz1 - cz0))
+#				var xform_grid:Transform3D = Transform3D.IDENTITY
+#				xform_grid = xform_grid.translated_local(Vector3(cx0, cy0, cz0))
+#				xform_grid = xform_grid.scaled_local(Vector3(cx1 - cx0, cy1 - cy0, cz1 - cz0))
 
 				var cube_tris:PackedVector3Array = MarchingCubes.create_cube_mesh(cube_index, edge_weights)
 				for p_idx in cube_tris.size():
