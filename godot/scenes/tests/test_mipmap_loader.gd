@@ -102,4 +102,23 @@ func _on_bn_gen_gradient_kernel_pressed():
 
 
 func _on_bn_gen_code_glsl_marching_cubes_pressed():
-	pass # Replace with function body.
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	var code:String = CubeSymmetries.format_table_as_glsl_code(colorings)
+	
+	var file:FileAccess = FileAccess.open("cube_code_glsl.txt", FileAccess.WRITE)
+	file.store_string(code)
+	
+
+func _on_bn_gen_code_gdscript_pressed():
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	var code:String = CubeSymmetries.format_table_as_code(colorings)
+	
+	var file:FileAccess = FileAccess.open("cube_code.txt", FileAccess.WRITE)
+	file.store_string(code)
+	
+
+
+func _on_bn_calculate_base_cubes_pressed():
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	CubeSymmetries.print_root_colors(colorings)
+	

@@ -29,11 +29,21 @@ text = "Test Sobel gradient calculation"
 layout_mode = 2
 text = "Geneate Gradient Kernel Code"
 
+[node name="bn_gen_code_gdscript" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Generate cube table GDScript"
+
 [node name="bn_gen_code_glsl_marching_cubes" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Generate Glsl Marching Cubes Tables"
+text = "Generate cube table GLSL"
+
+[node name="bn_calculate_base_cubes" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Calculate root cubes"
 
 [connection signal="pressed" from="VBoxContainer/bn_load_mipmaps" to="." method="_on_bn_load_mipmaps_pressed"]
 [connection signal="pressed" from="VBoxContainer/bn_calc_gradient" to="." method="_on_bn_calc_gradient_pressed"]
 [connection signal="pressed" from="VBoxContainer/bn_gen_gradient_kernel_code" to="." method="_on_bn_gen_gradient_kernel_pressed"]
+[connection signal="pressed" from="VBoxContainer/bn_gen_code_gdscript" to="." method="_on_bn_gen_code_gdscript_pressed"]
 [connection signal="pressed" from="VBoxContainer/bn_gen_code_glsl_marching_cubes" to="." method="_on_bn_gen_code_glsl_marching_cubes_pressed"]
+[connection signal="pressed" from="VBoxContainer/bn_calculate_base_cubes" to="." method="_on_bn_calculate_base_cubes_pressed"]

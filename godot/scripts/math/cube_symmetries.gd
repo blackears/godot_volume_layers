@@ -356,16 +356,6 @@ static func print_table(colorings:Array[PeerColoring]):
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
 	for coloring in colorings:
 		print("Coloring: %02x  Source: %02x  Xform: %s  Rev Winding: %s Ops: %s " % [coloring.coloring, coloring.get_root_coloring().coloring, str(coloring.calc_tranform()), coloring.reverse_winding(), format_op_list(coloring.operations)])
-#
-#static func format_table_as_code_gdscript(colorings:Array[PeerColoring])->String:
-#	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
-#
-#	var result:String = ""
-#
-#
-#
-#	return result	
-
 			
 static func format_table_as_code(colorings:Array[PeerColoring])->String:
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
@@ -402,6 +392,49 @@ static func format_table_as_code(colorings:Array[PeerColoring])->String:
 			result += "\t\t%d, %d, %d, \n" % [a, b, c]
 
 		result += "\t],\n"
+		
+	return result
+
+static func format_table_as_glsl_code(colorings:Array[PeerColoring])->String:
+	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
+
+	var result:String = ""
+	
+	for c_idx in colorings.size():
+		var coloring:PeerColoring = colorings[c_idx]
+		var root_col:int = coloring.get_root_coloring().coloring
+		var edge_tri_list:Array = root_mesh_edges[root_col]
+		
+#		result += "\t[ # %02x (root %02x, rev winding %s)\n" % [c_idx, root_col, coloring.reverse_winding()]
+		result += "\t// 0x%02x\n" % [c_idx]
+		
+		result += "\t{"
+		
+		for i in range(0, edge_tri_list.size(), 3):
+			var a:int
+			var b:int
+			var c:int
+			
+			if coloring.reverse_winding():
+				a = edge_tri_list[i]
+				c = edge_tri_list[i + 1]
+				b = edge_tri_list[i + 2]
+			else:
+				a = edge_tri_list[i]
+				b = edge_tri_list[i + 1]
+				c = edge_tri_list[i + 2]
+				
+			for op in coloring.operations:
+				a = operate_on_edge(a, op)
+				b = operate_on_edge(b, op)
+				c = operate_on_edge(c, op)
+				
+			result += "%d, %d, %d, " % [a, b, c]
+
+		for i in 5 - (edge_tri_list.size() / 3):
+			result += "-1, -1, -1, "
+
+		result += "},\n"
 		
 	return result
 
