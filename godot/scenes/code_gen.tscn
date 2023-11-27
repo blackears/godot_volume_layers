@@ -1,6 +1,37 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5645q28cbtad"]
+[gd_scene load_steps=2 format=3 uid="uid://b0f15wh072qx0"]
 
-[ext_resource type="Script" path="res://scenes/code_gen.gd" id="1_nw47o"]
+[sub_resource type="GDScript" id="GDScript_4lcrc"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func _on_button_pressed():
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	CubeSymmetries.print_root_colors(colorings)
+	
+#	var text:String = CubeSymmetries.format_table_as_code(colorings)
+#	print(text)
+	pass # Replace with function body.
+
+
+func _on_bn_generate_code_gdscript_pressed():
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	var code:String = CubeSymmetries.format_table_as_code(colorings)
+	
+	var file:FileAccess = FileAccess.open(\"cube_code.txt\", FileAccess.WRITE)
+	file.store_string(code)
+	
+	#print(code)
+"
 
 [node name="code_gen" type="Control"]
 layout_mode = 3
@@ -9,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_nw47o")
+script = SubResource("GDScript_4lcrc")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0

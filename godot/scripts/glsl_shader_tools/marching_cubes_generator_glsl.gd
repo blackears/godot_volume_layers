@@ -1,5 +1,5 @@
 @tool
-extends Resource
+extends GLSLShaderTool
 class_name MarchingCubesGeneratorGLSL
 
 func _init():

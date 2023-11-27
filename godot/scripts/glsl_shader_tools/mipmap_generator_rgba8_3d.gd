@@ -1,5 +1,5 @@
 @tool
-extends Resource
+extends GLSLShaderTool
 class_name MipmapGenerator_RGBA8_3D
 
 var rd:RenderingDevice

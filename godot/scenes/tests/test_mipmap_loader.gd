@@ -53,9 +53,9 @@ func _on_bn_calc_gradient_pressed():
 	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list_base)
 
 	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new()
-	var grad_image_mipmaps = mipmap_gen.calculate(grad_image_list)
+	var grad_image_mipmaps:Array[Image] = mipmap_gen.calculate(grad_image_list)
 
-	grad_image_list.append(grad_image_mipmaps)
+	grad_image_list.append_array(grad_image_mipmaps)
 #	for i in image_list_base.size():
 #		image_list_base[i].save_exr("../export/base_%d.exr" % i, true)
 	
