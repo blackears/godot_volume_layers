@@ -47,7 +47,7 @@ func calculate(img_list:Array[Image])->Array[Image]:
 			
 		var local_data:PackedByteArray = img.get_data()
 		data_buffer.append_array(local_data)
-		
+	
 	var tex_layer_rid:RID = rd.texture_create(fmt_tex_out, view, [data_buffer])
 	
 	calc_mipmap_recursive(tex_layer_rid, size, mipmap_img_list)
@@ -58,10 +58,10 @@ func calculate(img_list:Array[Image])->Array[Image]:
 
 #var mip_img_idx:int = 0
 
-func calc_mipmap_recursive(tex_layer_rid:RID, size:Vector3i, mipmap_img_list:Array[Image]):
+func calc_mipmap_recursive(tex_layer_rid:RID, size:Vector3i, mipmap_img_list:Array[Image])->int:
 
 	if size.x == 1 && size.y == 1 && size.z == 1:
-		return
+		return 0
 	
 	size = Vector3i(max(1, size.x >> 1), max(1, size.y >> 1), max(1, size.z >> 1))
 	
@@ -123,10 +123,11 @@ func calc_mipmap_recursive(tex_layer_rid:RID, size:Vector3i, mipmap_img_list:Arr
 #		mip_img_idx += 1
 	#print_floats(float_data, 40)
 	
-	calc_mipmap_recursive(dest_tex, size, mipmap_img_list)
+	var ret_val = calc_mipmap_recursive(dest_tex, size, mipmap_img_list)
 
 	rd.free_rid(pipeline)
 	rd.free_rid(dest_tex)
 	
+	return ret_val + 1
 
 	

@@ -87,6 +87,33 @@ func _on_bn_calc_gradient_pressed():
 	print("done")
 	pass # Replace with function body.
 
+
+func _on_bn_create_cube_mesh_glsl_var_pressed():
+	var ar:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
+	ar.zip_file = zip_file
+	
+	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new(rd)
+	var img_size:Vector3i = ar.get_size()
+	var image_list:Array[Image] = ar.get_image_list().duplicate()
+	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list)
+
+#	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new(rd)
+#	var grad_image_mipmaps:Array[Image] = mipmap_gen.calculate(grad_image_list)
+#
+#	grad_image_list.append_array(grad_image_mipmaps)
+	
+	####
+	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
+
+	var dens_tex_rid:RID = cube_gen.create_texture_image_from_image_stack(image_list, true)
+	
+	pass # Replace with function body.
+
+
+func _on_bn_create_cube_mesh_glsl_fixed_pressed():
+	pass # Replace with function body.
+
 func _on_bn_gen_gradient_kernel_pressed():
 	var s:PackedInt32Array = [1, 2, 1]
 	var t:PackedInt32Array = [-1, 0, 1]
@@ -157,5 +184,6 @@ func _on_bn_gen_code_glsl_var_pressed():
 	
 	var file:FileAccess = FileAccess.open("cube_code_glsl_var.txt", FileAccess.WRITE)
 	file.store_string(code)
+
 
 
