@@ -32,7 +32,7 @@ layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;
 
 layout(set = 0, binding = 0, std430) restrict readonly buffer ParamBufferRO {
 	float threshold;
-	float scale;
+	//float scale;
 	//Size of cube grid in cells
 	ivec3 grid_size;
 }
@@ -48,7 +48,7 @@ layout(set = 0, binding = 2) uniform sampler3D density_tex;
 layout(set = 0, binding = 3) uniform sampler3D gradient_tex;
 
 layout(rgba32f, set = 0, binding = 4) writeonly restrict uniform image1D result_points;
-layout(rgba32f, set = 0, binding = 5) writeonly restrict uniform image1D result_normals;
+//layout(rgba32f, set = 0, binding = 5) writeonly restrict uniform image1D result_normals;
 
 float calc_edge_weight(float threshold, float p0_val, float p1_val) {
 	return (threshold - p0_val) / (p1_val - p0_val);
@@ -679,7 +679,7 @@ void main() {
 
 	int read_pos = tessellation_offsets[cube_index];
 	int num_points = tessellation_offsets[cube_index + 1] - read_pos;
-	int write_pos = atomicAdd(params_rw.num_vertices, num_points);
+	int write_pos = atomicAdd(params_rw.num_vertices, num_points * 2);
 	
 	for (int i = 0; i < num_points; ++i) {
 		vec3 point = get_edge_point(tessellation_table[read_pos + i], edge_weights);
@@ -687,8 +687,9 @@ void main() {
 		vec3 local_point_pos = (point + pos) / params.grid_size;
 		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
 		
-		imageStore(result_points, write_pos + i, vec4(local_point_pos, 1.0));
-		imageStore(result_normals, write_pos + i, vec4(grad, 0.0));
+		imageStore(result_points, write_pos + i * 2, vec4(local_point_pos, 1.0));
+		imageStore(result_points, write_pos + i * 2 + 1, vec4(grad, 0.0));
+//		imageStore(result_normals, write_pos + i * 2 + 1, vec4(grad, 0.0));
 	}
 	
 }

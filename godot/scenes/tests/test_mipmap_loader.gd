@@ -106,7 +106,10 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 	####
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
 
-	var dens_tex_rid:RID = cube_gen.create_texture_image_from_image_stack(image_list, true)
+	var mesh_size:Vector3i = Vector3i(image_list[0].get_width(), image_list[0].get_height(), image_list.size())
+	cube_gen.generate_mesh(mesh_size, .5, image_list, grad_image_list)
+
+	#var dens_tex_rid:RID = cube_gen.create_texture_image_from_image_stack(image_list, true)
 	
 	pass # Replace with function body.
 
