@@ -47,9 +47,9 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	buffer_ro_uniform.add_id(param_buffer_ro)
 	
 	#Create buffer for read-write parameters
-	var param_rw_buf:PackedByteArray
-	param_rw_buf.resize(4)
-	param_rw_buf.encode_s32(0, 0)
+	var param_rw_buf:PackedByteArray = PackedInt32Array([0]).to_byte_array()
+#	param_rw_buf.resize(4)
+#	param_rw_buf.encode_s32(0, 0)
 	
 #	var param_buffer_float:PackedByteArray = PackedFloat32Array([brush_pos.x, brush_pos.y, radius, 0, color.r, color.g, color.b, color.a]).to_byte_array()
 	var param_buffer_rw:RID = rd.storage_buffer_create(param_rw_buf.size(), param_rw_buf)
@@ -131,7 +131,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	rd.sync()
 	
 	#Get results
-	var param_rw_byte_data:PackedByteArray = rd.texture_get_data(param_buffer_rw, 0)
+	var param_rw_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_rw, 0)
 	var param_rw_int_data:PackedInt32Array = param_rw_byte_data.to_int32_array()
 	var uuu:int = param_rw_byte_data.size()
 	
