@@ -72,6 +72,7 @@ func _on_bn_calc_gradient_pressed():
 #	for i in grad_image_list.size():
 #		grad_image_list[i].save_exr("../export/grad_%d.exr" % i, false)
 	
+	%image_stack_viewer.image_list = grad_image_list
 	print("done")
 	pass # Replace with function body.
 

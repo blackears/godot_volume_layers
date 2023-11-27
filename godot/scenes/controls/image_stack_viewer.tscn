@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxq7xyukuhylf"]
+
+[ext_resource type="Script" path="res://scenes/controls/image_stack_viewer.gd" id="1_5mq7w"]
+
+[node name="image_stack_viewer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5mq7w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 185.0
+offset_bottom = 250.0
+
+[node name="img_texture" type="TextureRect" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="spin_cur_image" type="SpinBox" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="value_changed" from="VBoxContainer/spin_cur_image" to="." method="_on_spin_cur_image_value_changed"]
