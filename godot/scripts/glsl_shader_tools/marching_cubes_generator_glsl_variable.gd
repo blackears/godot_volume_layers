@@ -59,24 +59,25 @@ func create_texture_image_from_image_stack(img_list:Array[Image], gen_mipmaps:bo
 #		var mipmap_count = 1
 #		var layer_count = mipmap_img_list.size()
 #		while
-		fmt_tex_out.mipmaps = num_layers - 1
+		fmt_tex_out.mipmaps = num_layers + 1
 
-		#var ggg = data_buffer.size()
+		var ggg = data_buffer.size()
+		#data_buffer.clear()
 
-		for i in img_list.size():
-			var img:Image = img_list[i]
+		for i in mipmap_img_list.size():
+			var img:Image = mipmap_img_list[i]
 			if img.get_format() != Image.FORMAT_RF:
 				push_error("Images must be in RF format")
-				
+
 #			var iii = data_buffer.size()
-			
+
 			var local_data:PackedByteArray = img.get_data()
 			data_buffer.append_array(local_data)
 
 #			var hhh = data_buffer.size()
 			pass
 
-#		var jjj = data_buffer.size()
+		var jjj = data_buffer.size()
 		
 
 		var fmt_tex_out2:RDTextureFormat = RDTextureFormat.new()
@@ -84,7 +85,7 @@ func create_texture_image_from_image_stack(img_list:Array[Image], gen_mipmaps:bo
 		fmt_tex_out2.width = size.x
 		fmt_tex_out2.height = size.y
 		fmt_tex_out2.depth = size.z
-		fmt_tex_out2.mipmaps = num_layers - 1
+		fmt_tex_out2.mipmaps = num_layers + 1
 		fmt_tex_out2.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 		fmt_tex_out2.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 		var view2:RDTextureView = RDTextureView.new()
