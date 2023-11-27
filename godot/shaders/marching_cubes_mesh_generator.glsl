@@ -16,8 +16,8 @@ params;
 layout(set = 0, binding = 1) uniform sampler3D density_tex;
 layout(set = 0, binding = 2) uniform sampler3D gradient_tex;
 
-layout(rgba32f, set = 0, binding = 3) uniform image1D result_points;
-layout(rgba32f, set = 0, binding = 4) uniform image1D result_normals;
+layout(rgba32f, set = 0, binding = 3) writeonly restrict uniform image1D result_points;
+layout(rgba32f, set = 0, binding = 4) writeonly restrict uniform image1D result_normals;
 
 float calc_edge_weight(float threshold, float p0_val, float p1_val) {
 	return (threshold - p0_val) / (p1_val - p0_val);

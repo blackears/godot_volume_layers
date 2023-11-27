@@ -8,6 +8,8 @@ extends Control
 			return
 		zip_file = value
 
+@export_file("*.glsl") var shader_load_test:String
+
 #@export var tex:ZippedImageArchiveTexture3D:
 #	get:
 #		return tex
@@ -101,13 +103,6 @@ func _on_bn_gen_gradient_kernel_pressed():
 
 
 
-func _on_bn_gen_code_glsl_marching_cubes_pressed():
-	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
-	var code:String = CubeSymmetries.format_table_as_glsl_code(colorings)
-	
-	var file:FileAccess = FileAccess.open("cube_code_glsl.txt", FileAccess.WRITE)
-	file.store_string(code)
-	
 
 func _on_bn_gen_code_gdscript_pressed():
 	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
@@ -122,3 +117,33 @@ func _on_bn_calculate_base_cubes_pressed():
 	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
 	CubeSymmetries.print_root_colors(colorings)
 	
+
+
+func _on_bn_test_shader_compile_pressed():
+	var ctx:GLSLContext = GLSLContext.new()
+	
+	var sh:GLSLShader = ctx.load_shader_from_path(shader_load_test)
+	if sh:
+		sh.dispose()
+		print("Shader " + shader_load_test + " loaded successfully")
+	
+	
+
+
+func _on_bn_gen_code_gdscript_fixed_pressed():
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	var code:String = CubeSymmetries.format_table_as_glsl_code_fixed_width(colorings)
+	
+	var file:FileAccess = FileAccess.open("cube_code_glsl_fixed.txt", FileAccess.WRITE)
+	file.store_string(code)
+
+
+func _on_bn_gen_code_gdscript_var_pressed():
+#	for i in range(0, 5, 2):
+#		print("step %d" % i)
+	
+	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
+	var code:String = CubeSymmetries.format_table_as_glsl_code_var_width(colorings)
+	
+	var file:FileAccess = FileAccess.open("cube_code_glsl_var.txt", FileAccess.WRITE)
+	file.store_string(code)

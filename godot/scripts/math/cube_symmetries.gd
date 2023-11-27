@@ -1,3 +1,26 @@
+# MIT License
+#
+# Copyright (c) 2023 Mark McKay
+# https://github.com/blackears/mri_marching_cubes
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 # This code precomputes the table for cube symmetries.   
 #
 # Since meny of the different arrangements of cube conrer colorings are rotations, reflections or
@@ -395,7 +418,7 @@ static func format_table_as_code(colorings:Array[PeerColoring])->String:
 		
 	return result
 
-static func format_table_as_glsl_code(colorings:Array[PeerColoring])->String:
+static func format_table_as_glsl_code_fixed_width(colorings:Array[PeerColoring])->String:
 	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
 
 	var result:String = ""
@@ -438,3 +461,61 @@ static func format_table_as_glsl_code(colorings:Array[PeerColoring])->String:
 		
 	return result
 
+
+static func format_table_as_glsl_code_var_width(colorings:Array[PeerColoring])->String:
+	colorings.sort_custom(func(a:PeerColoring, b:PeerColoring): return a.coloring < b.coloring)
+
+	var size_list:PackedInt32Array
+	var result_tess_size:String = ""
+	var result_tess:String = ""
+	var vertex_index:int = 0
+	
+	for c_idx in colorings.size():
+		var coloring:PeerColoring = colorings[c_idx]
+		var root_col:int = coloring.get_root_coloring().coloring
+		var edge_tri_list:Array = root_mesh_edges[root_col]
+		
+#		result += "\t[ # %02x (root %02x, rev winding %s)\n" % [c_idx, root_col, coloring.reverse_winding()]
+		result_tess += "\t// 0x%02x\n" % [c_idx]
+		
+		result_tess += "\t"
+		
+		for i in range(0, edge_tri_list.size(), 3):
+			var a:int
+			var b:int
+			var c:int
+			
+			if coloring.reverse_winding():
+				a = edge_tri_list[i]
+				c = edge_tri_list[i + 1]
+				b = edge_tri_list[i + 2]
+			else:
+				a = edge_tri_list[i]
+				b = edge_tri_list[i + 1]
+				c = edge_tri_list[i + 2]
+				
+			for op in coloring.operations:
+				a = operate_on_edge(a, op)
+				b = operate_on_edge(b, op)
+				c = operate_on_edge(c, op)
+				
+			result_tess += "%d, %d, %d, " % [a, b, c]
+
+		result_tess += "\n"
+
+		size_list.append(vertex_index)
+#		result_tess_size += "%d, " % vertex_index
+#		result_tess_size += "\t%d,\n" % vertex_index
+		vertex_index += edge_tri_list.size()
+		
+	size_list.append(vertex_index)
+		
+	for i in range(0, size_list.size(), 16):
+		var slice:PackedInt32Array = size_list.slice(i, i + 16)
+		#print("slice size %d" % slice.size())
+		result_tess_size += "\t"
+		for j in slice:
+			result_tess_size += "%d, " % j
+		result_tess_size += "\n"
+		
+	return result_tess_size + result_tess

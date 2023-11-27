@@ -3,11 +3,9 @@
 
 layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;
 
-//layout(rgba32f, set = 0, binding = 0) uniform image3D source_image;
-layout(rgba8, set = 0, binding = 0) uniform image3D source_image;
+layout(rgba8, set = 0, binding = 0) readonly restrict uniform image3D source_image;
 
-//layout(rgba32f, set = 0, binding = 1) uniform image3D mipmap_image;
-layout(rgba8, set = 0, binding = 1) uniform image3D mipmap_image;
+layout(rgba8, set = 0, binding = 1) writeonly restrict uniform image3D mipmap_image;
 
 
 void main() {
