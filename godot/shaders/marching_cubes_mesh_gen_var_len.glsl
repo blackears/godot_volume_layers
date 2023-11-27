@@ -625,9 +625,7 @@ vec3 get_edge_point(int edge_idx, float[12] edge_weights) {
 
 void main() {
 	ivec3 pos = ivec3(gl_GlobalInvocationID.xyz);
-	vec3 samp_pos = vec3(pos / params.grid_size);
-	vec4 col = texture(density_tex, samp_pos);
-/*
+
 	vec3 c000 = (pos + vec3(0, 0, 0)) / params.grid_size;
 	vec3 c100 = (pos + vec3(1, 0, 0)) / params.grid_size;
 	vec3 c010 = (pos + vec3(0, 1, 0)) / params.grid_size;
@@ -690,8 +688,9 @@ void main() {
 		imageStore(result_points, write_pos + i * 2, vec4(local_point_pos, 1.0));
 		imageStore(result_points, write_pos + i * 2 + 1, vec4(grad, 0.0));
 	}
-	*/
 	
+	
+	/*
 	//TEST
 	{	
 		int cube_index = 1;
@@ -704,4 +703,5 @@ void main() {
 			imageStore(result_points, write_pos + i * 2 + 1, vec4(pos, 0.0));
 		}
 	}
+	*/
 }
