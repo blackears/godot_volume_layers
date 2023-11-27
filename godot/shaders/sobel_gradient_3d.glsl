@@ -23,7 +23,8 @@ vec3[] sobel_kernel = {
 void main() {
 	ivec3 pos = ivec3(gl_GlobalInvocationID.xyz);
 
-	vec4 value;
+	vec4 value = vec4(0, 0, 0, 0);
+	
 	for (int k = 0; k < 3; ++k) {
 		for (int j = 0; j < 3; ++j) {
 			for (int i = 0; i < 3; ++i) {
