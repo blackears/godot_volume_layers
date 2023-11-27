@@ -23,8 +23,9 @@ func on_archive_changed():
 	load_image_from_archive(archive)
 
 func load_image_from_archive(archive:ZippedImageArchive_RF_3D):
-	var img_list:Array[Image] = archive.get_image_list()
+	var img_list:Array[Image] = archive.get_image_list().duplicate()
 	var size:Vector3i = archive.get_size()
+	print("tex3d num img " + str(img_list.size()))
 
 	#Generate mipmaps
 	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()

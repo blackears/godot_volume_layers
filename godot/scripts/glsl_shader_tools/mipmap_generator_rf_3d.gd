@@ -35,7 +35,7 @@ func calculate(img_list:Array[Image])->Array[Image]:
 	fmt_tex_out.width = size.x
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
-	#fmt_tex_out.mipmaps = false
+	fmt_tex_out.mipmaps = 1
 	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()

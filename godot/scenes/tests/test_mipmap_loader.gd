@@ -35,10 +35,11 @@ func _on_bn_test_gen_mipmaps_pressed():
 	ar.zip_file = zip_file
 	z.archive = ar
 	
-	var img_list:Array[Image] = ar.get_image_list()
+	var img_list:Array[Image] = ar.get_image_list().duplicate()
 
 	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
 	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
+	print("test mip num img " + str(img_list.size()))
 	var mipmap_images:Array[Image] = gen.calculate(img_list)
 	
 	img_list.append_array(mipmap_images)
@@ -58,9 +59,9 @@ func _on_bn_calc_gradient_pressed():
 	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
 	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new(rd)
 	var img_size:Vector3i = ar.get_size()
-	var image_list:Array[Image] = ar.get_image_list()
-	var image_list_base:Array[Image] = image_list.slice(0, img_size.z)
-	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list_base)
+	var image_list:Array[Image] = ar.get_image_list().duplicate()
+	#var image_list_base:Array[Image] = image_list.slice(0, img_size.z)
+	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list)
 
 	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new(rd)
 	var grad_image_mipmaps:Array[Image] = mipmap_gen.calculate(grad_image_list)
