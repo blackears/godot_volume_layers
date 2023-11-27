@@ -17,6 +17,19 @@ var data_size:Vector3i
 var gradient:ImageGradient
 
 
+var supported_image_file_formats:Array[String] = [
+	"bmp",
+	"dds",
+	"exr",
+	"hdr",
+	"jpg",
+	"jpeg",
+	"png",
+	"tga",
+	"svg",
+	"webp"
+]
+
 func load_image_from_zip(path:String):
 	var reader:ZIPReader = ZIPReader.new()
 	var err := reader.open(path)
@@ -29,7 +42,8 @@ func load_image_from_zip(path:String):
 	var img_list:Array[Image]
 	
 	for filename in reader.get_files():
-		if filename.ends_with(".png"):
+		var suffix:String = filename.get_extension()
+		if supported_image_file_formats.has(suffix):
 			var buf:PackedByteArray = reader.read_file(filename)
 			
 			var image:Image = Image.new()

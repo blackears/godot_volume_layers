@@ -35,17 +35,17 @@ var dirty:bool = true
 
 func get_size()->Vector3i:
 	if dirty:
-		load_image_from_zip(zip_file)
+		read_images_from_zip(zip_file)
 		dirty = false
 	return img_size
 
 func get_image_list()->Array[Image]:
 	if dirty:
-		load_image_from_zip(zip_file)
+		read_images_from_zip(zip_file)
 		dirty = false
 	return img_list
 
-func load_image_from_zip(path:String):
+func read_images_from_zip(path:String):
 	img_list.clear()
 	img_size = Vector3i.ZERO
 	if path.is_empty():
@@ -81,12 +81,12 @@ func load_image_from_zip(path:String):
 				img_list.append(image)
 	
 	reader.close()
-				
+	
 	var img_depth:int = img_list.size()
 	img_size = Vector3i(img_width, img_height, img_depth)
 
-	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new()
-	var mipmap_images:Array[Image] = gen.calculate(img_list)
-	
-	img_list.append_array(mipmap_images)
-	#create(img_format, img_width, img_height, img_depth, true, img_list)
+#	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+#	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
+#	var mipmap_images:Array[Image] = gen.calculate(img_list)
+#
+#	img_list.append_array(mipmap_images)

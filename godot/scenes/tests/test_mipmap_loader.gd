@@ -29,13 +29,22 @@ func _process(delta):
 	pass
 
 
-func _on_bn_load_mipmaps_pressed():
-	var z:ZippedImageArchiveTexture3D = ZippedImageArchiveTexture3D.new()
+func _on_bn_test_gen_mipmaps_pressed():
+	var z:ZippedImageArchiveRFTexture3D = ZippedImageArchiveRFTexture3D.new()
 	var ar:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
 	ar.zip_file = zip_file
 	z.archive = ar
-	#z.zip_file = zip_file
 	
+	var img_list:Array[Image] = ar.get_image_list()
+
+	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
+	var mipmap_images:Array[Image] = gen.calculate(img_list)
+	
+	img_list.append_array(mipmap_images)
+	
+	
+	%image_stack_viewer.image_list = img_list
 	print("Done")
 
 	pass # Replace with function body.
@@ -46,13 +55,14 @@ func _on_bn_calc_gradient_pressed():
 	var ar:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
 	ar.zip_file = zip_file
 	
-	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new()
+	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new(rd)
 	var img_size:Vector3i = ar.get_size()
 	var image_list:Array[Image] = ar.get_image_list()
 	var image_list_base:Array[Image] = image_list.slice(0, img_size.z)
 	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list_base)
 
-	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new()
+	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new(rd)
 	var grad_image_mipmaps:Array[Image] = mipmap_gen.calculate(grad_image_list)
 
 	grad_image_list.append_array(grad_image_mipmaps)
@@ -127,11 +137,9 @@ func _on_bn_test_shader_compile_pressed():
 	if sh:
 		sh.dispose()
 		print("Shader " + shader_load_test + " loaded successfully")
-	
-	
 
 
-func _on_bn_gen_code_gdscript_fixed_pressed():
+func _on_bn_gen_code_glsl_fixed_pressed():
 	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
 	var code:String = CubeSymmetries.format_table_as_glsl_code_fixed_width(colorings)
 	
@@ -139,7 +147,7 @@ func _on_bn_gen_code_gdscript_fixed_pressed():
 	file.store_string(code)
 
 
-func _on_bn_gen_code_gdscript_var_pressed():
+func _on_bn_gen_code_glsl_var_pressed():
 #	for i in range(0, 5, 2):
 #		print("step %d" % i)
 	
@@ -148,3 +156,5 @@ func _on_bn_gen_code_gdscript_var_pressed():
 	
 	var file:FileAccess = FileAccess.open("cube_code_glsl_var.txt", FileAccess.WRITE)
 	file.store_string(code)
+
+

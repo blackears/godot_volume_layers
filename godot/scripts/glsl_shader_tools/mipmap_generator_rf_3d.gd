@@ -2,11 +2,12 @@
 extends GLSLShaderTool
 class_name MipmapGenerator_rf_3d
 
-var rd:RenderingDevice
+#var rd:RenderingDevice
 var shader:RID
 
-func _init():
-	rd = RenderingServer.create_local_rendering_device()
+func _init(rd:RenderingDevice):
+	super._init(rd)
+	#rd = RenderingServer.create_local_rendering_device()
 
 	var shader_file:RDShaderFile = load("res://shaders/mipmap_generator_rf_3d.glsl")
 	if !shader_file.base_error.is_empty():
@@ -34,6 +35,7 @@ func calculate(img_list:Array[Image])->Array[Image]:
 	fmt_tex_out.width = size.x
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
+	#fmt_tex_out.mipmaps = false
 	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	var view := RDTextureView.new()
@@ -42,7 +44,9 @@ func calculate(img_list:Array[Image])->Array[Image]:
 	for img in img_list:
 		if img.get_format() != Image.FORMAT_RF:
 			push_error("Images must be in RF format")
-		data_buffer.append_array(img.get_data())
+			
+		var local_data:PackedByteArray = img.get_data()
+		data_buffer.append_array(local_data)
 		
 	var tex_layer_rid:RID = rd.texture_create(fmt_tex_out, view, [data_buffer])
 	

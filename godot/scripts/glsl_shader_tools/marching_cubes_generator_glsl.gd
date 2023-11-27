@@ -2,7 +2,8 @@
 extends GLSLShaderTool
 class_name MarchingCubesGeneratorGLSL
 
-func _init():
+func _init(rd:RenderingDevice):
+	super._init(rd)
 	pass
 
 func dispose():

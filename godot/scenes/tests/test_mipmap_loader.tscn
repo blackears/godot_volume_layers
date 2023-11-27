@@ -25,13 +25,29 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="bn_load_mipmaps" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Load mipmaps"
+text = "Test controls"
+
+[node name="bn_test_gen_mipmaps" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Test generate mipmaps"
 
 [node name="bn_calc_gradient" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Test Sobel gradient calculation"
+
+[node name="bn_test_shader_compile" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Test Shader Compile"
+
+[node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Generate code"
+
+[node name="bn_calculate_base_cubes" type="Button" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Calculate root cubes"
 
 [node name="bn_gen_gradient_kernel_code" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -39,34 +55,26 @@ text = "Geneate Gradient Kernel Code"
 
 [node name="bn_gen_code_gdscript_fixed" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Generate cube table GDScript fixed"
+text = "Generate cube table GLSL fixed"
 
 [node name="bn_gen_code_gdscript_var" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Generate cube table GDScript variable"
+text = "Generate cube table GLSL variable"
 
-[node name="bn_gen_code_glsl_marching_cubes" type="Button" parent="HBoxContainer/VBoxContainer"]
+[node name="bn_gen_code_glsl_marching_cubes_fixed" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Generate cube tables GLSL"
-
-[node name="bn_calculate_base_cubes" type="Button" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Calculate root cubes"
-
-[node name="bn_test_shader_compile" type="Button" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Test Shader Compile"
+text = "Generate cube tables GDScript"
 
 [node name="image_stack_viewer" parent="HBoxContainer" instance=ExtResource("2_ollj1")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_load_mipmaps" to="." method="_on_bn_load_mipmaps_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_gen_mipmaps" to="." method="_on_bn_test_gen_mipmaps_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_calc_gradient" to="." method="_on_bn_calc_gradient_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_gradient_kernel_code" to="." method="_on_bn_gen_gradient_kernel_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_fixed" to="." method="_on_bn_gen_code_gdscript_fixed_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_var" to="." method="_on_bn_gen_code_gdscript_var_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_glsl_marching_cubes" to="." method="_on_bn_gen_code_glsl_marching_cubes_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_calculate_base_cubes" to="." method="_on_bn_calculate_base_cubes_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_shader_compile" to="." method="_on_bn_test_shader_compile_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_calculate_base_cubes" to="." method="_on_bn_calculate_base_cubes_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_gradient_kernel_code" to="." method="_on_bn_gen_gradient_kernel_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_fixed" to="." method="_on_bn_gen_code_glsl_fixed_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_var" to="." method="_on_bn_gen_code_glsl_var_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_glsl_marching_cubes_fixed" to="." method="_on_bn_gen_code_gdscript_pressed"]

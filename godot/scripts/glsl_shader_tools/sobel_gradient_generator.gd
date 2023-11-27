@@ -2,11 +2,12 @@
 extends GLSLShaderTool
 class_name SobelGradientGenerator
 
-var rd:RenderingDevice
+#var rd:RenderingDevice
 var shader:RID
 
-func _init():
-	rd = RenderingServer.create_local_rendering_device()
+func _init(rd:RenderingDevice):
+	super._init(rd)
+	#rd = RenderingServer.create_local_rendering_device()
 
 	var shader_file:RDShaderFile = load("res://shaders/sobel_gradient_3d.glsl")
 	if !shader_file.base_error.is_empty():
@@ -59,7 +60,6 @@ func calculate_gradient_from_image_stack(img_list:Array[Image])->Array[Image]:
 func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
 	var pipeline:RID = rd.compute_pipeline_create(shader)
 	
-	####
 	#Source image
 	var source_tex_uniform:RDUniform = RDUniform.new()
 	source_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
@@ -125,7 +125,7 @@ func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
 		result_img_list.append(img)
 
 	rd.free_rid(pipeline)
-	rd.free_rid(dest_tex)	
+	rd.free_rid(dest_tex)
 	
 	return result_img_list
 	

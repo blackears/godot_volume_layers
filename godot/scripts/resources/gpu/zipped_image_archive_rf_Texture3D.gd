@@ -1,6 +1,6 @@
 @tool
 extends ImageTexture3D
-class_name ZippedImageArchiveTexture3D
+class_name ZippedImageArchiveRFTexture3D
 
 @export var archive:ZippedImageArchive_RF_3D:
 	get:
@@ -25,9 +25,14 @@ func on_archive_changed():
 func load_image_from_archive(archive:ZippedImageArchive_RF_3D):
 	var img_list:Array[Image] = archive.get_image_list()
 	var size:Vector3i = archive.get_size()
-#	var img_width:int = img_list[0].get_width()
-#	var img_height:int = img_list[0].get_height()
-#	var img_depth:int = img_list.size()
+
+	#Generate mipmaps
+	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
+	var mipmap_images:Array[Image] = gen.calculate(img_list)
+	
+	img_list.append_array(mipmap_images)
+
 	create(Image.FORMAT_RF, size.x, size.y, size.z, true, img_list)
 	
 

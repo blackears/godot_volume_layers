@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://t0n1mrmltp2k"]
 
 [ext_resource type="Script" path="res://scenes/controls/volume_layers.gd" id="1_3p0bi"]
-[ext_resource type="Script" path="res://scripts/resources/zipped_image_archive_rf_3d.gd" id="2_i1anp"]
+[ext_resource type="Script" path="res://scripts/resources/gpu/zipped_image_archive_rf_3d.gd" id="2_i1anp"]
 [ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://materials/standard_material_shader.tres" id="2_ji444"]
 [ext_resource type="Script" path="res://scripts/resources/zipped_image_archive_Texture3D.gd" id="3_6sggg"]
 
