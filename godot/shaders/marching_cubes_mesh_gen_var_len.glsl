@@ -627,7 +627,7 @@ void main() {
 	ivec3 pos = ivec3(gl_GlobalInvocationID.xyz);
 	vec3 samp_pos = vec3(pos / params.grid_size);
 	vec4 col = texture(density_tex, samp_pos);
-
+/*
 	vec3 c000 = (pos + vec3(0, 0, 0)) / params.grid_size;
 	vec3 c100 = (pos + vec3(1, 0, 0)) / params.grid_size;
 	vec3 c010 = (pos + vec3(0, 1, 0)) / params.grid_size;
@@ -689,7 +689,19 @@ void main() {
 		
 		imageStore(result_points, write_pos + i * 2, vec4(local_point_pos, 1.0));
 		imageStore(result_points, write_pos + i * 2 + 1, vec4(grad, 0.0));
-//		imageStore(result_normals, write_pos + i * 2 + 1, vec4(grad, 0.0));
 	}
+	*/
 	
+	//TEST
+	{	
+		int cube_index = 1;
+		int read_pos = tessellation_offsets[cube_index];
+		int num_points = tessellation_offsets[cube_index + 1] - read_pos;
+		int write_pos = atomicAdd(params_rw.num_vertices, num_points * 2);
+		
+		for (int i = 0; i < num_points; ++i) {
+			imageStore(result_points, write_pos + i * 2, vec4(pos, 1.0));
+			imageStore(result_points, write_pos + i * 2 + 1, vec4(pos, 0.0));
+		}
+	}
 }

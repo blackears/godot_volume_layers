@@ -92,7 +92,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
 	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
 	fmt_tex_out.width = max_output_points * 2 * 3
-	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
+	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
 #	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
 		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
@@ -101,7 +101,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var view:RDTextureView = RDTextureView.new()
 	
 	var data:PackedByteArray
-	data.resize(max_output_points * 4 * 3 * 2)
+	data.resize(max_output_points * 4 * 4 * 3 * 2)
 	data.fill(0)
 	var out_points_tex:RID = rd.texture_create(fmt_tex_out, view, [data])
 
@@ -144,7 +144,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	#########
 	#########
 	#########
-	var start_of_result:PackedFloat32Array = out_float_data.slice(0, 16 * 3)
+	var start_of_result:PackedFloat32Array = out_float_data.slice(0, 16 * 4)
 	
 	pass
 
