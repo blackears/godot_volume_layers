@@ -633,8 +633,8 @@ vec3 get_edge_point(int edge_idx, float[12] edge_weights) {
 }
 
 float calc_edge_weight(float threshold, float p0_val, float p1_val) {
-//	return (threshold - p0_val) / (p1_val - p0_val);
-	return .5;
+	return (threshold - p0_val) / (p1_val - p0_val);
+//	return .5;
 }
 
 void main() {
@@ -699,19 +699,9 @@ void main() {
 		vec3 point = get_edge_point(tessellation_table[read_pos + i], edge_weights);
 	
 		vec3 local_point_pos = (point + pos) / params.grid_size;
-		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
+//		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
+		vec3 grad = texture(gradient_tex, local_point_pos).rgb;
 		
-//		imageStore(result_points, write_pos + i, vec4(local_point_pos, 1));
-//		imageStore(result_points, write_pos + i, vec4(point, 1));
-//		imageStore(result_points, write_pos + i, vec4(pos, 1));
-//		imageStore(result_points, write_pos + i, vec4((write_pos + 1).xxx, 1));
-//		imageStore(result_points, write_pos + i, vec4(5, 6, 7, 1));
-//		params_wp.points[write_pos + i] = write_pos.xxx;
-
-//		params_wp.points[write_pos + i * 3] = write_pos;
-//		params_wp.points[write_pos + i * 3 + 1] = write_pos;
-//		params_wp.points[write_pos + i * 3 + 2] = 2;
-
 		params_w_point.values[write_pos + i * 3] = local_point_pos.x;
 		params_w_point.values[write_pos + i * 3 + 1] = local_point_pos.y;
 		params_w_point.values[write_pos + i * 3 + 2] = local_point_pos.z;
@@ -720,7 +710,6 @@ void main() {
 		params_w_normal.values[write_pos + i * 3 + 1] = grad.y;
 		params_w_normal.values[write_pos + i * 3 + 2] = grad.z;
 
-//		imageStore(result_normals, write_pos + i, vec4(grad, 0));
 	}
 	
 	
