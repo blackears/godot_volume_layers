@@ -47,10 +47,15 @@ params_rw;
 layout(set = 0, binding = 2) uniform sampler3D density_tex;
 layout(set = 0, binding = 3) uniform sampler3D gradient_tex;
 
-layout(set = 0, binding = 4, std430) restrict writeonly buffer ParamBufferWO {
-	float[] points;
+layout(set = 0, binding = 4, std430) restrict writeonly buffer ParamBufferWPoint {
+	float[] values;
 }
-params_wp;
+params_w_point;
+
+layout(set = 0, binding = 5, std430) restrict writeonly buffer ParamBufferWNormal {
+	float[] values;
+}
+params_w_normal;
 
 //layout(rgba32f, set = 0, binding = 4) writeonly restrict uniform image1D result_points;
 //layout(rgba32f, set = 0, binding = 5) writeonly restrict uniform image1D result_normals;
@@ -707,10 +712,14 @@ void main() {
 //		params_wp.points[write_pos + i * 3 + 1] = write_pos;
 //		params_wp.points[write_pos + i * 3 + 2] = 2;
 
-		params_wp.points[write_pos + i * 3] = local_point_pos.x;
-		params_wp.points[write_pos + i * 3 + 1] = local_point_pos.y;
-		params_wp.points[write_pos + i * 3 + 2] = local_point_pos.z;
-		
+		params_w_point.values[write_pos + i * 3] = local_point_pos.x;
+		params_w_point.values[write_pos + i * 3 + 1] = local_point_pos.y;
+		params_w_point.values[write_pos + i * 3 + 2] = local_point_pos.z;
+
+		params_w_normal.values[write_pos + i * 3] = grad.x;
+		params_w_normal.values[write_pos + i * 3 + 1] = grad.y;
+		params_w_normal.values[write_pos + i * 3 + 2] = grad.z;
+
 //		imageStore(result_normals, write_pos + i, vec4(grad, 0));
 	}
 	

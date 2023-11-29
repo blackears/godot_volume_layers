@@ -93,18 +93,26 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	#var scale_factor:float = 1 # estimate output buffer size based on grid size
 	var triangle_data_size:int = 3 * 4 * 4 # points per tri * floats per point * bytes per float
 	var buffer_out_size:int = int(num_grid_cells * scale_factor) * triangle_data_size
+	print("buffer_out_size ", buffer_out_size)
 
 	var out_point_buffer_data:PackedByteArray
 	out_point_buffer_data.resize(buffer_out_size)
-#	out_buffer_data.fill(0)
-#	out_buffer_data.to_float32_array().fill(69)
+#	out_point_buffer_data.fill(0)
 
-	var param_buffer_wp:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
+	var param_buffer_w_point:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
 	
-	var buffer_wp_uniform:RDUniform = RDUniform.new()
-	buffer_wp_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-	buffer_wp_uniform.binding = 4
-	buffer_wp_uniform.add_id(param_buffer_wp)
+	var buffer_w_point_uniform:RDUniform = RDUniform.new()
+	buffer_w_point_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	buffer_w_point_uniform.binding = 4
+	buffer_w_point_uniform.add_id(param_buffer_w_point)
+
+	###
+	var param_buffer_w_normal:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
+	
+	var buffer_w_normal_uniform:RDUniform = RDUniform.new()
+	buffer_w_normal_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	buffer_w_normal_uniform.binding = 5
+	buffer_w_normal_uniform.add_id(param_buffer_w_normal)
 	
 #	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
 #	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
@@ -135,7 +143,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	####
 	#Set uniforms
 #	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, out_points_tex_uniform, out_normals_tex_uniform], marching_cubes_shader_rid, 0)
-	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, buffer_wp_uniform], marching_cubes_shader_rid, 0)
+	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, buffer_w_point_uniform, buffer_w_normal_uniform], marching_cubes_shader_rid, 0)
 
 	#Run the shader
 	if true:
@@ -162,12 +170,15 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var num_floats_written:int = param_rw_int_data[0]
 	var uuu:int = param_rw_byte_data.size()
 	
-	var param_wp_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_wp, 0)
-	var param_wp_float_data:PackedFloat32Array = param_wp_byte_data.to_float32_array()
+	var param_w_point_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_point, 0)
+	var param_w_point_float_data:PackedFloat32Array = param_w_point_byte_data.to_float32_array()
 	
-	var s0 = param_wp_byte_data.slice(0, 100)
-	var sz = param_wp_byte_data.size()
-	var fx = param_wp_float_data.size()
+	var param_w_normal_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_normal, 0)
+	var param_w_normal_float_data:PackedFloat32Array = param_w_normal_byte_data.to_float32_array()
+	
+#	var s0 = param_wp_byte_data.slice(0, 100)
+#	var sz = param_wp_byte_data.size()
+#	var fx = param_wp_float_data.size()
 	
 #	var out_point_byte_data:PackedByteArray = rd.texture_get_data(out_points_tex, 0)
 ##	var out_point_byte_data:PackedByteArray = rd.buffer_get_data(out_points_tex, 0)
@@ -188,13 +199,17 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var points:PackedVector3Array
 	var normals:PackedVector3Array
 	for i in num_floats_written:
-		points.append(Vector3(param_wp_float_data[i * 3], param_wp_float_data[i * 3 + 1], param_wp_float_data[i * 3 + 2]))
+		points.append(Vector3(param_w_point_float_data[i * 3], \
+			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]))
+		normals.append(Vector3(param_w_normal_float_data[i * 3], \
+			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]))
 #		points.append(Vector3(out_point_float_data[i * 4], out_point_float_data[i * 4 + 1], out_point_float_data[i * 4 + 2]))
 #		normals.append(Vector3(out_normals_float_data[i * 4], out_normals_float_data[i * 4 + 1], out_normals_float_data[i * 4 + 2]))
 
-#		file_dump.store_line("%f %f %f %f" % [out_point_float_data[i * 4], out_point_float_data[i * 4 + 1], out_point_float_data[i * 4 + 2], out_point_float_data[i * 4 + 3]])
-		file_dump.store_line("%f %f %f" % [param_wp_float_data[i * 3], \
-			param_wp_float_data[i * 3 + 1], param_wp_float_data[i * 3 + 2]])
+#		file_dump.store_line("%f %f %f" % [param_w_point_float_data[i * 3], \
+#			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]])
+		file_dump.store_line("%f %f %f" % [param_w_normal_float_data[i * 3], \
+			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]])
 	file_dump.close()
 
 #	for p in points:
@@ -206,7 +221,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var limit = 3 * 4096
 #	var mesh = create_mesh(points.slice(limit_start, limit), normals.slice(limit_start, limit))
 #	var mesh = create_mesh(points.slice(limit_start, limit), points.slice(limit_start, limit))
-	var mesh = create_mesh(points.slice(0, num_floats_written / 3), points.slice(0, num_floats_written / 3))
+	var mesh = create_mesh(points.slice(0, num_floats_written / 3), normals.slice(0, num_floats_written / 3))
 	return mesh
 #	return create_mesh(points, normals)
 	
