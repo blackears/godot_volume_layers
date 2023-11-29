@@ -41,10 +41,10 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 #	var param_buffer_float:PackedByteArray = PackedFloat32Array([brush_pos.x, brush_pos.y, radius, 0, color.r, color.g, color.b, color.a]).to_byte_array()
 	var param_buffer_ro:RID = rd.storage_buffer_create(param_ro_buf.size(), param_ro_buf)
 	
-	var buffer_ro_uniform:RDUniform = RDUniform.new()
-	buffer_ro_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-	buffer_ro_uniform.binding = 0
-	buffer_ro_uniform.add_id(param_buffer_ro)
+	var uniform_buffer_ro:RDUniform = RDUniform.new()
+	uniform_buffer_ro.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniform_buffer_ro.binding = 0
+	uniform_buffer_ro.add_id(param_buffer_ro)
 	
 	#Create buffer for read-write parameters
 	var param_rw_buf:PackedByteArray = PackedInt32Array([0]).to_byte_array()
@@ -54,10 +54,10 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 #	var param_buffer_float:PackedByteArray = PackedFloat32Array([brush_pos.x, brush_pos.y, radius, 0, color.r, color.g, color.b, color.a]).to_byte_array()
 	var param_buffer_rw:RID = rd.storage_buffer_create(param_rw_buf.size(), param_rw_buf)
 	
-	var buffer_rw_uniform:RDUniform = RDUniform.new()
-	buffer_rw_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-	buffer_rw_uniform.binding = 1
-	buffer_rw_uniform.add_id(param_buffer_rw)
+	var uniform_buffer_rw:RDUniform = RDUniform.new()
+	uniform_buffer_rw.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniform_buffer_rw.binding = 1
+	uniform_buffer_rw.add_id(param_buffer_rw)
 	
 	#Density texture
 	var density_tex_rid:RID = create_texture_image_from_image_stack(img_list_density, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
@@ -65,12 +65,12 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var samp_density_state:RDSamplerState = RDSamplerState.new()
 	var samp_density:RID = rd.sampler_create(samp_density_state)
 
-	var tex_density_uniform:RDUniform = RDUniform.new()
+	var uniform_tex_density:RDUniform = RDUniform.new()
 #	tex_density_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
-	tex_density_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
-	tex_density_uniform.binding = 2
-	tex_density_uniform.add_id(samp_density) #Order of add_id() is important here!
-	tex_density_uniform.add_id(density_tex_rid)
+	uniform_tex_density.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
+	uniform_tex_density.binding = 2
+	uniform_tex_density.add_id(samp_density) #Order of add_id() is important here!
+	uniform_tex_density.add_id(density_tex_rid)
 	
 	#Gradient texture
 	var grad_tex_rid:RID = create_texture_image_from_image_stack(img_list_gradient, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
@@ -78,11 +78,11 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var samp_grad_state:RDSamplerState = RDSamplerState.new()
 	var samp_grad:RID = rd.sampler_create(samp_grad_state)
 
-	var tex_grad_uniform:RDUniform = RDUniform.new()
-	tex_grad_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
-	tex_grad_uniform.binding = 3
-	tex_grad_uniform.add_id(samp_grad) #Order of add_id() is important here!
-	tex_grad_uniform.add_id(grad_tex_rid)
+	var uniform_tex_grad:RDUniform = RDUniform.new()
+	uniform_tex_grad.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
+	uniform_tex_grad.binding = 3
+	uniform_tex_grad.add_id(samp_grad) #Order of add_id() is important here!
+	uniform_tex_grad.add_id(grad_tex_rid)
 	
 	##################
 	##################
@@ -101,18 +101,18 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 
 	var param_buffer_w_point:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
 	
-	var buffer_w_point_uniform:RDUniform = RDUniform.new()
-	buffer_w_point_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-	buffer_w_point_uniform.binding = 4
-	buffer_w_point_uniform.add_id(param_buffer_w_point)
+	var uniform_buffer_w_point:RDUniform = RDUniform.new()
+	uniform_buffer_w_point.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniform_buffer_w_point.binding = 4
+	uniform_buffer_w_point.add_id(param_buffer_w_point)
 
 	###
 	var param_buffer_w_normal:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
 	
-	var buffer_w_normal_uniform:RDUniform = RDUniform.new()
-	buffer_w_normal_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
-	buffer_w_normal_uniform.binding = 5
-	buffer_w_normal_uniform.add_id(param_buffer_w_normal)
+	var uniform_buffer_w_normal:RDUniform = RDUniform.new()
+	uniform_buffer_w_normal.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	uniform_buffer_w_normal.binding = 5
+	uniform_buffer_w_normal.add_id(param_buffer_w_normal)
 	
 #	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
 #	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
@@ -143,7 +143,9 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	####
 	#Set uniforms
 #	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, out_points_tex_uniform, out_normals_tex_uniform], marching_cubes_shader_rid, 0)
-	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, buffer_w_point_uniform, buffer_w_normal_uniform], marching_cubes_shader_rid, 0)
+	var uniform_set = rd.uniform_set_create([uniform_buffer_ro, \
+		uniform_buffer_rw, uniform_tex_density, uniform_tex_grad, \
+		uniform_buffer_w_point, uniform_buffer_w_normal], marching_cubes_shader_rid, 0)
 
 	#Run the shader
 	if true:
