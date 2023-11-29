@@ -648,7 +648,7 @@ void main() {
 	vec3 c101 = (pos + vec3(1, 0, 1)) / params.grid_size;
 	vec3 c011 = (pos + vec3(0, 1, 1)) / params.grid_size;
 	vec3 c111 = (pos + vec3(1, 1, 1)) / params.grid_size;
-	
+	/*
 	float s0 = texture(density_tex, c000).r;
 	float s1 = texture(density_tex, c100).r;
 	float s2 = texture(density_tex, c010).r;
@@ -657,10 +657,10 @@ void main() {
 	float s5 = texture(density_tex, c101).r;
 	float s6 = texture(density_tex, c011).r;
 	float s7 = texture(density_tex, c111).r;
-	
+	*/
 	//float mipmap_lod = 0;
 	float mipmap_lod = params.mipmap_lod;
-/*	
+
 	float s0 = textureLod(density_tex, c000, mipmap_lod).r;
 	float s1 = textureLod(density_tex, c100, mipmap_lod).r;
 	float s2 = textureLod(density_tex, c010, mipmap_lod).r;
@@ -669,7 +669,7 @@ void main() {
 	float s5 = textureLod(density_tex, c101, mipmap_lod).r;
 	float s6 = textureLod(density_tex, c011, mipmap_lod).r;
 	float s7 = textureLod(density_tex, c111, mipmap_lod).r;
-*/	
+	
 	int cube_index = (s0 > params.threshold ? 0x1 : 0)
 		| (s1 > params.threshold ? 0x2 : 0)
 		| (s2 > params.threshold ? 0x4 : 0)
