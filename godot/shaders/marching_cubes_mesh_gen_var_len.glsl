@@ -47,12 +47,16 @@ params_rw;
 layout(set = 0, binding = 2) uniform sampler3D density_tex;
 layout(set = 0, binding = 3) uniform sampler3D gradient_tex;
 
-layout(rgba32f, set = 0, binding = 4) writeonly restrict uniform image1D result_points;
+layout(set = 0, binding = 4, std430) restrict writeonly buffer ParamBufferWO {
+	float[] points;
+}
+params_wp;
+
+//layout(rgba32f, set = 0, binding = 4) writeonly restrict uniform image1D result_points;
 //layout(rgba32f, set = 0, binding = 5) writeonly restrict uniform image1D result_normals;
 
-float calc_edge_weight(float threshold, float p0_val, float p1_val) {
-	return (threshold - p0_val) / (p1_val - p0_val);
-}
+//layout(r32f, set = 0, binding = 4) writeonly restrict uniform image1D result_points;
+//layout(r32f, set = 0, binding = 5) writeonly restrict uniform image1D result_normals;
 
 const float pos_infinity = 1.0 / 0.0;
 
@@ -623,6 +627,11 @@ vec3 get_edge_point(int edge_idx, float[12] edge_weights) {
 	}
 }
 
+float calc_edge_weight(float threshold, float p0_val, float p1_val) {
+//	return (threshold - p0_val) / (p1_val - p0_val);
+	return .5;
+}
+
 void main() {
 	ivec3 pos = ivec3(gl_GlobalInvocationID.xyz);
 
@@ -653,6 +662,8 @@ void main() {
 		| (s6 > params.threshold ? 0x40 : 0)
 		| (s7 > params.threshold ? 0x80 : 0);
 	
+//cube_index = 1;
+	
 	if (cube_index == 0 || cube_index == 0xff) {
 		//early exit
 		return;
@@ -677,7 +688,7 @@ void main() {
 
 	int read_pos = tessellation_offsets[cube_index];
 	int num_points = tessellation_offsets[cube_index + 1] - read_pos;
-	int write_pos = atomicAdd(params_rw.num_vertices, num_points * 2);
+	int write_pos = atomicAdd(params_rw.num_vertices, num_points * 3);
 	
 	for (int i = 0; i < num_points; ++i) {
 		vec3 point = get_edge_point(tessellation_table[read_pos + i], edge_weights);
@@ -685,8 +696,22 @@ void main() {
 		vec3 local_point_pos = (point + pos) / params.grid_size;
 		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
 		
-		imageStore(result_points, write_pos + i * 2, vec4(local_point_pos, 1.0));
-		imageStore(result_points, write_pos + i * 2 + 1, vec4(grad, 0.0));
+//		imageStore(result_points, write_pos + i, vec4(local_point_pos, 1));
+//		imageStore(result_points, write_pos + i, vec4(point, 1));
+//		imageStore(result_points, write_pos + i, vec4(pos, 1));
+//		imageStore(result_points, write_pos + i, vec4((write_pos + 1).xxx, 1));
+//		imageStore(result_points, write_pos + i, vec4(5, 6, 7, 1));
+//		params_wp.points[write_pos + i] = write_pos.xxx;
+
+//		params_wp.points[write_pos + i * 3] = write_pos;
+//		params_wp.points[write_pos + i * 3 + 1] = write_pos;
+//		params_wp.points[write_pos + i * 3 + 2] = 2;
+
+		params_wp.points[write_pos + i * 3] = local_point_pos.x;
+		params_wp.points[write_pos + i * 3 + 1] = local_point_pos.y;
+		params_wp.points[write_pos + i * 3 + 2] = local_point_pos.z;
+		
+//		imageStore(result_normals, write_pos + i, vec4(grad, 0));
 	}
 	
 	

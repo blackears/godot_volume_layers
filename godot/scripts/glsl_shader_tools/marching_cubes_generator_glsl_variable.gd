@@ -25,7 +25,7 @@ func dispose():
 # threshold - surface density threshold
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
-func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:Array[Image], img_list_gradient:Array[Image]):
+func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
 	
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
@@ -84,69 +84,155 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	tex_grad_uniform.add_id(samp_grad) #Order of add_id() is important here!
 	tex_grad_uniform.add_id(grad_tex_rid)
 	
+	##################
+	##################
 	#Output buffers
-	var max_output_points:int = result_grid_size.x * result_grid_size.y * result_grid_size.z
-	#num_points * interleaved buffer * floats per vector * size of float
-	var buffer_out_size:int = max_output_points * 2 * 3 * 4
-	
-	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
-	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
-	fmt_tex_out.width = max_output_points * 2 * 3
-	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
-#	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
-	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
-		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
-		| RenderingDevice.TEXTURE_USAGE_CPU_READ_BIT \
-		| RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
-	var view:RDTextureView = RDTextureView.new()
-	
-	var data:PackedByteArray
-	data.resize(max_output_points * 4 * 4 * 3 * 2)
-	data.fill(0)
-	var out_points_tex:RID = rd.texture_create(fmt_tex_out, view, [data])
+	var num_grid_cells:int = result_grid_size.x * result_grid_size.y * result_grid_size.z
+	#3.65  3.68
+	var scale_factor:float = 4.02 # estimate output buffer size based on grid size
+	#var scale_factor:float = 1 # estimate output buffer size based on grid size
+	var triangle_data_size:int = 3 * 4 * 4 # points per tri * floats per point * bytes per float
+	var buffer_out_size:int = int(num_grid_cells * scale_factor) * triangle_data_size
 
-	var dest_tex_uniform:RDUniform = RDUniform.new()
-	dest_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
-	dest_tex_uniform.binding = 4
-	dest_tex_uniform.add_id(out_points_tex)
+	var out_point_buffer_data:PackedByteArray
+	out_point_buffer_data.resize(buffer_out_size)
+#	out_buffer_data.fill(0)
+#	out_buffer_data.to_float32_array().fill(69)
+
+	var param_buffer_wp:RID = rd.storage_buffer_create(out_point_buffer_data.size(), out_point_buffer_data)
+	
+	var buffer_wp_uniform:RDUniform = RDUniform.new()
+	buffer_wp_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER
+	buffer_wp_uniform.binding = 4
+	buffer_wp_uniform.add_id(param_buffer_wp)
+	
+#	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
+#	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
+#	fmt_tex_out.width = buffer_out_size / (4 * 4)
+#	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
+#	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
+#		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
+#		| RenderingDevice.TEXTURE_USAGE_CPU_READ_BIT \
+#		| RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
+#	var view:RDTextureView = RDTextureView.new()
+	
+	#Out points
+#	var out_points_tex:RID = rd.texture_create(fmt_tex_out, view, [out_buffer_data])
+#
+#	var out_points_tex_uniform:RDUniform = RDUniform.new()
+#	out_points_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
+#	out_points_tex_uniform.binding = 4
+#	out_points_tex_uniform.add_id(out_points_tex)
+	
+	#Out normals
+#	var out_normals_tex:RID = rd.texture_create(fmt_tex_out, view, [out_buffer_data.duplicate()])
+#
+#	var out_normals_tex_uniform:RDUniform = RDUniform.new()
+#	out_normals_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
+#	out_normals_tex_uniform.binding = 5
+#	out_normals_tex_uniform.add_id(out_normals_tex)
 	
 	####
 	#Set uniforms
-	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, dest_tex_uniform], marching_cubes_shader_rid, 0)
+#	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, out_points_tex_uniform, out_normals_tex_uniform], marching_cubes_shader_rid, 0)
+	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, buffer_wp_uniform], marching_cubes_shader_rid, 0)
 
 	#Run the shader
-	var pipeline:RID = rd.compute_pipeline_create(marching_cubes_shader_rid)
-	
-	var compute_list = rd.compute_list_begin()
-	rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
-	rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
-#	rd.compute_list_dispatch(compute_list, image_size.x / 8, image_size.y / 8, 1)
-	@warning_ignore("integer_division")
-	rd.compute_list_dispatch(compute_list, \
-		(result_grid_size.x - 1) / 4 + 1, \
-		(result_grid_size.y - 1) / 4 + 1, \
-		(result_grid_size.z - 1) / 4 + 1)
-	rd.compute_list_end()
-	rd.submit()
-	rd.sync()
+	if true:
+		var pipeline:RID = rd.compute_pipeline_create(marching_cubes_shader_rid)
+		
+		var compute_list = rd.compute_list_begin()
+		rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
+		rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
+	#	rd.compute_list_dispatch(compute_list, image_size.x / 8, image_size.y / 8, 1)
+		@warning_ignore("integer_division")
+		rd.compute_list_dispatch(compute_list, \
+			(result_grid_size.x - 1) / 4 + 1, \
+			(result_grid_size.y - 1) / 4 + 1, \
+			(result_grid_size.z - 1) / 4 + 1)
+		rd.compute_list_end()
+		rd.submit()
+		rd.sync()
+		rd.full_barrier()
+		#rd.barrier(RenderingDevice.BARRIER_MASK_COMPUTE)
 	
 	#Get results
 	var param_rw_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_rw, 0)
 	var param_rw_int_data:PackedInt32Array = param_rw_byte_data.to_int32_array()
+	var num_floats_written:int = param_rw_int_data[0]
 	var uuu:int = param_rw_byte_data.size()
 	
-	var out_byte_data:PackedByteArray = rd.texture_get_data(out_points_tex, 0)
-	var out_float_data:PackedFloat32Array = out_byte_data.to_float32_array()
-	var www:int = out_byte_data.size()
+	var param_wp_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_wp, 0)
+	var param_wp_float_data:PackedFloat32Array = param_wp_byte_data.to_float32_array()
 	
+	var s0 = param_wp_byte_data.slice(0, 100)
+	var sz = param_wp_byte_data.size()
+	var fx = param_wp_float_data.size()
+	
+#	var out_point_byte_data:PackedByteArray = rd.texture_get_data(out_points_tex, 0)
+##	var out_point_byte_data:PackedByteArray = rd.buffer_get_data(out_points_tex, 0)
+##	var out_float_data:PackedFloat32Array = out_byte_data.to_float32_array()
+#	var www:int = out_point_byte_data.size()
+#	var out_point_float_data:PackedFloat32Array = out_point_byte_data.to_float32_array()
+#	var out_pt_size = out_point_float_data.size()
+	
+#	var out_normals_byte_data:PackedByteArray = rd.texture_get_data(out_normals_tex, 0)
+#	var out_normals_float_data:PackedFloat32Array = out_normals_byte_data.to_float32_array()
 	
 	
 	#########
 	#########
 	#########
-	var start_of_result:PackedFloat32Array = out_float_data.slice(0, 16 * 4)
+	#Convert data to format Godot can use
+	var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
+	var points:PackedVector3Array
+	var normals:PackedVector3Array
+	for i in num_floats_written:
+		points.append(Vector3(param_wp_float_data[i * 3], param_wp_float_data[i * 3 + 1], param_wp_float_data[i * 3 + 2]))
+#		points.append(Vector3(out_point_float_data[i * 4], out_point_float_data[i * 4 + 1], out_point_float_data[i * 4 + 2]))
+#		normals.append(Vector3(out_normals_float_data[i * 4], out_normals_float_data[i * 4 + 1], out_normals_float_data[i * 4 + 2]))
+
+#		file_dump.store_line("%f %f %f %f" % [out_point_float_data[i * 4], out_point_float_data[i * 4 + 1], out_point_float_data[i * 4 + 2], out_point_float_data[i * 4 + 3]])
+		file_dump.store_line("%f %f %f" % [param_wp_float_data[i * 3], \
+			param_wp_float_data[i * 3 + 1], param_wp_float_data[i * 3 + 2]])
+	file_dump.close()
+
+#	for p in points:
+#		print("point " + str(p))
+
+	print("num_floats_written ", num_floats_written)
+	print("num_points_written ", num_floats_written / 3)
+	var limit_start = 3 * 4090
+	var limit = 3 * 4096
+#	var mesh = create_mesh(points.slice(limit_start, limit), normals.slice(limit_start, limit))
+#	var mesh = create_mesh(points.slice(limit_start, limit), points.slice(limit_start, limit))
+	var mesh = create_mesh(points.slice(0, num_floats_written / 3), points.slice(0, num_floats_written / 3))
+	return mesh
+#	return create_mesh(points, normals)
+	
+	#var start_of_points_result:PackedFloat32Array = out_point_float_data.slice(0, 16 * 4)
+	#var start_of_normals_result:PackedFloat32Array = out_normals_float_data.slice(0, 16 * 4)
 	
 	pass
+
+func create_mesh(points:PackedVector3Array, normals:PackedVector3Array)->ArrayMesh:
+#	var vertices = PackedVector3Array()
+#	vertices.push_back(Vector3(0, 1, 0))
+#	vertices.push_back(Vector3(1, 0, 0))
+#	vertices.push_back(Vector3(0, 0, 1))	
+	
+	# Initialize the ArrayMesh.
+	var arr_mesh:ArrayMesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+#	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_VERTEX] = points
+	arrays[Mesh.ARRAY_NORMAL] = normals
+
+	# Create the Mesh.
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return arr_mesh
+
 
 func get_image_format(format:RenderingDevice.DataFormat)->Image.Format:
 	match format:

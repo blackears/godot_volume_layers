@@ -104,12 +104,21 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 #	grad_image_list.append_array(grad_image_mipmaps)
 	
 	####
+	
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
 
-	var mesh_size:Vector3i = Vector3i(image_list[0].get_width(), image_list[0].get_height(), image_list.size())
-	cube_gen.generate_mesh(mesh_size, .5, image_list, grad_image_list)
+	var start_time_usec = Time.get_ticks_usec()
+#	var mesh_size:Vector3i = Vector3i(image_list[0].get_width() / 2, image_list[0].get_height() / 2, image_list.size() / 2)
+	var mesh_size:Vector3i = Vector3i(16, 16, 16)
+	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, image_list, grad_image_list)
+	var end_time_usec = Time.get_ticks_usec()
 
+	%mesh_viewer.mesh = mesh
+	print("time delta usec ", (end_time_usec - start_time_usec))
 	#var dens_tex_rid:RID = cube_gen.create_texture_image_from_image_stack(image_list, true)
+	
+	await %mesh_viewer.updated
+	%mesh_viewer.export_gltf()
 	
 	pass # Replace with function body.
 
@@ -190,3 +199,24 @@ func _on_bn_gen_code_glsl_var_pressed():
 
 
 
+
+
+func _on_bn_test_mesh_gen_pressed():
+	var vertices = PackedVector3Array()
+	vertices.push_back(Vector3(0, 1, 0))
+	vertices.push_back(Vector3(1, 0, 0))
+	vertices.push_back(Vector3(0, 0, 1))
+
+	# Initialize the ArrayMesh.
+	var arr_mesh = ArrayMesh.new()
+	var arrays = []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices.to_byte_array().to_float32_array()
+
+	# Create the Mesh.
+	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	var m = MeshInstance3D.new()
+	m.mesh = arr_mesh
+	
+	
+	pass # Replace with function body.
