@@ -32,7 +32,7 @@ layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;
 
 layout(set = 0, binding = 0, std430) restrict readonly buffer ParamBufferRO {
 	float threshold;
-	//float scale;
+	float mipmap_lod;
 	//Size of cube grid in cells
 	ivec3 grid_size;
 }
@@ -658,6 +658,18 @@ void main() {
 	float s6 = texture(density_tex, c011).r;
 	float s7 = texture(density_tex, c111).r;
 	
+	//float mipmap_lod = 0;
+	float mipmap_lod = params.mipmap_lod;
+/*	
+	float s0 = textureLod(density_tex, c000, mipmap_lod).r;
+	float s1 = textureLod(density_tex, c100, mipmap_lod).r;
+	float s2 = textureLod(density_tex, c010, mipmap_lod).r;
+	float s3 = textureLod(density_tex, c110, mipmap_lod).r;
+	float s4 = textureLod(density_tex, c001, mipmap_lod).r;
+	float s5 = textureLod(density_tex, c101, mipmap_lod).r;
+	float s6 = textureLod(density_tex, c011, mipmap_lod).r;
+	float s7 = textureLod(density_tex, c111, mipmap_lod).r;
+*/	
 	int cube_index = (s0 > params.threshold ? 0x1 : 0)
 		| (s1 > params.threshold ? 0x2 : 0)
 		| (s2 > params.threshold ? 0x4 : 0)
@@ -695,13 +707,15 @@ void main() {
 	int num_points = tessellation_offsets[cube_index + 1] - read_pos;
 	int write_pos = atomicAdd(params_rw.num_vertices, num_points * 3);
 	
+	
+	
 	for (int i = 0; i < num_points; ++i) {
 		vec3 point = get_edge_point(tessellation_table[read_pos + i], edge_weights);
 	
 		vec3 local_point_pos = (point + pos) / params.grid_size;
 //		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
 //		vec3 normal = -normalize(texture(gradient_tex, local_point_pos).rgb);
-		vec3 normal = -normalize(texture(gradient_tex, local_point_pos).rgb);
+		vec3 normal = -normalize(textureLod(gradient_tex, local_point_pos, mipmap_lod).rgb);
 		
 		params_w_point.values[write_pos + i * 3] = local_point_pos.x;
 		params_w_point.values[write_pos + i * 3 + 1] = local_point_pos.y;
@@ -713,19 +727,4 @@ void main() {
 
 	}
 	
-	
-	/*
-	//TEST
-	{	
-		int cube_index = 1;
-		int read_pos = tessellation_offsets[cube_index];
-		int num_points = tessellation_offsets[cube_index + 1] - read_pos;
-		int write_pos = atomicAdd(params_rw.num_vertices, num_points * 2);
-		
-		for (int i = 0; i < num_points; ++i) {
-			imageStore(result_points, write_pos + i * 2, vec4(pos, 1.0));
-			imageStore(result_points, write_pos + i * 2 + 1, vec4(pos, 0.0));
-		}
-	}
-	*/
 }

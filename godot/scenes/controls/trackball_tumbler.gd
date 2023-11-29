@@ -25,41 +25,62 @@ func calc_pitch_yaw(pos:Vector3, focus_point:Vector3):
 
 func _unhandled_input(event):
 	#print(event)
-	if event.is_action("move_up"):
-		position += basis.y
-		focus += basis.y
-		get_viewport().set_input_as_handled()
-	elif event.is_action("move_down"):
-		position += -basis.y
-		focus += -basis.y
-		get_viewport().set_input_as_handled()
-	elif event.is_action("move_left"):
-		position += -basis.x
-		focus += -basis.x
-		get_viewport().set_input_as_handled()
-	elif event.is_action("move_right"):
-		position += basis.x
-		focus += basis.x
-		get_viewport().set_input_as_handled()
-	elif event.is_action("move_forward"):
-		position += -basis.z
-		focus += -basis.z
-		get_viewport().set_input_as_handled()
-	elif event.is_action("move_backward"):
-		position += basis.z
-		focus += basis.z
-		get_viewport().set_input_as_handled()
+	if false:	
+		if event.is_action("move_up"):
+			position += basis.y
+			focus += basis.y
+			get_viewport().set_input_as_handled()
+		elif event.is_action("move_down"):
+			position += -basis.y
+			focus += -basis.y
+			get_viewport().set_input_as_handled()
+		elif event.is_action("move_left"):
+			position += -basis.x
+			focus += -basis.x
+			get_viewport().set_input_as_handled()
+		elif event.is_action("move_right"):
+			position += basis.x
+			focus += basis.x
+			get_viewport().set_input_as_handled()
+		elif event.is_action("move_forward"):
+			position += -basis.z
+			focus += -basis.z
+			get_viewport().set_input_as_handled()
+		elif event.is_action("move_backward"):
+			position += basis.z
+			focus += basis.z
+			get_viewport().set_input_as_handled()
 	
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			mouse_down_pos = event.position
-			var result = calc_pitch_yaw(global_position, focus)
-			pitch_start = result["pitch"]
-			yaw_start = result["yaw"]
-			if event.shift_pressed:
-				drag_style = DragStyle.PAN
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				var len:float = global_position.distance_to(focus)
+
+				var new_len:float = len - 1
+				var offset:Vector3 = global_position - focus
+				var new_offset:Vector3 = offset.normalized() * new_len
+				global_position = focus + new_offset
+				look_at(focus)
+
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				var len:float = global_position.distance_to(focus)
+
+				var new_len:float = len + 1
+				var offset:Vector3 = global_position - focus
+				var new_offset:Vector3 = offset.normalized() * new_len
+				global_position = focus + new_offset
+				look_at(focus)
+			
 			else:
-				drag_style = DragStyle.TUMBLE
+				mouse_down_pos = event.position
+				var result = calc_pitch_yaw(global_position, focus)
+				pitch_start = result["pitch"]
+				yaw_start = result["yaw"]
+				if event.shift_pressed:
+					drag_style = DragStyle.PAN
+				else:
+					drag_style = DragStyle.TUMBLE
+				
 		else:
 			drag_style = DragStyle.NONE
 
@@ -83,25 +104,7 @@ func _unhandled_input(event):
 		if drag_style == DragStyle.PAN:
 			pass
 
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				var len:float = global_position.distance_to(focus)
 
-				var new_len:float = len - 2
-				var offset:Vector3 = global_position - focus
-				var new_offset:Vector3 = offset.normalized() * new_len
-				global_position = focus + new_offset
-				look_at(focus)
-
-			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				var len:float = global_position.distance_to(focus)
-
-				var new_len:float = len + 2
-				var offset:Vector3 = global_position - focus
-				var new_offset:Vector3 = offset.normalized() * new_len
-				global_position = focus + new_offset
-				look_at(focus)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

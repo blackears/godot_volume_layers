@@ -10,6 +10,8 @@ extends Control
 
 @export_file("*.glsl") var shader_load_test:String
 
+@export_range(0, 1) var cube_resolution:float = .8
+
 #@export var tex:ZippedImageArchiveTexture3D:
 #	get:
 #		return tex
@@ -87,7 +89,24 @@ func _on_bn_calc_gradient_pressed():
 	print("done")
 	pass # Replace with function body.
 
+func calc_mipmap_sizes_recursive(size:Vector3i, result:Array[Vector3i]):
+	result.append(size)
+	
+	if size == Vector3i.ONE:
+		return
+		
+	var next_size:Vector3i = Vector3i(\
+		max(size.x >> 1, 1), \
+		max(size.y >> 1, 1), \
+		max(size.x >> 1, 1))
+	
+	calc_mipmap_sizes_recursive(next_size, result)
 
+func calc_mipmap_sizes(size:Vector3i)->Array[Vector3i]:
+	var result:Array[Vector3i]
+	calc_mipmap_sizes_recursive(size, result)
+	return result
+	
 func _on_bn_create_cube_mesh_glsl_var_pressed():
 	var ar:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
 	ar.zip_file = zip_file
@@ -98,11 +117,6 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 	var image_list:Array[Image] = ar.get_image_list().duplicate()
 	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list)
 
-#	var mipmap_gen:MipmapGenerator_RGBAF_3D = MipmapGenerator_RGBAF_3D.new(rd)
-#	var grad_image_mipmaps:Array[Image] = mipmap_gen.calculate(grad_image_list)
-#
-#	grad_image_list.append_array(grad_image_mipmaps)
-	
 	####
 	
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
@@ -110,8 +124,22 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 	var start_time_usec = Time.get_ticks_usec()
 #	var mesh_size:Vector3i = Vector3i(image_list[0].get_width(), image_list[0].get_height(), image_list.size())
 #	var mesh_size:Vector3i = Vector3i(image_list[0].get_width() / 2, image_list[0].get_height() / 2, image_list.size() / 2)
-	var mesh_size:Vector3i = Vector3i(64, 64, 64)
-	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, image_list, grad_image_list)
+#	var mesh_size:Vector3i = Vector3i(64, 64, 64)
+	var mesh_size_base:Vector3i = Vector3i(image_list[0].get_width(), \
+		image_list[0].get_height(), image_list.size())
+	var mipmap_sizes:Array[Vector3i] = calc_mipmap_sizes(mesh_size_base)
+	var mipmap_level:float = mipmap_sizes.size() * (1 - cube_resolution)
+	var mesh_size:Vector3i = mipmap_sizes[int(mipmap_level)]
+	
+#	var mesh_size:Vector3i = mesh_size_base * cube_resolution
+#	mesh_size = Vector3i(max(mesh_size.x, 1), \
+#		max(mesh_size.y, 1), \
+#		max(mesh_size.z, 1))
+#	var max_base_dim:int = max(mesh_size_base.x, mesh_size_base.y, mesh_size_base.z)
+#	var mipmap_level:float = max_base_dim * cube_resolution
+	
+	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, mipmap_level, \
+		image_list, grad_image_list)
 	var end_time_usec = Time.get_ticks_usec()
 
 	%mesh_viewer.mesh = mesh
@@ -179,13 +207,6 @@ func _on_bn_test_shader_compile_pressed():
 		sh.dispose()
 		print("Shader " + shader_load_test + " loaded successfully")
 
-
-func _on_bn_gen_code_glsl_fixed_pressed():
-	var colorings:Array[CubeSymmetries.PeerColoring] = CubeSymmetries.find_all_groups()
-	var code:String = CubeSymmetries.format_table_as_glsl_code_fixed_width(colorings)
-	
-	var file:FileAccess = FileAccess.open("cube_code_glsl_fixed.txt", FileAccess.WRITE)
-	file.store_string(code)
 
 
 func _on_bn_gen_code_glsl_var_pressed():

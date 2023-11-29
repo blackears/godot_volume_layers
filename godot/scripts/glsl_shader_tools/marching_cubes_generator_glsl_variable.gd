@@ -25,13 +25,13 @@ func dispose():
 # threshold - surface density threshold
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
-func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
+func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
 	
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
 	param_ro_buf.resize(8 * 4)
 	param_ro_buf.encode_float(0, threshold)
-	param_ro_buf.encode_float(1 * 4, 0)
+	param_ro_buf.encode_float(1 * 4, mipmap_lod)
 	param_ro_buf.encode_float(2 * 4, 0)
 	param_ro_buf.encode_float(3 * 4, 0)
 	param_ro_buf.encode_s32(4 * 4, result_grid_size.x)

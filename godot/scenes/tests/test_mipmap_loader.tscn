@@ -46,10 +46,6 @@ text = "Test Shader Compile"
 layout_mode = 2
 text = "Create mesh GLSL variable length"
 
-[node name="bn_create_cube_mesh_glsl_fixed" type="Button" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Create mesh GLSL fixed length"
-
 [node name="bn_test_mesh_gen" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Test gen mesh"
@@ -66,10 +62,6 @@ text = "Calculate root cubes"
 layout_mode = 2
 text = "Geneate Gradient Kernel Code"
 
-[node name="bn_gen_code_gdscript_fixed" type="Button" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Generate cube table GLSL fixed"
-
 [node name="bn_gen_code_gdscript_var" type="Button" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Generate cube table GLSL variable"
@@ -84,22 +76,20 @@ size_flags_horizontal = 3
 
 [node name="image_stack_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("2_ollj1")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="mesh_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("3_3ngjk")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_gen_mipmaps" to="." method="_on_bn_test_gen_mipmaps_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_calc_gradient" to="." method="_on_bn_calc_gradient_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_shader_compile" to="." method="_on_bn_test_shader_compile_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_create_cube_mesh_glsl_var" to="." method="_on_bn_create_cube_mesh_glsl_var_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_create_cube_mesh_glsl_fixed" to="." method="_on_bn_create_cube_mesh_glsl_fixed_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_mesh_gen" to="." method="_on_bn_test_mesh_gen_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_calculate_base_cubes" to="." method="_on_bn_calculate_base_cubes_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_gradient_kernel_code" to="." method="_on_bn_gen_gradient_kernel_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_fixed" to="." method="_on_bn_gen_code_glsl_fixed_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_gdscript_var" to="." method="_on_bn_gen_code_glsl_var_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_gen_code_glsl_marching_cubes_fixed" to="." method="_on_bn_gen_code_gdscript_pressed"]
