@@ -233,18 +233,19 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	pass
 
 func create_mesh(points:PackedVector3Array, normals:PackedVector3Array)->ArrayMesh:
-	var colors:PackedColorArray
-	for n in normals:
-		n = (n + Vector3.ONE) / 2
-		colors.append(Color(n.x, n.y, n.z, 1))
+	if false:
+		var colors:PackedColorArray
+		for n in normals:
+			n = (n + Vector3.ONE) / 2
+			colors.append(Color(n.x, n.y, n.z, 1))
 	
 	# Initialize the ArrayMesh.
 	var arr_mesh:ArrayMesh = ArrayMesh.new()
 	var arrays = []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = points
-#	arrays[Mesh.ARRAY_NORMAL] = normals
-	arrays[Mesh.ARRAY_COLOR] = colors
+	arrays[Mesh.ARRAY_NORMAL] = normals
+#	arrays[Mesh.ARRAY_COLOR] = colors
 
 	# Create the Mesh.
 	arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)

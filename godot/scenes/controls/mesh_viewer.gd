@@ -35,7 +35,7 @@ func export_gltf():
 
 #	doc.append_from_scene(%mesh, state)
 	doc.append_from_scene($SubViewportContainer/SubViewport/Node3D, state)
-	doc.write_to_filesystem(state, "mesh.glb")
+	doc.write_to_filesystem(state, "../export/mesh.glb")
 	
 #	var root:Node = plugin.get_editor_interface().get_edited_scene_root()
 #	var root_clean:Node3D = clean_flat(root) if %check_flatten.button_pressed else clean_branch(root)
