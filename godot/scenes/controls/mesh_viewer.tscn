@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://xd2y5yyb6mar"]
+[gd_scene load_steps=7 format=3 uid="uid://xd2y5yyb6mar"]
 
 [ext_resource type="Script" path="res://scenes/controls/mesh_viewer.gd" id="1_5w5cq"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="2_565ey"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j4q76"]
 
@@ -45,8 +46,10 @@ environment = SubResource("Environment_1gc1e")
 unique_name_in_owner = true
 mesh = SubResource("CapsuleMesh_pj71k")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, -4, 1, 2)
+[node name="trackball_tumbler" parent="SubViewportContainer/SubViewport/Node3D" instance=ExtResource("2_565ey")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.04076)
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.9392)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/Node3D/trackball_tumbler"]
+transform = Transform3D(1, 0, 0, 0, 0.984463, 0.17559, 0, -0.17559, 0.984463, -0.495212, 0.854301, -0.0937715)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D/trackball_tumbler"]

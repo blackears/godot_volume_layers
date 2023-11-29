@@ -63,6 +63,9 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, img_list_density:
 	var density_tex_rid:RID = create_texture_image_from_image_stack(img_list_density, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
 	
 	var samp_density_state:RDSamplerState = RDSamplerState.new()
+	samp_density_state.repeat_u = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_BORDER
+	samp_density_state.repeat_v = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_BORDER
+	samp_density_state.repeat_w = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_BORDER
 	var samp_density:RID = rd.sampler_create(samp_density_state)
 
 	var uniform_tex_density:RDUniform = RDUniform.new()

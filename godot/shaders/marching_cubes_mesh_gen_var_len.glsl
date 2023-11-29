@@ -700,6 +700,7 @@ void main() {
 	
 		vec3 local_point_pos = (point + pos) / params.grid_size;
 //		vec3 grad = normalize(texture(gradient_tex, local_point_pos).rgb);
+//		vec3 normal = -normalize(texture(gradient_tex, local_point_pos).rgb);
 		vec3 normal = -normalize(texture(gradient_tex, local_point_pos).rgb);
 		
 		params_w_point.values[write_pos + i * 3] = local_point_pos.x;

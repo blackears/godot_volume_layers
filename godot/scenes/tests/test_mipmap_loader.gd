@@ -108,9 +108,9 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
 
 	var start_time_usec = Time.get_ticks_usec()
-	var mesh_size:Vector3i = Vector3i(image_list[0].get_width(), image_list[0].get_height(), image_list.size())
+#	var mesh_size:Vector3i = Vector3i(image_list[0].get_width(), image_list[0].get_height(), image_list.size())
 #	var mesh_size:Vector3i = Vector3i(image_list[0].get_width() / 2, image_list[0].get_height() / 2, image_list.size() / 2)
-#	var mesh_size:Vector3i = Vector3i(64, 64, 64)
+	var mesh_size:Vector3i = Vector3i(64, 64, 64)
 	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, image_list, grad_image_list)
 	var end_time_usec = Time.get_ticks_usec()
 

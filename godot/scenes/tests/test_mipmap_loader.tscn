@@ -84,12 +84,12 @@ size_flags_horizontal = 3
 
 [node name="image_stack_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("2_ollj1")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="mesh_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("3_3ngjk")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/bn_test_gen_mipmaps" to="." method="_on_bn_test_gen_mipmaps_pressed"]
