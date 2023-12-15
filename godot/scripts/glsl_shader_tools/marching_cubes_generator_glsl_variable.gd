@@ -20,12 +20,17 @@ func dispose():
 	mipmap_gen_rgbaf_3d.dispose()
 	pass
 
+func generate_mesh_raw(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
+	var density_tex_rid:RID = create_texture_image_from_image_stack(img_list_density, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
+	var grad_tex_rid:RID = create_texture_image_from_image_stack(img_list_gradient, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
+	return generate_mesh(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
+
 # source_grid_size - dimensions of source image data.  Density and gradient image stacks must both be of this size
 # result_grid_size - number of cells in result marching cubes mesh
 # threshold - surface density threshold
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
-func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, img_list_density:Array[Image], img_list_gradient:Array[Image])->ArrayMesh:
+func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID)->ArrayMesh:
 	
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
@@ -60,8 +65,6 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	uniform_buffer_rw.add_id(param_buffer_rw)
 	
 	#Density texture
-	var density_tex_rid:RID = create_texture_image_from_image_stack(img_list_density, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
-	
 	var samp_density_state:RDSamplerState = RDSamplerState.new()
 	samp_density_state.repeat_u = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_BORDER
 	samp_density_state.repeat_v = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_BORDER
@@ -76,8 +79,6 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	uniform_tex_density.add_id(density_tex_rid)
 	
 	#Gradient texture
-	var grad_tex_rid:RID = create_texture_image_from_image_stack(img_list_gradient, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
-	
 	var samp_grad_state:RDSamplerState = RDSamplerState.new()
 	var samp_grad:RID = rd.sampler_create(samp_grad_state)
 

@@ -138,8 +138,12 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 #	var max_base_dim:int = max(mesh_size_base.x, mesh_size_base.y, mesh_size_base.z)
 #	var mipmap_level:float = max_base_dim * cube_resolution
 	
+	var glsl_util:GLSLUtil = GLSLUtil.new(rd)
+	var density_tex_rid:RID = glsl_util.create_texture_image_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
+	var grad_tex_rid:RID = glsl_util.create_texture_image_from_image_stack(grad_image_list, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
+
 	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, int(mipmap_level), \
-		image_list, grad_image_list)
+		density_tex_rid, grad_tex_rid)
 	var end_time_usec = Time.get_ticks_usec()
 
 	%mesh_viewer.mesh = mesh
@@ -152,8 +156,8 @@ func _on_bn_create_cube_mesh_glsl_var_pressed():
 	pass # Replace with function body.
 
 
-func _on_bn_create_cube_mesh_glsl_fixed_pressed():
-	pass # Replace with function body.
+#func _on_bn_create_cube_mesh_glsl_fixed_pressed():
+	#pass # Replace with function body.
 
 func _on_bn_gen_gradient_kernel_pressed():
 	var s:PackedInt32Array = [1, 2, 1]

@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://bylhfbpma41vf"]
+
+[ext_resource type="PackedScene" uid="uid://cgxnkhpiegm2" path="res://scenes/controls/glsl/marching_cubes_glsl.tscn" id="1_tcmp8"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="2_vbpbm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_25jua"]
+
+[sub_resource type="Sky" id="Sky_icpay"]
+sky_material = SubResource("ProceduralSkyMaterial_25jua")
+
+[sub_resource type="Environment" id="Environment_1y15q"]
+background_mode = 2
+sky = SubResource("Sky_icpay")
+
+[node name="TestGlslMarchingCubes" type="Node3D"]
+
+[node name="MarchingCubesGlsl" parent="." instance=ExtResource("1_tcmp8")]
+image_file = "res://art/iguana/Iguana_png.zip"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1y15q")
+
+[node name="trackball_tumbler" parent="." instance=ExtResource("2_vbpbm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
+
+[node name="Camera3D" type="Camera3D" parent="trackball_tumbler"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="trackball_tumbler"]

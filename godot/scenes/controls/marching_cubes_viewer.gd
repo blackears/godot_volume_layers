@@ -1,6 +1,6 @@
 @tool
 extends Node3D
-class_name MarchinvCubesViewer
+class_name MarchingCubesViewer
 
 @export var material:Material:
 	get:
