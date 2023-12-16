@@ -1,6 +1,6 @@
 @tool
 extends Node3D
-class_name MarchingCubesGlsl
+class_name MarchingCubesViewerGlsl
 
 @export_file("*.zip") var image_file:String:
 	get:
@@ -52,14 +52,42 @@ func reload_image():
 	var grad_gen:SobelGradientGenerator = SobelGradientGenerator.new(rd)
 	var img_size:Vector3i = ar.get_size()
 	var image_list:Array[Image] = ar.get_image_list().duplicate()
-	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list)
+#	var grad_image_list:Array[Image] = grad_gen.calculate_gradient_from_image_stack(image_list)
 
-	var glsl_util:GLSLUtil = GLSLUtil.new(rd)
-	density_tex_rid = glsl_util.create_texture_image_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
-	grad_tex_rid = glsl_util.create_texture_image_from_image_stack(grad_image_list, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
-	
 	mesh_size_base = Vector3i(image_list[0].get_width(), \
 		image_list[0].get_height(), image_list.size())
+
+	var glsl_util:GLSLUtil = GLSLUtil.new(rd)
+	var image_list_with_mipmaps:Array[Image] = glsl_util.create_mipmaps_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT)
+	#density_tex_rid = glsl_util.create_texture_image_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
+	#grad_tex_rid = glsl_util.create_texture_image_from_image_stack(grad_image_list, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
+	#grad_tex_rid = grad_gen.calculate_gradient_image_from_image(density_tex_rid, mesh_size_base, true)
+	
+	#var count:int = 0
+	#for img in image_list_with_mipmaps:
+		#img.save_png("../export/images/density_%d.png" % count)
+		#count += 1
+		
+	var ss = image_list_with_mipmaps.size()
+		
+	var gradient_list_with_mipmaps:Array[Image]
+	var mipmap_sizes:Array[Vector3i] = GLSLUtil.calc_mipmap_sizes(mesh_size_base)
+	var slice_start:int = 0
+	for size in mipmap_sizes:
+		print("slice_start ", slice_start)
+		var mipmap_stack:Array[Image] = image_list_with_mipmaps.slice(slice_start, slice_start + size.z)
+		var grad_img:Array[Image] = grad_gen.calculate_gradient_from_image_stack(mipmap_stack)
+		gradient_list_with_mipmaps.append_array(grad_img)
+		slice_start += size.z
+
+	#count = 0
+	#for img in gradient_list_with_mipmaps:
+		#img.save_png("../export/images/grad_%d.png" % count)
+		#count += 1
+	
+	density_tex_rid = glsl_util.create_texture_image_from_image_stack_with_mipmaps(image_list_with_mipmaps, RenderingDevice.DATA_FORMAT_R32_SFLOAT, mesh_size_base, mipmap_sizes.size())
+	grad_tex_rid = glsl_util.create_texture_image_from_image_stack_with_mipmaps(gradient_list_with_mipmaps, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, mesh_size_base, mipmap_sizes.size())
+	
 		
 	var min_dim:float = min(mesh_size_base.x, mesh_size_base.y, mesh_size_base.z)
 

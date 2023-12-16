@@ -25,7 +25,7 @@ static func calc_mipmap_sizes_recursive(size:Vector3i, result:Array[Vector3i]):
 	var next_size:Vector3i = Vector3i(\
 		max(size.x >> 1, 1), \
 		max(size.y >> 1, 1), \
-		max(size.x >> 1, 1))
+		max(size.z >> 1, 1))
 	
 	calc_mipmap_sizes_recursive(next_size, result)
 
@@ -53,7 +53,64 @@ static func get_format_bytes_per_pixel(format:RenderingDevice.DataFormat)->int:
 			push_error("Unhandled format")
 			return 0
 
-#func create_texture_image(size:Vector3i):
+func create_mipmaps_from_image_stack(img_list:Array[Image], format:RenderingDevice.DataFormat)->Array[Image]:
+	var img_format:Image.Format = get_image_format(format)
+	
+	var data_buffer:PackedByteArray
+	for img in img_list:
+		var cur_format:Image.Format = img.get_format()
+		if cur_format != img_format:
+			push_error("Images must be in " + str(img_format) + " format")
+			
+		var local_data:PackedByteArray = img.get_data()
+		data_buffer.append_array(local_data)
+		
+	
+	var mipmap_img_list:Array[Image]
+	var num_layers:int
+	
+	mipmap_img_list.append_array(img_list)
+	
+	if format == RenderingDevice.DATA_FORMAT_R32_SFLOAT:
+		var images:Array[Image] = mipmap_gen_rf_3d.calculate(img_list)
+		mipmap_img_list.append_array(images)
+	if format == RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT:
+		var images:Array[Image] = mipmap_gen_rgbaf_3d.calculate(img_list)
+		mipmap_img_list.append_array(images)
+	
+	return mipmap_img_list
+	
+func create_texture_image_from_image_stack_with_mipmaps(img_list:Array[Image], format:RenderingDevice.DataFormat, size:Vector3i, num_layers:int)->RID:
+	var img_format:Image.Format = get_image_format(format)
+	
+	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
+	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_3D
+	fmt_tex_out.width = size.x
+	fmt_tex_out.height = size.y
+	fmt_tex_out.depth = size.z
+	fmt_tex_out.mipmaps = num_layers
+	fmt_tex_out.format = format
+	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
+		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
+		| RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
+		
+	var view:RDTextureView = RDTextureView.new()
+		
+
+	var data_buffer:PackedByteArray
+	for img in img_list:
+		var cur_format:Image.Format = img.get_format()
+		if cur_format != img_format:
+			push_error("Images must be in " + str(img_format) + " format")
+			
+		var local_data:PackedByteArray = img.get_data()
+		data_buffer.append_array(local_data)
+		
+	var tex_layer_rid:RID = rd.texture_create(fmt_tex_out, view, [data_buffer])
+
+	return tex_layer_rid
+	
+		
 func create_texture_image_from_image_stack(img_list:Array[Image], format:RenderingDevice.DataFormat, gen_mipmaps:bool)->RID:
 	var size:Vector3i = Vector3i(img_list[0].get_width(), img_list[0].get_height(), img_list.size())
 	var img_format:Image.Format = get_image_format(format)
@@ -64,10 +121,10 @@ func create_texture_image_from_image_stack(img_list:Array[Image], format:Renderi
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
 	fmt_tex_out.mipmaps = 1
-#	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.format = format
-#	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT | RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
-	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
+	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
+		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
+		| RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	var view:RDTextureView = RDTextureView.new()
 	
 	var data_buffer:PackedByteArray

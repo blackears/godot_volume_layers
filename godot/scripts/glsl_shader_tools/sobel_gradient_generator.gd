@@ -24,6 +24,9 @@ func _init(rd:RenderingDevice):
 func dispose():
 	rd.free_rid(shader)
 
+
+
+	
 #Images must all be the same size and have image format FORMAT_RF.  If
 # they are not in that format, they will be converted to that format.
 func calculate_gradient_from_image_stack(img_list:Array[Image])->Array[Image]:
@@ -56,7 +59,7 @@ func calculate_gradient_from_image_stack(img_list:Array[Image])->Array[Image]:
 	
 	return result_img_list
 
-func calculate_gradient(tex_layer_rid:RID, size:Vector3i):
+func calculate_gradient(tex_layer_rid:RID, size:Vector3i)->Array[Image]:
 	var pipeline:RID = rd.compute_pipeline_create(shader)
 	
 	#Source image
