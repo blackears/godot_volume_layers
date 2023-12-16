@@ -5,3 +5,5 @@
 /godot/cube_code_glsl_fixed.txt
 /godot/cube_code_glsl_var.txt
 /godot/scenes/tests/*.tmp
+/bugs
+/godot/dump_buffer.txt

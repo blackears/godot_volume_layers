@@ -118,32 +118,6 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	uniform_buffer_w_normal.binding = 5
 	uniform_buffer_w_normal.add_id(param_buffer_w_normal)
 	
-#	var fmt_tex_out:RDTextureFormat = RDTextureFormat.new()
-#	fmt_tex_out.texture_type = RenderingDevice.TEXTURE_TYPE_1D
-#	fmt_tex_out.width = buffer_out_size / (4 * 4)
-#	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
-#	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT \
-#		| RenderingDevice.TEXTURE_USAGE_STORAGE_BIT \
-#		| RenderingDevice.TEXTURE_USAGE_CPU_READ_BIT \
-#		| RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT
-#	var view:RDTextureView = RDTextureView.new()
-	
-	#Out points
-#	var out_points_tex:RID = rd.texture_create(fmt_tex_out, view, [out_buffer_data])
-#
-#	var out_points_tex_uniform:RDUniform = RDUniform.new()
-#	out_points_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
-#	out_points_tex_uniform.binding = 4
-#	out_points_tex_uniform.add_id(out_points_tex)
-	
-	#Out normals
-#	var out_normals_tex:RID = rd.texture_create(fmt_tex_out, view, [out_buffer_data.duplicate()])
-#
-#	var out_normals_tex_uniform:RDUniform = RDUniform.new()
-#	out_normals_tex_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_IMAGE
-#	out_normals_tex_uniform.binding = 5
-#	out_normals_tex_uniform.add_id(out_normals_tex)
-	
 	####
 	#Set uniforms
 #	var uniform_set = rd.uniform_set_create([buffer_ro_uniform, buffer_rw_uniform, tex_density_uniform, tex_grad_uniform, out_points_tex_uniform, out_normals_tex_uniform], marching_cubes_shader_rid, 0)
@@ -174,7 +148,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	var param_rw_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_rw, 0)
 	var param_rw_int_data:PackedInt32Array = param_rw_byte_data.to_int32_array()
 	var num_floats_written:int = param_rw_int_data[0]
-	var uuu:int = param_rw_byte_data.size()
+	#var uuu:int = param_rw_byte_data.size()
 	
 	var param_w_point_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_point, 0)
 	var param_w_point_float_data:PackedFloat32Array = param_w_point_byte_data.to_float32_array()
@@ -182,26 +156,12 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	var param_w_normal_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_normal, 0)
 	var param_w_normal_float_data:PackedFloat32Array = param_w_normal_byte_data.to_float32_array()
 	
-#	var s0 = param_wp_byte_data.slice(0, 100)
-#	var sz = param_wp_byte_data.size()
-#	var fx = param_wp_float_data.size()
-	
-#	var out_point_byte_data:PackedByteArray = rd.texture_get_data(out_points_tex, 0)
-##	var out_point_byte_data:PackedByteArray = rd.buffer_get_data(out_points_tex, 0)
-##	var out_float_data:PackedFloat32Array = out_byte_data.to_float32_array()
-#	var www:int = out_point_byte_data.size()
-#	var out_point_float_data:PackedFloat32Array = out_point_byte_data.to_float32_array()
-#	var out_pt_size = out_point_float_data.size()
-	
-#	var out_normals_byte_data:PackedByteArray = rd.texture_get_data(out_normals_tex, 0)
-#	var out_normals_float_data:PackedFloat32Array = out_normals_byte_data.to_float32_array()
-	
 	
 	#########
 	#########
 	#########
 	#Convert data to format Godot can use
-	var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
+	#var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
 	var points:PackedVector3Array
 	var normals:PackedVector3Array
 	for i in num_floats_written:
@@ -209,14 +169,10 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]))
 		normals.append(Vector3(param_w_normal_float_data[i * 3], \
 			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]))
-#		points.append(Vector3(out_point_float_data[i * 4], out_point_float_data[i * 4 + 1], out_point_float_data[i * 4 + 2]))
-#		normals.append(Vector3(out_normals_float_data[i * 4], out_normals_float_data[i * 4 + 1], out_normals_float_data[i * 4 + 2]))
 
-#		file_dump.store_line("%f %f %f" % [param_w_point_float_data[i * 3], \
-#			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]])
-		file_dump.store_line("%f %f %f" % [param_w_normal_float_data[i * 3], \
-			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]])
-	file_dump.close()
+		#file_dump.store_line("%f %f %f" % [param_w_normal_float_data[i * 3], \
+			#param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]])
+	#file_dump.close()
 
 #	for p in points:
 #		print("point " + str(p))
@@ -225,16 +181,9 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	print("num_points_written ", num_floats_written / 3)
 	var limit_start = 3 * 4090
 	var limit = 3 * 4096
-#	var mesh = create_mesh(points.slice(limit_start, limit), normals.slice(limit_start, limit))
-#	var mesh = create_mesh(points.slice(limit_start, limit), points.slice(limit_start, limit))
 	var mesh = create_mesh(points.slice(0, num_floats_written / 3), normals.slice(0, num_floats_written / 3))
 	return mesh
-#	return create_mesh(points, normals)
 	
-	#var start_of_points_result:PackedFloat32Array = out_point_float_data.slice(0, 16 * 4)
-	#var start_of_normals_result:PackedFloat32Array = out_normals_float_data.slice(0, 16 * 4)
-	
-	pass
 
 func create_mesh(points:PackedVector3Array, normals:PackedVector3Array)->ArrayMesh:
 	if false:
@@ -291,9 +240,7 @@ func create_texture_image_from_image_stack(img_list:Array[Image], format:Renderi
 	fmt_tex_out.height = size.y
 	fmt_tex_out.depth = size.z
 	fmt_tex_out.mipmaps = 1
-#	fmt_tex_out.format = RenderingDevice.DATA_FORMAT_R32_SFLOAT
 	fmt_tex_out.format = format
-#	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_CAN_COPY_FROM_BIT | RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	fmt_tex_out.usage_bits = RenderingDevice.TEXTURE_USAGE_CAN_UPDATE_BIT | RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	var view:RDTextureView = RDTextureView.new()
 	

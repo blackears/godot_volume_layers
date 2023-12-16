@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends Node3D
 class_name MarchingCubesViewerGlsl
 
@@ -37,6 +37,10 @@ var flag_update_mesh:bool = false
 var density_tex_rid:RID
 var grad_tex_rid:RID
 var mesh_size_base:Vector3i
+
+enum BuildState { IDLE, BUILDING, DONE }
+var mesh_build_state:BuildState = BuildState.IDLE
+var mutex:Mutex = Mutex.new()
 
 var rd:RenderingDevice
 
@@ -95,6 +99,18 @@ func reload_image():
 	xform = xform.translated_local(Vector3(-.5, -.5, -.5))
 	%mesh.transform = xform
 
+#class BuildMestTool extends RefCounted:
+	#signal done
+	#var thread:Thread = Thread.new()
+	#var work:Callable
+	#
+	#func start(callable:Callable):
+		#thread.start(do_work)
+	#
+	#func do_work():
+		#work.call()
+		#done.emit()
+
 func build_mesh():
 	if cube_resolution <= 0:
 		return
@@ -121,6 +137,14 @@ func build_mesh():
 	
 	#await %mesh_viewer.updated
 	#%mesh_viewer.export_gltf()
+	#mutex.lock()
+	if mesh_build_state != BuildState.BUILDING:
+		push_error("Should be in BUILDING state")
+	print("set mesh_build_state = BuildState.DONE")
+	mesh_build_state = BuildState.DONE
+	#mutex.lock()
+	
+	#call_deferred("")
 	
 	pass # Replace with function body.
 	pass
@@ -154,16 +178,34 @@ func _process(delta):
 			flag_reload_image_file = false
 			flag_update_mesh = true
 		
+	#mutex.lock()
+	
 	if flag_update_mesh:
-		print("flag_update_mesh %d" % count)
-		count += 1
-		if !thread_build_mesh:
+		#print("flag_update_mesh %d" % count)
+		#count += 1
+		if mesh_build_state == BuildState.IDLE:
 			print("start thread")
+			flag_update_mesh = false
+			mesh_build_state = BuildState.BUILDING
 			thread_build_mesh = Thread.new()
 			thread_build_mesh.start(build_mesh)
-			await thread_build_mesh.wait_to_finish()
-			thread_build_mesh = null
-			print("end thread")
+			pass
 			
-			flag_update_mesh = false
+	if mesh_build_state == BuildState.DONE:
+		print("end thread")
+		thread_build_mesh.wait_to_finish()
+		thread_build_mesh = null
+		mesh_build_state = BuildState.IDLE
+		
+	#mutex.unlock()
+		
+		#if !thread_build_mesh:
+			#print("start thread")
+			#thread_build_mesh = Thread.new()
+			#thread_build_mesh.start(build_mesh)
+			#await thread_build_mesh.wait_to_finish()
+			#thread_build_mesh = null
+			#print("end thread")
+			
+#			flag_update_mesh = false
 	pass

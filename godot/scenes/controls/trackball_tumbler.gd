@@ -10,6 +10,7 @@ var drag_style:DragStyle = DragStyle.NONE
 
 var yaw_start:float
 var pitch_start:float
+var zoom_amount:float = .2
 
 func calc_pitch_yaw(pos:Vector3, focus_point:Vector3):
 	var offset:Vector3 = pos - focus_point
@@ -56,7 +57,7 @@ func _unhandled_input(event):
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				var len:float = global_position.distance_to(focus)
 
-				var new_len:float = len - 1
+				var new_len:float = len - zoom_amount
 				var offset:Vector3 = global_position - focus
 				var new_offset:Vector3 = offset.normalized() * new_len
 				global_position = focus + new_offset
@@ -65,7 +66,7 @@ func _unhandled_input(event):
 			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				var len:float = global_position.distance_to(focus)
 
-				var new_len:float = len + 1
+				var new_len:float = len + zoom_amount
 				var offset:Vector3 = global_position - focus
 				var new_offset:Vector3 = offset.normalized() * new_len
 				global_position = focus + new_offset

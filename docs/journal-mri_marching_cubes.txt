@@ -1,0 +1,4 @@
+creating CPU version of algorithm
+
+realizing that algorithm is wrong.  Fixing by taking face color into consideration.
+
