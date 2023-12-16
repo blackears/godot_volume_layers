@@ -68,6 +68,10 @@ func reload_image():
 	%mesh.transform = xform
 
 func build_mesh():
+	if cube_resolution <= 0:
+		return
+	if threshold <= 0 || threshold >= 1:
+		return
 	
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
 
@@ -79,7 +83,7 @@ func build_mesh():
 	var mesh_size:Vector3i = mipmap_sizes[int(mipmap_level)]
 	
 
-	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, .5, int(mipmap_level), \
+	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, threshold, int(mipmap_level), \
 		density_tex_rid, grad_tex_rid)
 	var end_time_msec = Time.get_ticks_msec()
 
@@ -96,16 +100,42 @@ func build_mesh():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rd = RenderingServer.create_local_rendering_device()
+	
+	var image_load_thread = Thread.new()
+	image_load_thread.start(func(): pass)
+	
 	pass # Replace with function body.
 
 
+#var mutex:Mutex = Mutex.new()
+var thread_reload_image:Thread
+var thread_build_mesh:Thread
+var count:int = 0
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if flag_reload_image_file:
-		reload_image()
-		flag_reload_image_file = false
+		#mutex.lock()
+		if !thread_reload_image:
+			thread_reload_image = Thread.new()
+			thread_reload_image.start(reload_image)
+			await thread_reload_image.wait_to_finish()
+		#mutex.unlock()
+			thread_reload_image = null
+		
+		#reload_image()
+			flag_reload_image_file = false
+			flag_update_mesh = true
 		
 	if flag_update_mesh:
-		build_mesh()
-		flag_update_mesh = false
+		print("flag_update_mesh %d" % count)
+		count += 1
+		if !thread_build_mesh:
+			print("start thread")
+			thread_build_mesh = Thread.new()
+			thread_build_mesh.start(build_mesh)
+			await thread_build_mesh.wait_to_finish()
+			thread_build_mesh = null
+			print("end thread")
+			
+			flag_update_mesh = false
 	pass
