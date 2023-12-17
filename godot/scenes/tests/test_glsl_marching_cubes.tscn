@@ -18,6 +18,7 @@ script = ExtResource("1_5lhal")
 
 [node name="MarchingCubesGlsl" parent="." instance=ExtResource("1_tcmp8")]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 image_file = "res://art/iguana/Iguana_png.zip"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
