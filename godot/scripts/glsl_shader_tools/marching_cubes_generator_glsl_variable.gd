@@ -31,6 +31,7 @@ func generate_mesh_raw(result_grid_size:Vector3i, threshold:float, mipmap_lod:fl
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
 func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID)->ArrayMesh:
+	var start_time:int = Time.get_ticks_msec()
 	
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
@@ -97,7 +98,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	#var scale_factor:float = 1 # estimate output buffer size based on grid size
 	var triangle_data_size:int = 3 * 4 * 4 # points per tri * floats per point * bytes per float
 	var buffer_out_size:int = int(num_grid_cells * scale_factor) * triangle_data_size
-	print("buffer_out_size ", buffer_out_size)
+	#print("buffer_out_size ", buffer_out_size)
 
 	var out_point_buffer_data:PackedByteArray
 	out_point_buffer_data.resize(buffer_out_size)
@@ -143,6 +144,8 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 		rd.sync()
 		rd.full_barrier()
 		#rd.barrier(RenderingDevice.BARRIER_MASK_COMPUTE)
+
+	var shader_done_time:int = Time.get_ticks_msec()
 	
 	#Get results
 	var param_rw_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_rw, 0)
@@ -177,11 +180,18 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 #	for p in points:
 #		print("point " + str(p))
 
-	print("num_floats_written ", num_floats_written)
-	print("num_points_written ", num_floats_written / 3)
+	#print("num_floats_written ", num_floats_written)
+	#print("num_points_written ", num_floats_written / 3)
 	var limit_start = 3 * 4090
 	var limit = 3 * 4096
 	var mesh = create_mesh(points.slice(0, num_floats_written / 3), normals.slice(0, num_floats_written / 3))
+	
+	var build_mesh_done_time:int = Time.get_ticks_msec()
+	
+	print("time running shader msec:", (shader_done_time - start_time))
+	print("time building mesh msec:", (build_mesh_done_time - shader_done_time))
+	print("time total msec:", (build_mesh_done_time - start_time))
+	
 	return mesh
 	
 

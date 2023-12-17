@@ -38,12 +38,13 @@ var density_tex_rid:RID
 var grad_tex_rid:RID
 var mesh_size_base:Vector3i
 
-enum BuildState { IDLE, BUILDING, DONE }
-var mesh_build_state:BuildState = BuildState.IDLE
-var mutex:Mutex = Mutex.new()
+#enum BuildState { IDLE, BUILDING, DONE }
+#var mesh_build_state:BuildState = BuildState.IDLE
+#var mutex:Mutex = Mutex.new()
 
 var rd:RenderingDevice
 
+var mesh_build_tool:MeshBuilderTool
 
 func reload_image():
 	if !FileAccess.file_exists(image_file):
@@ -119,7 +120,7 @@ func build_mesh():
 	
 	var cube_gen:MarchingCubesGeneratorGLSLVariable = MarchingCubesGeneratorGLSLVariable.new(rd)
 
-	var start_time_msec = Time.get_ticks_msec()
+	#var start_time_msec = Time.get_ticks_msec()
 	#var mesh_size_base:Vector3i = Vector3i(image_list[0].get_width(), \
 		#image_list[0].get_height(), image_list.size())
 	var mipmap_sizes:Array[Vector3i] = GLSLUtil.calc_mipmap_sizes(mesh_size_base)
@@ -129,20 +130,17 @@ func build_mesh():
 
 	var mesh:ArrayMesh = cube_gen.generate_mesh(mesh_size, threshold, int(mipmap_level), \
 		density_tex_rid, grad_tex_rid)
-	var end_time_msec = Time.get_ticks_msec()
+	#var end_time_msec = Time.get_ticks_msec()
 
 	%mesh.mesh = mesh
-	print("time delta msec ", (end_time_msec - start_time_msec))
+	#print("time delta msec ", (end_time_msec - start_time_msec))
 	#var dens_tex_rid:RID = cube_gen.create_texture_image_from_image_stack(image_list, true)
 	
-	#await %mesh_viewer.updated
-	#%mesh_viewer.export_gltf()
 	#mutex.lock()
-	if mesh_build_state != BuildState.BUILDING:
-		push_error("Should be in BUILDING state")
-	print("set mesh_build_state = BuildState.DONE")
-	mesh_build_state = BuildState.DONE
-	#mutex.lock()
+	#if mesh_build_state != BuildState.BUILDING:
+		#push_error("Should be in BUILDING state")
+	#print("set mesh_build_state = BuildState.DONE")
+	#mesh_build_state = BuildState.DONE
 	
 	#call_deferred("")
 	
@@ -155,47 +153,92 @@ func _ready():
 	
 	var image_load_thread = Thread.new()
 	image_load_thread.start(func(): pass)
-	
+
+	mesh_build_tool	= MeshBuilderTool.new(self)
 	pass # Replace with function body.
 
 
 #var mutex:Mutex = Mutex.new()
-var thread_reload_image:Thread
-var thread_build_mesh:Thread
-var count:int = 0
+#var thread_reload_image:Thread
+#var thread_build_mesh:Thread
+#var count:int = 0
+
+class MeshBuilderTool extends RefCounted:
+	signal done
+	
+	var thread:Thread
+	var node:MarchingCubesViewerGlsl
+	var flag_rebuild:bool = false
+	var mutex:Mutex
+	
+	func _init(node:MarchingCubesViewerGlsl):
+		self.node = node
+		mutex = Mutex.new()
+		thread = Thread.new()
+		thread.start(main_loop)
+	
+	func rebuild():
+		mutex.lock()
+		flag_rebuild = true
+		mutex.unlock()
+		
+	
+	func main_loop():
+		while true:
+			mutex.lock()
+			var needs_update:bool = flag_rebuild
+			if needs_update:
+				flag_rebuild = false
+			mutex.unlock()
+			
+			if needs_update:
+				node.build_mesh()
+				done.emit()
+			
+			OS.delay_msec(100)
+		
+		pass
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if flag_reload_image_file:
-		#mutex.lock()
-		if !thread_reload_image:
-			thread_reload_image = Thread.new()
-			thread_reload_image.start(reload_image)
-			await thread_reload_image.wait_to_finish()
-		#mutex.unlock()
-			thread_reload_image = null
+		reload_image()
+		flag_reload_image_file = false
+		flag_update_mesh = true
 		
-		#reload_image()
-			flag_reload_image_file = false
-			flag_update_mesh = true
+		#mutex.lock()
+		#if !thread_reload_image:
+			#thread_reload_image = Thread.new()
+			#thread_reload_image.start(reload_image)
+			#await thread_reload_image.wait_to_finish()
+		##mutex.unlock()
+			#thread_reload_image = null
+		#
+		##reload_image()
+			#flag_reload_image_file = false
+			#flag_update_mesh = true
 		
 	#mutex.lock()
 	
 	if flag_update_mesh:
+		mesh_build_tool.rebuild()
+		flag_update_mesh = false
+		
 		#print("flag_update_mesh %d" % count)
 		#count += 1
-		if mesh_build_state == BuildState.IDLE:
-			print("start thread")
-			flag_update_mesh = false
-			mesh_build_state = BuildState.BUILDING
-			thread_build_mesh = Thread.new()
-			thread_build_mesh.start(build_mesh)
-			pass
-			
-	if mesh_build_state == BuildState.DONE:
-		print("end thread")
-		thread_build_mesh.wait_to_finish()
-		thread_build_mesh = null
-		mesh_build_state = BuildState.IDLE
+		#if mesh_build_state == BuildState.IDLE:
+			#print("start thread")
+			#flag_update_mesh = false
+			#mesh_build_state = BuildState.BUILDING
+			#thread_build_mesh = Thread.new()
+			#thread_build_mesh.start(build_mesh)
+			#pass
+			#
+	#if mesh_build_state == BuildState.DONE:
+		#print("end thread")
+		#thread_build_mesh.wait_to_finish()
+		#thread_build_mesh = null
+		#mesh_build_state = BuildState.IDLE
 		
 	#mutex.unlock()
 		
