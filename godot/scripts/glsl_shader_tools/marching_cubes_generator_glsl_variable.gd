@@ -217,11 +217,14 @@ func run_mesh_shader(result_grid_size:Vector3i, threshold:float, mipmap_lod:floa
 	#########
 	
 func create_mesh(points:PackedVector3Array, normals:PackedVector3Array)->ArrayMesh:
-	if false:
-		var colors:PackedColorArray
-		for n in normals:
-			n = (n + Vector3.ONE) / 2
-			colors.append(Color(n.x, n.y, n.z, 1))
+	#if false:
+		#var colors:PackedColorArray
+		#for n in normals:
+			#n = (n + Vector3.ONE) / 2
+			#colors.append(Color(n.x, n.y, n.z, 1))
+	
+	if points.is_empty() || normals.is_empty():
+		return
 	
 	# Initialize the ArrayMesh.
 	var arr_mesh:ArrayMesh = ArrayMesh.new()

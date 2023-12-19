@@ -40,3 +40,11 @@ func _on_save_dialog_file_selected(save_path:String):
 	doc.append_from_scene(%MarchingCubesGlsl, state)
 	doc.write_to_filesystem(state, path)
 		
+
+
+func _on_bn_load_pressed():
+	%load_dialog.popup_centered()
+
+
+func _on_load_dialog_file_selected(path):
+	pass # Replace with function body.
