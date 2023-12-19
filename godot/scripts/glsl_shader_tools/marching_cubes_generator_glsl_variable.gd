@@ -11,6 +11,9 @@ var param_w_point_float_data:PackedFloat32Array
 var param_w_normal_float_data:PackedFloat32Array
 var param_rw_int_data:PackedInt32Array
 
+#Start with small buffer size.  This will expand as more data is needed.
+var output_buffer_size:int = 300
+
 func _init(rd:RenderingDevice):
 	super._init(rd)
 	mipmap_gen_rf_3d = MipmapGenerator_rf_3d.new(rd)
@@ -39,12 +42,17 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	
 	
 	var num_floats_written:int = param_rw_int_data[0]
+	if num_floats_written > output_buffer_size:
+		output_buffer_size = num_floats_written
+		print("num floats ", num_floats_written)
+		run_mesh_shader(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
+		num_floats_written = param_rw_int_data[0]
 	
 	#Convert data to format Godot can use
 	#var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
 	var points:PackedVector3Array
 	var normals:PackedVector3Array
-	for i in num_floats_written:
+	for i in num_floats_written / 3:
 		points.append(Vector3(param_w_point_float_data[i * 3], \
 			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]))
 		normals.append(Vector3(param_w_normal_float_data[i * 3], \
@@ -136,12 +144,14 @@ func run_mesh_shader(result_grid_size:Vector3i, threshold:float, mipmap_lod:floa
 	##################
 	##################
 	#Output buffers
-	var num_grid_cells:int = result_grid_size.x * result_grid_size.y * result_grid_size.z
-	#3.65  3.68
-	var scale_factor:float = 4.02 # estimate output buffer size based on grid size
-	#var scale_factor:float = 1 # estimate output buffer size based on grid size
-	var triangle_data_size:int = 3 * 4 * 4 # points per tri * floats per point * bytes per float
-	var buffer_out_size:int = int(num_grid_cells * scale_factor) * triangle_data_size
+	#var num_grid_cells:int = result_grid_size.x * result_grid_size.y * result_grid_size.z
+	##3.65  3.68
+	#var scale_factor:float = 4.02 # estimate output buffer size based on grid size
+	##var scale_factor:float = 1 # estimate output buffer size based on grid size
+	#var triangle_data_size:int = 3 * 4 * 4 # points per tri * floats per point * bytes per float
+	#var buffer_out_size:int = int(num_grid_cells * scale_factor) * triangle_data_size
+	
+	var buffer_out_size:int = output_buffer_size * 4
 	#print("buffer_out_size ", buffer_out_size)
 
 	var out_point_buffer_data:PackedByteArray
