@@ -39,7 +39,7 @@ layout(set = 0, binding = 0, std430) restrict readonly buffer ParamBufferRO {
 params;
 
 layout(set = 0, binding = 1, std430) restrict buffer ParamBufferRW {
-	int num_vertices;
+	int num_floats_written;
 }
 params_rw;
 
@@ -648,17 +648,7 @@ void main() {
 	vec3 c101 = (pos + vec3(1, 0, 1)) / params.grid_size;
 	vec3 c011 = (pos + vec3(0, 1, 1)) / params.grid_size;
 	vec3 c111 = (pos + vec3(1, 1, 1)) / params.grid_size;
-	/*
-	float s0 = texture(density_tex, c000).r;
-	float s1 = texture(density_tex, c100).r;
-	float s2 = texture(density_tex, c010).r;
-	float s3 = texture(density_tex, c110).r;
-	float s4 = texture(density_tex, c001).r;
-	float s5 = texture(density_tex, c101).r;
-	float s6 = texture(density_tex, c011).r;
-	float s7 = texture(density_tex, c111).r;
-	*/
-	//float mipmap_lod = 0;
+
 	float mipmap_lod = params.mipmap_lod;
 
 	float s0 = textureLod(density_tex, c000, mipmap_lod).r;
@@ -678,8 +668,6 @@ void main() {
 		| (s5 > params.threshold ? 0x20 : 0)
 		| (s6 > params.threshold ? 0x40 : 0)
 		| (s7 > params.threshold ? 0x80 : 0);
-	
-//cube_index = 1;
 	
 	if (cube_index == 0 || cube_index == 0xff) {
 		//early exit
@@ -705,7 +693,7 @@ void main() {
 
 	int read_pos = tessellation_offsets[cube_index];
 	int num_points = tessellation_offsets[cube_index + 1] - read_pos;
-	int write_pos = atomicAdd(params_rw.num_vertices, num_points * 3);
+	int write_pos = atomicAdd(params_rw.num_floats_written, num_points * 3);
 	
 	
 	

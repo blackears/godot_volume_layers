@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_31oro")
 zip_file = "res://art/iguana/Iguana_png.zip"
-shader_load_test = "res://shaders/marching_cubes_mesh_gen_var_len.glsl"
+shader_load_test = "res://shaders/marching_cubes_mesh_preprocess.glsl"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1

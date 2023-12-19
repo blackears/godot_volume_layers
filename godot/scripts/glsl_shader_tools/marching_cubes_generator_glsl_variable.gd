@@ -6,6 +6,10 @@ class_name MarchingCubesGeneratorGLSLVariable
 var mipmap_gen_rf_3d:MipmapGenerator_rf_3d
 var mipmap_gen_rgbaf_3d:MipmapGenerator_RGBAF_3D
 var marching_cubes_shader_rid:RID
+	
+var param_w_point_float_data:PackedFloat32Array
+var param_w_normal_float_data:PackedFloat32Array
+var param_rw_int_data:PackedInt32Array
 
 func _init(rd:RenderingDevice):
 	super._init(rd)
@@ -25,14 +29,54 @@ func generate_mesh_raw(result_grid_size:Vector3i, threshold:float, mipmap_lod:fl
 	var grad_tex_rid:RID = create_texture_image_from_image_stack(img_list_gradient, RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT, true)
 	return generate_mesh(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
 
+
+func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID)->ArrayMesh:
+	var start_time:int = Time.get_ticks_msec()
+	
+	run_mesh_shader(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
+
+	var shader_done_time:int = Time.get_ticks_msec()
+	
+	
+	var num_floats_written:int = param_rw_int_data[0]
+	
+	#Convert data to format Godot can use
+	#var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
+	var points:PackedVector3Array
+	var normals:PackedVector3Array
+	for i in num_floats_written:
+		points.append(Vector3(param_w_point_float_data[i * 3], \
+			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]))
+		normals.append(Vector3(param_w_normal_float_data[i * 3], \
+			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]))
+
+		#file_dump.store_line("%f %f %f" % [param_w_normal_float_data[i * 3], \
+			#param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]])
+	#file_dump.close()
+
+#	for p in points:
+#		print("point " + str(p))
+
+	#print("num_floats_written ", num_floats_written)
+	#print("num_points_written ", num_floats_written / 3)
+	var limit_start = 3 * 4090
+	var limit = 3 * 4096
+	var mesh = create_mesh(points.slice(0, num_floats_written / 3), normals.slice(0, num_floats_written / 3))
+	
+	var build_mesh_done_time:int = Time.get_ticks_msec()
+	
+	print("time running shader msec:", (shader_done_time - start_time))
+	print("time building mesh msec:", (build_mesh_done_time - shader_done_time))
+	print("time total msec:", (build_mesh_done_time - start_time))
+	
+	return mesh
+
 # source_grid_size - dimensions of source image data.  Density and gradient image stacks must both be of this size
 # result_grid_size - number of cells in result marching cubes mesh
 # threshold - surface density threshold
 # img_list_density - image stack with 3d density data
 # img_list_gradient - image stack with 3d gradient data
-func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID)->ArrayMesh:
-	var start_time:int = Time.get_ticks_msec()
-	
+func run_mesh_shader(result_grid_size:Vector3i, threshold:float, mipmap_lod:float, density_tex_rid:RID, grad_tex_rid:RID):
 	#Create buffer for read only parameters
 	var param_ro_buf:PackedByteArray
 	param_ro_buf.resize(8 * 4)
@@ -145,56 +189,23 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 		rd.full_barrier()
 		#rd.barrier(RenderingDevice.BARRIER_MASK_COMPUTE)
 
-	var shader_done_time:int = Time.get_ticks_msec()
-	
 	#Get results
 	var param_rw_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_rw, 0)
-	var param_rw_int_data:PackedInt32Array = param_rw_byte_data.to_int32_array()
-	var num_floats_written:int = param_rw_int_data[0]
+	param_rw_int_data = param_rw_byte_data.to_int32_array()
+#	var num_floats_written:int = param_rw_int_data[0]
 	#var uuu:int = param_rw_byte_data.size()
 	
 	var param_w_point_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_point, 0)
-	var param_w_point_float_data:PackedFloat32Array = param_w_point_byte_data.to_float32_array()
+	param_w_point_float_data = param_w_point_byte_data.to_float32_array()
 	
 	var param_w_normal_byte_data:PackedByteArray = rd.buffer_get_data(param_buffer_w_normal, 0)
-	var param_w_normal_float_data:PackedFloat32Array = param_w_normal_byte_data.to_float32_array()
+	param_w_normal_float_data = param_w_normal_byte_data.to_float32_array()
 	
 	
 	#########
 	#########
 	#########
-	#Convert data to format Godot can use
-	#var file_dump:FileAccess = FileAccess.open("dump_buffer.txt", FileAccess.WRITE)
-	var points:PackedVector3Array
-	var normals:PackedVector3Array
-	for i in num_floats_written:
-		points.append(Vector3(param_w_point_float_data[i * 3], \
-			param_w_point_float_data[i * 3 + 1], param_w_point_float_data[i * 3 + 2]))
-		normals.append(Vector3(param_w_normal_float_data[i * 3], \
-			param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]))
-
-		#file_dump.store_line("%f %f %f" % [param_w_normal_float_data[i * 3], \
-			#param_w_normal_float_data[i * 3 + 1], param_w_normal_float_data[i * 3 + 2]])
-	#file_dump.close()
-
-#	for p in points:
-#		print("point " + str(p))
-
-	#print("num_floats_written ", num_floats_written)
-	#print("num_points_written ", num_floats_written / 3)
-	var limit_start = 3 * 4090
-	var limit = 3 * 4096
-	var mesh = create_mesh(points.slice(0, num_floats_written / 3), normals.slice(0, num_floats_written / 3))
 	
-	var build_mesh_done_time:int = Time.get_ticks_msec()
-	
-	print("time running shader msec:", (shader_done_time - start_time))
-	print("time building mesh msec:", (build_mesh_done_time - shader_done_time))
-	print("time total msec:", (build_mesh_done_time - start_time))
-	
-	return mesh
-	
-
 func create_mesh(points:PackedVector3Array, normals:PackedVector3Array)->ArrayMesh:
 	if false:
 		var colors:PackedColorArray
