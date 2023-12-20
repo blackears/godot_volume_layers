@@ -47,4 +47,5 @@ func _on_bn_load_pressed():
 
 
 func _on_load_dialog_file_selected(path):
+	%MarchingCubesGlsl.image_file = path
 	pass # Replace with function body.
