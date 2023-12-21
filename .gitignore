@@ -7,3 +7,7 @@
 /godot/scenes/tests/*.tmp
 /bugs
 /godot/dump_buffer.txt
+/downloads
+/Iguana.nii
+/Iguana_png
+/Iguana.nii.gz
