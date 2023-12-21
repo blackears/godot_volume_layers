@@ -61,10 +61,6 @@ var density_tex_rid:RID
 var grad_tex_rid:RID
 var mesh_size_base:Vector3i
 
-#enum BuildState { IDLE, BUILDING, DONE }
-#var mesh_build_state:BuildState = BuildState.IDLE
-#var mutex:Mutex = Mutex.new()
-
 var rd:RenderingDevice
 
 var mesh_build_tool:MeshBuilderTool
@@ -85,6 +81,8 @@ func reload_image():
 	mesh_size_base = Vector3i(image_list[0].get_width(), \
 		image_list[0].get_height(), image_list.size())
 
+	#print("mesh_size_base ", mesh_size_base)
+
 	var glsl_util:GLSLUtil = GLSLUtil.new(rd)
 	var image_list_with_mipmaps:Array[Image] = glsl_util.create_mipmaps_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT)
 	#density_tex_rid = glsl_util.create_texture_image_from_image_stack(image_list, RenderingDevice.DATA_FORMAT_R32_SFLOAT, true)
@@ -102,7 +100,7 @@ func reload_image():
 	var mipmap_sizes:Array[Vector3i] = GLSLUtil.calc_mipmap_sizes(mesh_size_base)
 	var slice_start:int = 0
 	for size in mipmap_sizes:
-		print("slice_start ", slice_start)
+		#print("slice_start ", slice_start)
 		var mipmap_stack:Array[Image] = image_list_with_mipmaps.slice(slice_start, slice_start + size.z)
 		var grad_img:Array[Image] = grad_gen.calculate_gradient_from_image_stack(mipmap_stack)
 		gradient_list_with_mipmaps.append_array(grad_img)

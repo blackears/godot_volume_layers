@@ -21,7 +21,7 @@ text = "Load mipmap"
 
 [node name="volume_layers" parent="." instance=ExtResource("2_35raq")]
 texture = ExtResource("3_5ujap")
-num_layers = 200
+num_layers = 400
 
 [node name="trackball_tumbler" parent="." instance=ExtResource("3_w87qo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)

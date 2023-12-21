@@ -18,7 +18,7 @@ gradient = SubResource("Gradient_4ehgp")
 [sub_resource type="BoxMesh" id="BoxMesh_5pn8e"]
 
 [node name="volume_layers" type="Node3D"]
-transform = Transform3D(0.820313, 0, 0, 0, -1, 6.11277e-08, 0, -8.74228e-08, -0.699219, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0, 0)
 script = ExtResource("1_3p0bi")
 texture = SubResource("ImageTexture3D_3ornx")
 num_layers = 100

@@ -10,11 +10,7 @@ class_name VolumeLayers
 			return
 		texture = value
 		rebuild_layers = true
-	
-#@export var size:Vector3 = Vector3.ONE
 
-#@export var density:float
-#@export var density:Curve
 
 @export var num_layers:int = 10:
 	get:
@@ -45,30 +41,6 @@ class_name VolumeLayers
 
 var rebuild_layers:bool = true
 
-#func create_layers():
-	#var vertices = PackedVector3Array()
-	#for i in num_layers:
-		##Point in +z
-		#vertices.push_back(Vector3(-1, -1, float(i) / (num_layers - 1)))
-		#vertices.push_back(Vector3(1, -1, float(i) / (num_layers - 1)))
-		#vertices.push_back(Vector3(1, 1, float(i) / (num_layers - 1)))
-		#
-		#vertices.push_back(Vector3(-1, -1, float(i) / (num_layers - 1)))
-		#vertices.push_back(Vector3(1, 1, float(i) / (num_layers - 1)))
-		#vertices.push_back(Vector3(-1, 1, float(i) / (num_layers - 1)))
-#
-	## Initialize the ArrayMesh.
-	#var arr_mesh = ArrayMesh.new()
-	#var arrays = []
-	#arrays.resize(Mesh.ARRAY_MAX)
-	#arrays[Mesh.ARRAY_VERTEX] = vertices
-#
-	## Create the Mesh.
-	#arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
-	#%mesh.mesh = arr_mesh
-#
-	#pass
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -80,6 +52,8 @@ func _process(delta):
 		var x:float = texture.get_width()
 		var y:float = texture.get_height()
 		var z:float = texture.get_depth()
+		
+		#print("texture.get_width()  ", Vector3i(x, y, z))
 		
 		var basis:Basis = Basis.IDENTITY
 		basis = basis * Basis.from_euler(Vector3(deg_to_rad(90), 0, 0))

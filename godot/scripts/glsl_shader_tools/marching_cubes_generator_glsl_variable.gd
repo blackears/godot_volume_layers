@@ -44,7 +44,7 @@ func generate_mesh(result_grid_size:Vector3i, threshold:float, mipmap_lod:float,
 	var num_floats_written:int = param_rw_int_data[0]
 	if num_floats_written > output_buffer_size:
 		output_buffer_size = num_floats_written
-		print("num floats ", num_floats_written)
+		#print("num floats ", num_floats_written)
 		run_mesh_shader(result_grid_size, threshold, mipmap_lod, density_tex_rid, grad_tex_rid)
 		num_floats_written = param_rw_int_data[0]
 	
