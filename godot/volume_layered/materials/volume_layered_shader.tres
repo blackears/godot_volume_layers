@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b474tuur3w8tn"]
 
-[ext_resource type="Shader" path="res://shaders/volume_shader.gdshader" id="1_jqd0p"]
+[ext_resource type="Shader" path="res://volume_layered/shaders/volume_shader.gdshader" id="1_23fq8"]
 [ext_resource type="Script" path="res://scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="2_lm2af"]
 
 [sub_resource type="Gradient" id="Gradient_4ehgp"]
@@ -17,7 +17,7 @@ zip_file = "res://art/iguana/Iguana_png.zip"
 [resource]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("1_jqd0p")
+shader = ExtResource("1_23fq8")
 shader_parameter/zoom = 2.0
 shader_parameter/layers = 100
 shader_parameter/opacity = 1.0

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://t0n1mrmltp2k"]
 
-[ext_resource type="Script" path="res://scenes/controls/volume_layers.gd" id="1_3p0bi"]
-[ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://materials/standard_material_shader.tres" id="2_ji444"]
+[ext_resource type="Script" path="res://volume_layered/scenes/controls/volume_layers.gd" id="1_3p0bi"]
 [ext_resource type="Script" path="res://scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="3_6sggg"]
+[ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://volume_layered/materials/volume_layered_shader.tres" id="3_17qp1"]
 
 [sub_resource type="ImageTexture3D" id="ImageTexture3D_3ornx"]
 script = ExtResource("3_6sggg")
@@ -28,4 +28,4 @@ gradient = SubResource("GradientTexture1D_yr4w7")
 unique_name_in_owner = true
 transform = Transform3D(1.17318, 0, 0, 0, -6.25146e-08, -1, 0, 1.43017, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("BoxMesh_5pn8e")
-surface_material_override/0 = ExtResource("2_ji444")
+surface_material_override/0 = ExtResource("3_17qp1")
