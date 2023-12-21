@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxodnrolana07"]
+
+[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
+[ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://scenes/controls/volume_layers.tscn" id="2_35raq"]
+[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana.tres" id="3_5ujap"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
+
+[sub_resource type="Environment" id="Environment_1nlpu"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_1q2j1")
+source_images = "res://art/iguana/Iguana_png.zip"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1nlpu")
+
+[node name="bn_load" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Load mipmap"
+
+[node name="volume_layers" parent="." instance=ExtResource("2_35raq")]
+texture = ExtResource("3_5ujap")
+num_layers = 200
+
+[node name="trackball_tumbler" parent="." instance=ExtResource("3_w87qo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
+
+[node name="Camera3D" type="Camera3D" parent="trackball_tumbler"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="trackball_tumbler"]
+
+[connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]

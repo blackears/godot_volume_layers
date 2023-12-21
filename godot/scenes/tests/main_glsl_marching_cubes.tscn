@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bylhfbpma41vf"]
 
-[ext_resource type="Script" path="res://scenes/tests/test_glsl_marching_cubes.gd" id="1_5lhal"]
+[ext_resource type="Script" path="res://scenes/tests/main_glsl_marching_cubes.gd" id="1_5lhal"]
 [ext_resource type="PackedScene" uid="uid://cgxnkhpiegm2" path="res://scenes/controls/glsl/marching_cubes_viewer_glsl.tscn" id="1_tcmp8"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="2_vbpbm"]
 
@@ -20,6 +20,7 @@ script = ExtResource("1_5lhal")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 image_file = "res://art/iguana/Iguana_png.zip"
+cube_resolution = 0.6
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1y15q")

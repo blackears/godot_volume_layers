@@ -1,24 +1,21 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://b474tuur3w8tn"]
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://b474tuur3w8tn"]
 
 [ext_resource type="Shader" path="res://shaders/volume_shader.gdshader" id="1_jqd0p"]
-[ext_resource type="Script" path="res://scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="2_vswpv"]
+[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana.tres" id="2_x5lel"]
 
-[sub_resource type="Gradient" id="Gradient_aspjs"]
-offsets = PackedFloat32Array(0, 0.237154, 0.328063, 0.411067)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+[sub_resource type="Gradient" id="Gradient_4ehgp"]
+offsets = PackedFloat32Array(0, 0.0410256, 1)
+colors = PackedColorArray(0.541176, 0.160784, 0.85098, 0, 0.541176, 0.160784, 0.85098, 0, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_4fdk4"]
-gradient = SubResource("Gradient_aspjs")
-
-[sub_resource type="ImageTexture3D" id="ImageTexture3D_v228f"]
-script = ExtResource("2_vswpv")
-zip_file = "res://art/iguana/Iguana_png.zip"
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yr4w7"]
+gradient = SubResource("Gradient_4ehgp")
 
 [resource]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_jqd0p")
 shader_parameter/zoom = 2.0
-shader_parameter/layers = 200
+shader_parameter/layers = 100
 shader_parameter/opacity = 1.0
-shader_parameter/texture_volume = SubResource("ImageTexture3D_v228f")
-shader_parameter/gradient = SubResource("GradientTexture1D_4fdk4")
+shader_parameter/texture_volume = ExtResource("2_x5lel")
+shader_parameter/gradient = SubResource("GradientTexture1D_yr4w7")

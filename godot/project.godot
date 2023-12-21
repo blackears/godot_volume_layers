@@ -11,6 +11,6 @@ config_version=5
 [application]
 
 config/name="Mri Marching Cubes"
-run/main_scene="res://scenes/tests/test_glsl_marching_cubes.tscn"
+run/main_scene="res://scenes/tests/main_glsl_marching_cubes.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"

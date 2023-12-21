@@ -11,6 +11,11 @@ class_name ZippedImageArchiveCpuTexture3D
 		zip_file = value
 		load_image_from_zip(zip_file)
 
+func _validate_property(property : Dictionary):
+	#Do not write image data to resource file
+	if property.name == "_images":
+		property.usage = PROPERTY_USAGE_NONE
+		
 func add_mipmaps(img_width:int, img_height:int, img_depth:int, img_format:int, parent_images:Array[Image], img_list:Array[Image]):
 	
 	if img_width == 1 && img_height == 1 && img_depth == 1:

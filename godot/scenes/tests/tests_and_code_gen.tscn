@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bs81rsxfkfp6g"]
 
-[ext_resource type="Script" path="res://scenes/tests/test_mipmap_loader.gd" id="1_31oro"]
-[ext_resource type="PackedScene" uid="uid://bxq7xyukuhylf" path="res://scenes/controls/image_stack_viewer.tscn" id="2_ollj1"]
-[ext_resource type="PackedScene" uid="uid://xd2y5yyb6mar" path="res://scenes/controls/mesh_viewer.tscn" id="3_3ngjk"]
+[ext_resource type="Script" path="res://scenes/tests/tests_and_code_gen.gd" id="1_alsi8"]
+[ext_resource type="PackedScene" uid="uid://bxq7xyukuhylf" path="res://scenes/controls/image_stack_viewer.tscn" id="2_k6yej"]
+[ext_resource type="PackedScene" uid="uid://xd2y5yyb6mar" path="res://scenes/controls/mesh_viewer.tscn" id="3_3w4k0"]
 
 [node name="test_mipmap_loader" type="Control"]
 layout_mode = 3
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_31oro")
+script = ExtResource("1_alsi8")
 zip_file = "res://art/iguana/Iguana_png.zip"
 shader_load_test = "res://shaders/marching_cubes_mesh_preprocess.glsl"
 
@@ -74,12 +74,12 @@ text = "Generate cube tables GDScript"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="image_stack_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("2_ollj1")]
+[node name="image_stack_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("2_k6yej")]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="mesh_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("3_3ngjk")]
+[node name="mesh_viewer" parent="HBoxContainer/TabContainer" instance=ExtResource("3_3w4k0")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
