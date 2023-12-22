@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgxnkhpiegm2"]
-
-[ext_resource type="Script" path="res://scenes/controls/glsl/marching_cubes_viewer_glsl.gd" id="1_vm6sv"]
-
-[node name="MarchingCubesGlsl" type="Node3D"]
-script = ExtResource("1_vm6sv")
-
-[node name="mesh" type="MeshInstance3D" parent="."]
-unique_name_in_owner = true

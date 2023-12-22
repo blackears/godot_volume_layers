@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Marching Cubes Viewer"
-run/main_scene="res://scenes/tests/main_glsl_marching_cubes.tscn"
+config/name="Volume "
+run/main_scene="res://volume_layered/main_volume_layered_shader.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
