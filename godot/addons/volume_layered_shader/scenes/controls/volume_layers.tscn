@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://t0n1mrmltp2k"]
 
-[ext_resource type="Script" path="res://volume_layered/scenes/controls/volume_layers.gd" id="1_3p0bi"]
-[ext_resource type="Script" path="res://scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="3_6sggg"]
-[ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://volume_layered/materials/volume_layered_shader.tres" id="3_17qp1"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layers.gd" id="1_3p0bi"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="3_6sggg"]
+[ext_resource type="Material" uid="uid://b474tuur3w8tn" path="res://addons/volume_layered_shader/materials/volume_layered_shader.tres" id="3_17qp1"]
 
 [sub_resource type="ImageTexture3D" id="ImageTexture3D_3ornx"]
 script = ExtResource("3_6sggg")

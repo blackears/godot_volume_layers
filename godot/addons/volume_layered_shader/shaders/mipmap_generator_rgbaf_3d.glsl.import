@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://gqatv0xxvru7"
+path="res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-d9a4dc03df190dbe564cb309f74b4b1d.res"
+
+[deps]
+
+source_file="res://addons/volume_layered_shader/shaders/mipmap_generator_rgbaf_3d.glsl"
+dest_files=["res://.godot/imported/mipmap_generator_rgbaf_3d.glsl-d9a4dc03df190dbe564cb309f74b4b1d.res"]
+
+[params]
+

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bk62samj5dspq"]
 
-[ext_resource type="Script" path="res://scenes/controls/trackball_tumbler.gd" id="1_wryfy"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/trackball_tumbler.gd" id="1_wryfy"]
 
 [node name="trackball_tumbler" type="Node3D"]
 script = ExtResource("1_wryfy")

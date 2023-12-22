@@ -1,6 +1,6 @@
 [gd_resource type="ImageTexture3D" script_class="ZippedImageArchiveCpuTexture3D" load_steps=2 format=3 uid="uid://gweqrs4nsgwa"]
 
-[ext_resource type="Script" path="res://scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="1_y06yw"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="1_y06yw"]
 
 [resource]
 script = ExtResource("1_y06yw")

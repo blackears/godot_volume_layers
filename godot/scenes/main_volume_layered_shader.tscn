@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxodnrolana07"]
 
-[ext_resource type="Script" path="res://volume_layered/main_volume_layered_shader.gd" id="1_1q2j1"]
-[ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://volume_layered/scenes/controls/volume_layers.tscn" id="2_35raq"]
+[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
+[ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://addons/volume_layered_shader/scenes/controls/volume_layers.tscn" id="2_35raq"]
 [ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana.tres" id="3_5ujap"]
-[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://addons/volume_layered_shader/scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 
