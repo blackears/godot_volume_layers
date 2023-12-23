@@ -18,7 +18,7 @@ Create a new instance of the addon by clicking the + button in the Scene window 
 
 You can set the image volume used by clicking in the Texture field and selecting New ZippedImageArchiveCpuTexture3D.  This will create a new 3D texture object with a field called Zip File.  You can now browse to your zip file containing your texture data.
 
-![Inspector shader](docs/inspector_shader.png)
+![Inspector shader](docs/volume_layer_inspector_panel.png)
 
 ## Credits
 
