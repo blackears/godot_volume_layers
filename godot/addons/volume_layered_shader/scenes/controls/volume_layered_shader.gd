@@ -53,7 +53,7 @@ class_name VolumeLayers
 		opacity = value
 		rebuild_layers = true
 
-@export var gradient:GradientTexture1D:
+@export var gradient:GradientTexture1D = preload("res://addons/textures/purple_gradient_texture.tres"):
 	get:
 		return gradient
 	set(value):
@@ -63,15 +63,28 @@ class_name VolumeLayers
 		rebuild_layers = true
 
 var rebuild_layers:bool = true
+var mesh_inst:MeshInstance3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	mesh_inst = MeshInstance3D.new()
+	add_child(mesh_inst)
+	
+	var mesh:BoxMesh = BoxMesh.new()
+	mesh.flip_faces = true
+	mesh_inst.mesh = mesh
+	
+	var mat:Material = preload("res://addons/volume_layered_shader/materials/volume_layered_shader.tres").duplicate()
+	mesh_inst.set_surface_override_material(0, mat)
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if rebuild_layers:
+		if !texture:
+			return
+		
 		var x:float = texture.get_width()
 		var y:float = texture.get_height()
 		var z:float = texture.get_depth()
@@ -79,11 +92,11 @@ func _process(delta):
 		#print("texture.get_width()  ", Vector3i(x, y, z))
 		
 		var basis:Basis = Basis.IDENTITY
-		basis = basis * Basis.from_euler(Vector3(deg_to_rad(90), 0, 0))
+		basis = basis * Basis.from_euler(Vector3(deg_to_rad(-90), 0, 0))
 		basis = basis * Basis.from_scale(Vector3(x, y, z) / min(x, y, z))
-		%mesh.transform = Transform3D(basis)
+		mesh_inst.transform = Transform3D(basis)
 		
-		var mat:ShaderMaterial = %mesh.get_surface_override_material(0)
+		var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
 		mat.set_shader_parameter("texture_volume", texture)
 		mat.set_shader_parameter("layers", num_layers)
 		mat.set_shader_parameter("opacity", opacity)

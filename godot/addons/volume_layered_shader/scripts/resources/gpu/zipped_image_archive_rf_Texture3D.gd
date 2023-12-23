@@ -59,9 +59,17 @@ func load_image_from_archive(archive:ZippedImageArchive_RF_3D):
 	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
 	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
 	var mipmap_images:Array[Image] = gen.calculate(img_list)
-	
-	img_list.append_array(mipmap_images)
 
-	create(Image.FORMAT_RF, size.x, size.y, size.z, true, img_list)
+	create(Image.FORMAT_RF, size.x, size.y, size.z, false, img_list)
+	
+	#img_list.append_array(mipmap_images)
+
+	#var mesh_size_base = Vector3i(img_list[0].get_width(), \
+		#img_list[0].get_height(), img_list.size())
+	#var mipmap_sizes:Array[Vector3i] = GLSLUtil.calc_mipmap_sizes(mesh_size_base)
+
+	#img_list = img_list.slice(0, img_list.size() - 1)
+#
+	#create(Image.FORMAT_RF, size.x, size.y, size.z, true, img_list)
 	
 

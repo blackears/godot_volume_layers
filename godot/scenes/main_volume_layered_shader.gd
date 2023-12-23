@@ -119,6 +119,21 @@ func _process(_delta):
 
 
 func _on_bn_load_pressed():
-	var tex:Texture3D = load_image_from_zip(source_images)
-	print("Loaded")
-	pass # Replace with function body.
+	%popup_load_file.popup_centered()
+
+
+func _on_popup_load_file_file_selected(path):
+	if !FileAccess.file_exists(path):
+		return
+	
+	var tex:ZippedImageArchiveCpuTexture3D = ZippedImageArchiveCpuTexture3D.new()
+	tex.zip_file = path
+	
+	#var archive:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
+	#archive.zip_file = path
+	#
+	#var tex:ZippedImageArchiveRFTexture3D = ZippedImageArchiveRFTexture3D.new()
+	#tex.archive = archive
+	
+	%volume_layers.texture = tex
+

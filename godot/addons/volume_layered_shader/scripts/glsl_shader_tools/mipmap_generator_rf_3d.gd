@@ -32,7 +32,7 @@ func _init(rd:RenderingDevice):
 	super._init(rd)
 	#rd = RenderingServer.create_local_rendering_device()
 
-	var shader_file:RDShaderFile = load("res://shaders/mipmap_generator_rf_3d.glsl")
+	var shader_file:RDShaderFile = load("res://addons/volume_layered_shader/shaders/mipmap_generator_rf_3d.glsl")
 	if !shader_file.base_error.is_empty():
 		push_error("Error loading shader\n", shader_file.base_error)
 		return
@@ -71,6 +71,7 @@ func calculate(img_list:Array[Image])->Array[Image]:
 		var local_data:PackedByteArray = img.get_data()
 		data_buffer.append_array(local_data)
 	
+	#var data_buffer_size:int = data_buffer.size()
 	var tex_layer_rid:RID = rd.texture_create(fmt_tex_out, view, [data_buffer])
 	
 	calc_mipmap_recursive(tex_layer_rid, size, mipmap_img_list)

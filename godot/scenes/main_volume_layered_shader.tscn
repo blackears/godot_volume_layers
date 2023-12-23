@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
-[ext_resource type="PackedScene" uid="uid://t0n1mrmltp2k" path="res://addons/volume_layered_shader/scenes/controls/volume_layers.tscn" id="2_35raq"]
-[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana.tres" id="3_5ujap"]
-[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://addons/volume_layered_shader/scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
+[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana.tres" id="4_563qf"]
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 
@@ -17,11 +17,7 @@ environment = SubResource("Environment_1nlpu")
 [node name="bn_load" type="Button" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
-text = "Load mipmap"
-
-[node name="volume_layers" parent="." instance=ExtResource("2_35raq")]
-texture = ExtResource("3_5ujap")
-num_layers = 400
+text = "Load volume"
 
 [node name="trackball_tumbler" parent="." instance=ExtResource("3_w87qo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
@@ -30,4 +26,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="trackball_tumbler"]
 
+[node name="popup_load_file" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+size = Vector2i(600, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.zip")
+
+[node name="VolumeLayeredShader" type="Node3D" parent="."]
+script = ExtResource("3_37taj")
+texture = ExtResource("4_563qf")
+num_layers = 200
+
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
+[connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]

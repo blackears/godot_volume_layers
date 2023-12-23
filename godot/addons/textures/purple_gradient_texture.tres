@@ -1,0 +1,6 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://bb8bdgbv3lc4m"]
+
+[ext_resource type="Gradient" uid="uid://bd4ldf822hhnh" path="res://addons/textures/purple_gradient.tres" id="1_xupsa"]
+
+[resource]
+gradient = ExtResource("1_xupsa")

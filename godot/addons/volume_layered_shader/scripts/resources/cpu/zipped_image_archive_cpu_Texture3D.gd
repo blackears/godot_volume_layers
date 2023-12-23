@@ -107,6 +107,12 @@ func load_image_from_zip(path:String):
 	#print("num images ", img_list.size())
 	
 	reader.close()
+
+	if true:
+		#TODO: Add mipmaps after https://github.com/godotengine/godot/issues/86423 is fixed
+		create(img_format, img_width, img_height, img_depth, false, img_list)
+		return
+	
 	
 	add_mipmaps(img_width, img_height, img_list.size(), img_format, img_list, img_list)
 
