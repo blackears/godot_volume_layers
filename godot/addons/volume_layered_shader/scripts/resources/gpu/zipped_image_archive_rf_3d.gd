@@ -113,3 +113,4 @@ func read_images_from_zip(path:String):
 #	var mipmap_images:Array[Image] = gen.calculate(img_list)
 #
 #	img_list.append_array(mipmap_images)
+	changed.emit()

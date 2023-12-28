@@ -39,6 +39,15 @@ filters = PackedStringArray("*.zip")
 script = ExtResource("3_37taj")
 texture = ExtResource("4_563qf")
 num_layers = 200
+gamma = 1.274
+color_scalar = 1.236
+
+[node name="VolumeLayeredShader" type="Node3D" parent="VolumeLayeredShader"]
+script = ExtResource("3_37taj")
+texture = ExtResource("4_563qf")
+num_layers = 200
+gamma = 1.274
+color_scalar = 1.236
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]

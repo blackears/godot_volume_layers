@@ -71,5 +71,6 @@ func load_image_from_archive(archive:ZippedImageArchive_RF_3D):
 	#img_list = img_list.slice(0, img_list.size() - 1)
 #
 	#create(Image.FORMAT_RF, size.x, size.y, size.z, true, img_list)
+	changed.emit()
 	
 

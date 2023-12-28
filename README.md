@@ -20,7 +20,7 @@ You can set the image volume used by clicking in the Texture field and selecting
 
 ![Inspector shader](docs/volume_layer_inspector_panel.png)
 
-## Credits
+## Acknowledgments
 
 Iguana MRI data taken from the niivue-images archive:
 

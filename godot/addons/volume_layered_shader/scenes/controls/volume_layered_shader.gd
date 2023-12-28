@@ -31,8 +31,15 @@ class_name VolumeLayers
 	set(value):
 		if texture == value:
 			return
+		
+		if texture:
+			texture.changed.disconnect(on_texture_changed)
+			
 		texture = value
-		rebuild_layers = true
+		
+		if texture:
+			texture.changed.connect(on_texture_changed)
+		
 
 
 @export var num_layers:int = 10:
@@ -44,7 +51,16 @@ class_name VolumeLayers
 		num_layers = value
 		rebuild_layers = true
 
-@export var opacity:float = 1:
+@export_range(0, 4) var gamma:float = 1:
+	get:
+		return gamma
+	set(value):
+		if value == gamma:
+			return
+		gamma = value
+		rebuild_layers = true
+
+@export_range(0, 1) var opacity:float = 1:
 	get:
 		return opacity
 	set(value):
@@ -53,17 +69,29 @@ class_name VolumeLayers
 		opacity = value
 		rebuild_layers = true
 
-@export var gradient:GradientTexture1D = preload("res://addons/textures/purple_gradient_texture.tres"):
+@export_range(0, 4) var color_scalar:float = 1:
+	get:
+		return color_scalar
+	set(value):
+		if value == color_scalar:
+			return
+		color_scalar = value
+		rebuild_layers = true
+
+@export var gradient:GradientTexture1D = preload("res://addons/volume_layered_shader/textures/purple_gradient_texture.tres"):
 	get:
 		return gradient
 	set(value):
 		if value == gradient:
 			return
 		gradient = value
-		rebuild_layers = true
 
 var rebuild_layers:bool = true
 var mesh_inst:MeshInstance3D
+
+func on_texture_changed():
+	rebuild_layers = true
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,7 +99,8 @@ func _ready():
 	add_child(mesh_inst)
 	
 	var mesh:BoxMesh = BoxMesh.new()
-	mesh.flip_faces = true
+#	mesh.flip_faces = true
+	mesh.flip_faces = false
 	mesh_inst.mesh = mesh
 	
 	var mat:Material = preload("res://addons/volume_layered_shader/materials/volume_layered_shader.tres").duplicate()
@@ -89,7 +118,7 @@ func _process(delta):
 		var y:float = texture.get_height()
 		var z:float = texture.get_depth()
 		
-		#print("texture.get_width()  ", Vector3i(x, y, z))
+		#print("texture size  ", Vector3i(x, y, z))
 		
 		var basis:Basis = Basis.IDENTITY
 		basis = basis * Basis.from_euler(Vector3(deg_to_rad(-90), 0, 0))
@@ -100,6 +129,8 @@ func _process(delta):
 		mat.set_shader_parameter("texture_volume", texture)
 		mat.set_shader_parameter("layers", num_layers)
 		mat.set_shader_parameter("opacity", opacity)
+		mat.set_shader_parameter("color_scalar", color_scalar)
+		mat.set_shader_parameter("gamma", gamma)
 		mat.set_shader_parameter("gradient", gradient)
 		
 		#create_layers()

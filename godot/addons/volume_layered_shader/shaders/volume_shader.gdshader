@@ -31,6 +31,8 @@ uniform sampler2D gradient: filter_linear_mipmap,repeat_disable;
 uniform float zoom = 2;
 uniform int layers = 2;
 uniform float opacity = 1;
+uniform float gamma = 1;
+uniform float color_scalar = 1;
 
 varying vec3 pos_local;
 varying vec3 pos_world;
@@ -70,7 +72,10 @@ void fragment() {
 			|| tex_sample_pt.z < 0.0 || tex_sample_pt.z > 1.0)
 			continue;
 		
-		layer_col = texture(gradient, vec2(layer_col.r, 0));
+//		layer_col = texture(gradient, vec2(layer_col.r * pow(2, gamma), 0));
+		layer_col = texture(gradient, vec2(pow(layer_col.r, gamma), 0));
+		layer_col.a *= opacity;
+		layer_col *= color_scalar;
 
 		col = mix(col, layer_col, layer_col.a);
 	}
