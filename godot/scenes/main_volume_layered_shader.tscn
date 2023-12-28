@@ -40,7 +40,7 @@ filters = PackedStringArray("*.zip")
 script = ExtResource("3_37taj")
 texture = ExtResource("4_563qf")
 num_layers = 200
-gamma = 1.178
+gamma = 1.341
 color_scalar = 1.236
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
