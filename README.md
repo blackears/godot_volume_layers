@@ -1,10 +1,12 @@
 # Volume Layers for Godot
 
-![Shader in editor viewport](docs/editor_screenshot.png)
+[![Demo video](https://img.youtube.com/vi/1IvKWIieZPM/0.jpg)](https://www.youtube.com/watch?v=1IvKWIieZPM)
 
 This is an addon for Godot that lets you view volumetric data, such as MRI scans.
 
 This addon uses zipped files of 2D images as source data, so any 3D volumetric files such as.nii will need to be converted to this first.  Online programs such as https://www.onlineconverter.com/nifti-to-png can be used to convert your data.
+
+![Shader in editor viewport](docs/editor_screenshot.png)
 
 ## Installation
 
@@ -19,6 +21,13 @@ Create a new instance of the addon by clicking the + button in the Scene window 
 You can set the image volume used by clicking in the Texture field and selecting New ZippedImageArchiveCpuTexture3D.  This will create a new 3D texture object with a field called Zip File.  You can now browse to your zip file containing your texture data.
 
 ![Inspector shader](docs/volume_layer_inspector_panel.png)
+
+* Texture - A Texture3D that contains the volumetric data to view.
+* Num Layers - The number of slices to make parallel to the camera.  The more slices, the higher the resolution.
+* Gamma - Adjusts the sharpness of the texture data.  Smaller values bring out soft areas while larger values bring out hard areas.
+* Opacity - Multiplies the opacity of the final pixel.
+* Color Scalar - Multiplies the color of the gradient.  Used to boost the strength of the gradient.
+* Gradient - Colors the pixels of the volume.  Softer values will be colored with values on the left of the gradient and harder values will be colored with values from the right side of the gradient.  It is recommended you make the left side of the gradient transparent so low density pixels are clear.
 
 ## Acknowledgments
 
