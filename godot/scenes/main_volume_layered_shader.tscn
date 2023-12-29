@@ -18,10 +18,10 @@ texture = ExtResource("4_563qf")
 num_layers = 200
 gamma = 1.341
 color_scalar = 1.236
-exclusion_planes = Array[NodePath]([NodePath("../Marker3D")])
+exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.071985, -0.00307459, -0.676001)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.760818)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")
