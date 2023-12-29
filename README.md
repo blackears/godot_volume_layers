@@ -1,6 +1,7 @@
 # Volume Layers for Godot
 
-[![Demo video](https://img.youtube.com/vi/1IvKWIieZPM/0.jpg)](https://www.youtube.com/watch?v=1IvKWIieZPM)
+[![Video - overview](https://img.youtube.com/vi/1IvKWIieZPM/0.jpg)](https://www.youtube.com/watch?v=1IvKWIieZPM)
+[![Video - using the cutting planes](https://img.youtube.com/vi/FzYEshB9TFQ/0.jpg)](https://www.youtube.com/watch?v=FzYEshB9TFQ)
 
 This is an addon for Godot that lets you view volumetric data, such as MRI scans.
 
