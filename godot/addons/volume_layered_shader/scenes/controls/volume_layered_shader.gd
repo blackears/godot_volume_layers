@@ -86,6 +86,16 @@ class_name VolumeLayers
 			return
 		gradient = value
 
+@export var exclusion_planes:Array[NodePath]:
+	get:
+		return exclusion_planes
+	set(value):
+		if value == exclusion_planes:
+			return
+		exclusion_planes = value
+		rebuild_layers = true
+
+
 var rebuild_layers:bool = true
 var mesh_inst:MeshInstance3D
 
@@ -110,29 +120,68 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if rebuild_layers:
-		if !texture:
-			return
-		
-		var x:float = texture.get_width()
-		var y:float = texture.get_height()
-		var z:float = texture.get_depth()
-		
-		#print("texture size  ", Vector3i(x, y, z))
-		
-		var basis:Basis = Basis.IDENTITY
-		basis = basis * Basis.from_euler(Vector3(deg_to_rad(-90), 0, 0))
-		basis = basis * Basis.from_scale(Vector3(x, y, z) / min(x, y, z))
-		mesh_inst.transform = Transform3D(basis)
-		
-		var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
-		mat.set_shader_parameter("texture_volume", texture)
-		mat.set_shader_parameter("layers", num_layers)
-		mat.set_shader_parameter("opacity", opacity)
-		mat.set_shader_parameter("color_scalar", color_scalar)
-		mat.set_shader_parameter("gamma", gamma)
-		mat.set_shader_parameter("gradient", gradient)
+#	if rebuild_layers:
+	if !texture:
+		return
+	
+	var x:float = texture.get_width()
+	var y:float = texture.get_height()
+	var z:float = texture.get_depth()
+	
+	#print("texture size  ", Vector3i(x, y, z))
+	
+	var basis:Basis = Basis.IDENTITY
+	basis = basis * Basis.from_euler(Vector3(deg_to_rad(-90), 0, 0))
+	basis = basis * Basis.from_scale(Vector3(x, y, z) / min(x, y, z))
+	mesh_inst.transform = Transform3D(basis)
+	
+	var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
+	mat.set_shader_parameter("texture_volume", texture)
+	mat.set_shader_parameter("layers", num_layers)
+	mat.set_shader_parameter("opacity", opacity)
+	mat.set_shader_parameter("color_scalar", color_scalar)
+	mat.set_shader_parameter("gamma", gamma)
+	mat.set_shader_parameter("gradient", gradient)
+	
+	var plane_count:int = 0
+	var plane_list:PackedFloat32Array
+	for node_path in exclusion_planes:
+		var node:Node = get_node(node_path)
+		if node is Node3D:
+			var xform:Transform3D = (node as Node3D).global_transform
+			var p:Plane = Plane(xform.basis.z, xform.origin)
+			plane_count += 1
+			plane_list.append(p.x)
+			plane_list.append(p.y)
+			plane_list.append(p.z)
+			plane_list.append(p.d)
+			
+	mat.set_shader_parameter("num_exclusion_planes", plane_count)
+	mat.set_shader_parameter("exclusion_planes", plane_list)
 		
 		#create_layers()
-		rebuild_layers = false
-	pass
+#		rebuild_layers = false
+
+	#if texture:
+#
+		#var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
+		#
+		#var plane_count:int = 0
+		#var plane_list:PackedFloat32Array
+		#for node_path in exclusion_planes:
+			#var node:Node = get_node(node_path)
+			#if node is Node3D:
+				#var xform:Transform3D = (node as Node3D).global_transform
+				#var p:Plane = Plane(xform.basis.z, xform.origin)
+				#plane_count += 1
+				#plane_list.append(p.x)
+				#plane_list.append(p.y)
+				#plane_list.append(p.z)
+				#plane_list.append(p.d)
+				#
+		#mat.set_shader_parameter("num_exclusion_planes", plane_count)
+		#mat.set_shader_parameter("exclusion_planes", plane_list)
+		
+#		print("plane_count ", plane_count)
+#		print("plane_list ", plane_list[3])
+		

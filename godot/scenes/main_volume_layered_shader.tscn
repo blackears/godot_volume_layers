@@ -12,6 +12,17 @@ background_mode = 1
 script = ExtResource("1_1q2j1")
 source_images = "res://art/iguana/Iguana_png.zip"
 
+[node name="VolumeLayeredShader" type="Node3D" parent="."]
+script = ExtResource("3_37taj")
+texture = ExtResource("4_563qf")
+num_layers = 200
+gamma = 1.341
+color_scalar = 1.236
+exclusion_planes = Array[NodePath]([NodePath("../Marker3D")])
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(-0.425705, 0.299394, 0.853896, 0.0470329, -0.935079, 0.351307, 0.903639, 0.189714, 0.383987, 0.071985, -0.00307459, 0.136983)
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")
 
@@ -35,13 +46,6 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.zip")
-
-[node name="VolumeLayeredShader" type="Node3D" parent="."]
-script = ExtResource("3_37taj")
-texture = ExtResource("4_563qf")
-num_layers = 200
-gamma = 1.341
-color_scalar = 1.236
 
 [connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]

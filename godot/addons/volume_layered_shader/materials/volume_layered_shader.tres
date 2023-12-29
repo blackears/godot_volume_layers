@@ -18,4 +18,6 @@ shader_parameter/layers = 100
 shader_parameter/opacity = 1.0
 shader_parameter/gamma = 1.0
 shader_parameter/color_scalar = 1.0
+shader_parameter/num_exclusion_planes = 0
+shader_parameter/exclusion_planes = null
 shader_parameter/gradient = SubResource("GradientTexture1D_yr4w7")
