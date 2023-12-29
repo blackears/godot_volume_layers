@@ -30,8 +30,8 @@ import getopt
 import platform
 
 projectName = 'volume_layered_shader'
-version="_1_0_1"
-extensions = [".gd", ".tres", ".tscn", ".gdshader", ".gdshaderinc", ".glsl", ".cfg", ".txt", ".md", ".glb", ".gltf", ".jpg", ".jpeg", ".png", ".exr", ".bin"]
+version="_1_0_2"
+extensions = [".gd", ".tres", ".tscn", ".gdshader", ".gdshaderinc", ".glsl", ".cfg", ".txt", ".md", ".glb", ".gltf", ".jpg", ".jpeg", ".png", ".exr", ".bin", ".svg"]
 
 
 def copy_files_with_suffix(source_dir, dest_dir, suffixes):

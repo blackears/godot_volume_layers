@@ -21,7 +21,7 @@ color_scalar = 1.236
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D")])
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(-0.425705, 0.299394, 0.853896, 0.0470329, -0.935079, 0.351307, 0.903639, 0.189714, 0.383987, 0.071985, -0.00307459, 0.136983)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.071985, -0.00307459, -0.676001)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")
