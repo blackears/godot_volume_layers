@@ -28,6 +28,7 @@ You can set the image volume used by clicking in the Texture field and selecting
 * Opacity - Multiplies the opacity of the final pixel.
 * Color Scalar - Multiplies the color of the gradient.  Used to boost the strength of the gradient.
 * Gradient - Colors the pixels of the volume.  Softer values will be colored with values on the left of the gradient and harder values will be colored with values from the right side of the gradient.  It is recommended you make the left side of the gradient transparent so low density pixels are clear.
+* Exclusion Planes - Any node added to this array will act as a plane that cuts away part of the model to make it easier to see the interior.  These nodes can be placed anywhere in your scene.  Marker3D is the recommended object type, but any object that extends Node3D can act as a clipping plane.
 
 ## Acknowledgments
 
