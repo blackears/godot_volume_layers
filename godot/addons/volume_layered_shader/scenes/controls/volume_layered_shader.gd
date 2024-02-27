@@ -120,6 +120,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	#print("<0>")
 #	if rebuild_layers:
 	if !texture:
 		return
@@ -129,6 +130,7 @@ func _process(delta):
 	var z:float = texture.get_depth()
 	
 	#print("texture size  ", Vector3i(x, y, z))
+	#print("<1>")
 	
 	var basis:Basis = Basis.IDENTITY
 	basis = basis * Basis.from_euler(Vector3(deg_to_rad(-90), 0, 0))
@@ -137,11 +139,13 @@ func _process(delta):
 	
 	var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
 	mat.set_shader_parameter("texture_volume", texture)
+	#print("num_layers ", num_layers)
 	mat.set_shader_parameter("layers", num_layers)
 	mat.set_shader_parameter("opacity", opacity)
 	mat.set_shader_parameter("color_scalar", color_scalar)
 	mat.set_shader_parameter("gamma", gamma)
 	mat.set_shader_parameter("gradient", gradient)
+	#print("<2>")
 	
 	var plane_count:int = 0
 	var plane_list:PackedFloat32Array
@@ -158,6 +162,7 @@ func _process(delta):
 			
 	mat.set_shader_parameter("num_exclusion_planes", plane_count)
 	mat.set_shader_parameter("exclusion_planes", plane_list)
+	#print("<3>")
 		
 		#create_layers()
 #		rebuild_layers = false

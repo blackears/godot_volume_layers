@@ -13,6 +13,7 @@ script = ExtResource("1_1q2j1")
 source_images = "res://art/iguana/Iguana_png.zip"
 
 [node name="VolumeLayeredShader" type="Node3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_37taj")
 texture = ExtResource("4_563qf")
 num_layers = 200
@@ -21,7 +22,7 @@ color_scalar = 1.236
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.760818)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.73389)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")

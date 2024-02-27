@@ -135,5 +135,5 @@ func _on_popup_load_file_file_selected(path):
 	#var tex:ZippedImageArchiveRFTexture3D = ZippedImageArchiveRFTexture3D.new()
 	#tex.archive = archive
 	
-	%volume_layers.texture = tex
+	%VolumeLayeredShader.texture = tex
 

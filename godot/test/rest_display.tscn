@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddby3nxlul1ns"]
+
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="1_16l3k"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scripts/resources/cpu/zipped_image_archive_cpu_Texture3D.gd" id="2_e211d"]
+
+[sub_resource type="ImageTexture3D" id="ImageTexture3D_hsnfr"]
+script = ExtResource("2_e211d")
+zip_file = "res://art/iguana/Iguana_png.zip"
+
+[node name="rest_display" type="Node3D"]
+
+[node name="VolumeLayeredShader" type="Node3D" parent="."]
+script = ExtResource("1_16l3k")
+texture = SubResource("ImageTexture3D_hsnfr")
+num_layers = 200
+gamma = 1.535
