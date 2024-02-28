@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://df1pchfaikhpo"
-path="res://.godot/imported/volume_layered.svg-27b6c6f4441229cb560e8a54ae97ed09.ctex"
+path="res://.godot/imported/volume_layered.svg-4032300effd2e0d9f82979c9903ec826.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/volume_layered_shader/art/volume_layered.svg"
-dest_files=["res://.godot/imported/volume_layered.svg-27b6c6f4441229cb560e8a54ae97ed09.ctex"]
+source_file="res://addons/volume_layered_shader/art/icons/volume_layered.svg"
+dest_files=["res://.godot/imported/volume_layered.svg-4032300effd2e0d9f82979c9903ec826.ctex"]
 
 [params]
 
