@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=8 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
 [ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
@@ -7,6 +7,11 @@
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 background_mode = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8cm72"]
+
+[sub_resource type="Theme" id="Theme_nfbml"]
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_8cm72")
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_1q2j1")
@@ -27,11 +32,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.76632)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")
 
-[node name="bn_load" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Load volume"
-
 [node name="trackball_tumbler" parent="." instance=ExtResource("3_w87qo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
 
@@ -48,5 +48,49 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.zip")
 
-[connection signal="pressed" from="bn_load" to="." method="_on_bn_load_pressed"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 339.0
+offset_bottom = 93.0
+theme = SubResource("Theme_nfbml")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="bn_load" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load volume"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Num Layers
+"
+
+[node name="spin_num_layers" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+allow_greater = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Gamma"
+
+[node name="slider_gamma" type="HSlider" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 10.0
+step = 0.01
+value = 1.0
+
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/bn_load" to="." method="_on_bn_load_pressed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/HBoxContainer2/spin_num_layers" to="." method="_on_spin_num_layers_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/HBoxContainer/slider_gamma" to="." method="_on_slider_gamma_value_changed"]

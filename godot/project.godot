@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="Volume Layered Shader"
-run/main_scene="res://test/rest_display.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+run/main_scene="res://scenes/main_volume_layered_shader.tscn"
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
 [editor_plugins]

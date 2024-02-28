@@ -109,7 +109,8 @@ func load_image_from_zip(path:String)->Texture3D:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	%slider_gamma.value = %VolumeLayeredShader.gamma
+	%spin_num_layers.value = %VolumeLayeredShader.num_layers
 	pass # Replace with function body.
 
 
@@ -137,3 +138,11 @@ func _on_popup_load_file_file_selected(path):
 	
 	%VolumeLayeredShader.texture = tex
 
+
+
+func _on_slider_gamma_value_changed(value):
+	%VolumeLayeredShader.gamma = value
+
+
+func _on_spin_num_layers_value_changed(value):
+	%VolumeLayeredShader.num_layers = value

@@ -30,7 +30,7 @@ import getopt
 import platform
 
 projectName = 'volume_layered_shader'
-version="_1_0_2"
+version="_1_0_3"
 extensions = [".gd", ".tres", ".tscn", ".gdshader", ".gdshaderinc", ".glsl", ".cfg", ".txt", ".md", ".glb", ".gltf", ".jpg", ".jpeg", ".png", ".exr", ".bin", ".svg"]
 
 
