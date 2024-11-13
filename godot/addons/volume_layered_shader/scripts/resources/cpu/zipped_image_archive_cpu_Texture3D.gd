@@ -122,4 +122,3 @@ func load_image_from_zip(path:String):
 
 	create(img_format, img_width, img_height, img_depth, true, img_list)
 	changed.emit()
-

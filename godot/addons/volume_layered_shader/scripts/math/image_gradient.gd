@@ -37,4 +37,3 @@ func get_gradient(pos:Vector3)->Vector3:
 	
 	var idx:int = int(pos.x) + size.x * (int(pos.y) + size.y * int(pos.z))
 	return gradients[idx]
-
