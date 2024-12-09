@@ -51,7 +51,7 @@ class_name VolumeLayers
 		num_layers = value
 		rebuild_layers = true
 
-@export_range(0, 4) var gamma:float = 1:
+@export_range(0, 4, .01, "or_greater") var gamma:float = 1:
 	get:
 		return gamma
 	set(value):
