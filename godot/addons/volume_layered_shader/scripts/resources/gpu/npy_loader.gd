@@ -158,24 +158,29 @@ func load_file(file_path:String):
 #		var byte_size:int = get_byte_size(descr)
 		
 #		var cur_frame:int = frame
+
+		size_x = 1 if shape.size() < 1 else shape[shape.size() - 1]
+		size_y = 1 if shape.size() < 2 else shape[shape.size() - 2]
+		size_z = 1 if shape.size() < 3 else shape[shape.size() - 3]
+		size_w = 1 if shape.size() < 4 else shape[shape.size() - 4]
 		
-		if shape.size() == 4:
-			size_x = shape[3]
-			size_y = shape[2]
-			size_z = shape[1]
-			size_w = shape[0]
-#			cur_frame = clamp(cur_frame, 0, size_w)
-			valid = true
-		elif shape.size() == 3:
-			size_x = shape[2]
-			size_y = shape[1]
-			size_z = shape[0]
-#			cur_frame = 0
-			size_w = 1
-			valid = true
-		else:
-			valid = false
-			return
+		#if shape.size() == 4:
+			#size_x = shape[3]
+			#size_y = shape[2]
+			#size_z = shape[1]
+			#size_w = shape[0]
+##			cur_frame = clamp(cur_frame, 0, size_w)
+			#valid = true
+		#elif shape.size() == 3:
+			#size_x = shape[2]
+			#size_y = shape[1]
+			#size_z = shape[0]
+##			cur_frame = 0
+			#size_w = 1
+			#valid = true
+		#else:
+			#valid = false
+			#return
 
 func load_image_stack(frame:int)->Array[Image]:
 	var cur_frame:int = clamp(frame, 0, size_w)

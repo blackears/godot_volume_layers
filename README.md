@@ -41,7 +41,7 @@ The addon provides several options for Texture3D loaders:
 - Load data stored in the .npy file format.
 - This is the data format used by Python's Numpy to store data arrays to disk.
 - It is a fairly simple file format, which should make it easy to generate your own files, even if you aren't using Python.
-- The NpyImageTexture3D presumes that the .npy file contains a 3D or 4D array of numerical values.
+- The NpyImageTexture3D presumes that the .npy file contains a multidimensional array of numerical values.  It was designed to handle 3D and 4D, but should work with lower dimensions too.
     - If 4D, the `frame` field of the NpyImageTexture3D resource can be set to indicate which 3D slice of the 4D array is to be shown.
 - [NPY website](https://numpy.org/devdocs/reference/generated/numpy.lib.format.html)
 

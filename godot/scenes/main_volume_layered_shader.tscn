@@ -22,7 +22,7 @@ unique_name_in_owner = true
 script = ExtResource("3_37taj")
 texture = ExtResource("3_bohj6")
 num_layers = 200
-gamma = 1.96
+gamma = 1.5
 color_scalar = 1.363
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
 

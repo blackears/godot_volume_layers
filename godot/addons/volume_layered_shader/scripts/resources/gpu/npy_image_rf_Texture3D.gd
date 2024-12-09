@@ -46,11 +46,6 @@ func reload_file():
 	
 	var img_list:Array[Image] = loader.load_image_stack(frame)
 	var size:Vector3i = Vector3i(loader.size_x, loader.size_y, loader.size_z)
-	###############
-	
-	#var img_list:Array[Image] = archive.get_image_list().duplicate()
-	#var size:Vector3i = archive.get_size()
-	#print("tex3d num img " + str(img_list.size()))
 
 	#Generate mipmaps
 	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
