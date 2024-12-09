@@ -25,25 +25,25 @@ The addon provides several options for Texture3D loaders:
 
 #### ZippedImageArchiveCpuTexture3D
 
-    - Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
-    - Images are presumed to all be the same size and arranged in the correct slice order.
-    - Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
+- Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
+- Images are presumed to all be the same size and arranged in the correct slice order.
+- Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
     
 #### ZippedImageArchiveGpuTexture3D
 
-    - Similar to ZippedImageArchiveCpuTexture3D, but uses GPU acceleration to generate mipmaps for smoother visualization.
-    - Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
-    - Images are presumed to all be the same size and arranged in the correct slice order.
-    - Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
+- Similar to ZippedImageArchiveCpuTexture3D, but uses GPU acceleration to generate mipmaps for smoother visualization.
+- Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
+- Images are presumed to all be the same size and arranged in the correct slice order.
+- Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
 
 #### NpyImageTexture3D
 
-    - Load data stored in the .npy file format.
-    - This is the data format used by Python's Numpy to store data arrays to disk.
-    - It is a fairly simple file format, which should make it easy to generate your own files, even if you aren't using Python.
-    - The NpyImageTexture3D presumes that the .npy file contains a 3D or 4D array of numerical values.
-        - If 4D, the `frame` field of the NpyImageTexture3D resource can be set to indicate which 3D slice of the 4D array is to be shown.
-    - [NPY website](https://numpy.org/devdocs/reference/generated/numpy.lib.format.html)
+- Load data stored in the .npy file format.
+- This is the data format used by Python's Numpy to store data arrays to disk.
+- It is a fairly simple file format, which should make it easy to generate your own files, even if you aren't using Python.
+- The NpyImageTexture3D presumes that the .npy file contains a 3D or 4D array of numerical values.
+    - If 4D, the `frame` field of the NpyImageTexture3D resource can be set to indicate which 3D slice of the 4D array is to be shown.
+- [NPY website](https://numpy.org/devdocs/reference/generated/numpy.lib.format.html)
 
 
 ![Inspector shader](docs/volume_layer_inspector_panel.png)
