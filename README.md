@@ -24,17 +24,20 @@ You can set the image volume used by clicking in the Texture field and then crea
 The addon provides several options for Texture3D loaders:
 
 #### ZippedImageArchiveCpuTexture3D
+
     - Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
     - Images are presumed to all be the same size and arranged in the correct slice order.
     - Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
     
 #### ZippedImageArchiveGpuTexture3D
+
     - Similar to ZippedImageArchiveCpuTexture3D, but uses GPU acceleration to generate mipmaps for smoother visualization.
     - Used to load images from a zip file of images of a common image format, such as PNG or JPEG.
     - Images are presumed to all be the same size and arranged in the correct slice order.
     - Create an instance of the ZippedImageArchiveCpuTexture3D and then set the Zip File field to the file path of the zip file with your images.
 
 #### NpyImageTexture3D
+
     - Load data stored in the .npy file format.
     - This is the data format used by Python's Numpy to store data arrays to disk.
     - It is a fairly simple file format, which should make it easy to generate your own files, even if you aren't using Python.
