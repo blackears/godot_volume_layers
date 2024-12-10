@@ -111,6 +111,12 @@ func load_image_from_zip(path:String)->Texture3D:
 func _ready():
 	%slider_gamma.value = %VolumeLayeredShader.gamma
 	%spin_num_layers.value = %VolumeLayeredShader.num_layers
+	
+	var tex = %VolumeLayeredShader.texture
+	if tex && "frame" in tex:
+		%spin_frame.value = tex.frame
+		
+	
 	pass # Replace with function body.
 
 
@@ -146,3 +152,9 @@ func _on_slider_gamma_value_changed(value):
 
 func _on_spin_num_layers_value_changed(value):
 	%VolumeLayeredShader.num_layers = value
+
+
+func _on_spin_frame_value_changed(value: float) -> void:
+	var tex = %VolumeLayeredShader.texture
+	if tex && "frame" in tex:
+		tex.frame = value

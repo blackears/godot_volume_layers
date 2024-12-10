@@ -1,0 +1,8 @@
+[gd_resource type="ImageTexture3D" script_class="NpyImageCpuRFTexture3D" load_steps=2 format=3 uid="uid://baqcwcckmp88m"]
+
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scripts/resources/cpu/npy_image_cpu_rf_Texture3d.gd" id="1_2xeub"]
+
+[resource]
+script = ExtResource("1_2xeub")
+file_path = "res://art/noise_data_4d.npy"
+frame = 0

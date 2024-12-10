@@ -23,7 +23,7 @@
 
 @tool
 extends ImageTexture3D
-class_name NpyImageRFTexture3D
+class_name NpyImageCpuRFTexture3D
 
 @export_file("*.npy") var file_path:String:
 	set(value):
@@ -48,19 +48,10 @@ func reload_file():
 	var size:Vector3i = Vector3i(loader.size_x, loader.size_y, loader.size_z)
 
 	#Generate mipmaps
-	var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
-	var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
-	var mipmap_images:Array[Image] = gen.calculate(img_list)
+	#var rd:RenderingDevice = RenderingServer.create_local_rendering_device()
+	#var gen:MipmapGenerator_rf_3d = MipmapGenerator_rf_3d.new(rd)
+	#var mipmap_images:Array[Image] = gen.calculate(img_list)
 
-#	create(Image.FORMAT_RF, size.x, size.y, size.z, false, img_list)
-	img_list.append_array(mipmap_images)
-
-	var mesh_size_base = Vector3i(img_list[0].get_width(), \
-		img_list[0].get_height(), img_list.size())
-	var mipmap_sizes:Array[Vector3i] = GLSLUtil.calc_mipmap_sizes(mesh_size_base)
-
-#	img_list = img_list.slice(0, img_list.size() - 1)
-
-	create(Image.FORMAT_RF, size.x, size.y, size.z, true, img_list)
+	create(Image.FORMAT_RF, size.x, size.y, size.z, false, img_list)
 	
 	changed.emit()
