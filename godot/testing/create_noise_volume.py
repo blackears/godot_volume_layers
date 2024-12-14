@@ -31,5 +31,5 @@ print("Noise volume calculated")
 # im = Image.fromarray(im_data)
 # im.save("noise.png")
 
-np.save('noise_data_4d.npy', arr.astype(np.float4))
+np.save('noise_data_4d.npy', arr.astype(np.float16))
 

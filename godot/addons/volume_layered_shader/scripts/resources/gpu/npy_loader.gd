@@ -169,18 +169,33 @@ func load_image_stack(frame:int)->Array[Image]:
 	var image_stack:Array[Image]
 	
 	f.seek(after_header + byte_size * cur_frame * size_x * size_y * size_z)
+	
 	for k in size_z:
-		var image_data:PackedFloat32Array
-		image_data.resize(size_x * size_y)
 		
-		for j in size_y:
-			for i in size_x:
-				var value:float = read_next_value(f, descr)
-				#write_to_buffer(image_data, value, j * size_x + i, descr)
-				image_data[j * size_x + i] = value
+		if descr == "<f4":
 
-		var img:Image = Image.create_from_data(size_x, size_y, false, Image.FORMAT_RF, image_data.to_byte_array())
-		image_stack.append(img)
+			var buf:PackedByteArray = f.get_buffer(size_x * size_y * byte_size)
+			var img:Image = Image.create_from_data(size_x, size_y, false, Image.FORMAT_RF, buf)
+			image_stack.append(img)
+		
+		#elif descr == "<f2":
+#
+			#var buf:PackedByteArray = f.get_buffer(size_x * size_y * byte_size)
+			#var img:Image = Image.create_from_data(size_x, size_y, false, Image.FORMAT_RH, buf)
+			#image_stack.append(img)
+		
+		else:
+			var image_data:PackedFloat32Array
+			image_data.resize(size_x * size_y)
+			
+			for j in size_y:
+				for i in size_x:
+					var value:float = read_next_value(f, descr)
+					#write_to_buffer(image_data, value, j * size_x + i, descr)
+					image_data[j * size_x + i] = value
+
+			var img:Image = Image.create_from_data(size_x, size_y, false, Image.FORMAT_RF, image_data.to_byte_array())
+			image_stack.append(img)
 	
 	
 	return image_stack
