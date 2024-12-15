@@ -128,7 +128,8 @@ func load_file(file_path:String):
 	var minor_version:int = f.get_8()
 
 	var header_length:int = f.get_16()
-	after_header = round_up_to_64(10 + header_length)
+#	after_header = round_up_to_64(10 + header_length)
+	after_header = 10 + header_length
 	
 	var header_buf:PackedByteArray = f.get_buffer(header_length)
 	
@@ -171,8 +172,9 @@ func load_image_stack(frame:int)->Array[Image]:
 	f.seek(after_header + byte_size * cur_frame * size_x * size_y * size_z)
 	
 	for k in size_z:
-		
-		if descr == "<f4":
+
+#		if false:
+		if descr == "<f4" && !f.big_endian:
 
 			var buf:PackedByteArray = f.get_buffer(size_x * size_y * byte_size)
 			var img:Image = Image.create_from_data(size_x, size_y, false, Image.FORMAT_RF, buf)

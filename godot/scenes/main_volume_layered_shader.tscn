@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
 [ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
-[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana_zip_layers_cpu.tres" id="3_iulwx"]
+[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana_zip_layers_cpu.tres" id="3_msc3q"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
@@ -20,7 +20,7 @@ source_images = "res://art/iguana/Iguana_png.zip"
 [node name="VolumeLayeredShader" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_37taj")
-texture = ExtResource("3_iulwx")
+texture = ExtResource("3_msc3q")
 num_layers = 200
 gamma = 2.2
 color_scalar = 1.363
