@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=9 format=3 uid="uid://bxodnrolana07"]
 
 [ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
 [ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
 [ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana_zip_layers_cpu.tres" id="3_msc3q"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
+[ext_resource type="ButtonGroup" uid="uid://iqkw4bdceccp" path="res://scenes/player_buttons.tres" id="5_lteic"]
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 background_mode = 1
@@ -46,7 +47,7 @@ size = Vector2i(600, 400)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.zip")
+filters = PackedStringArray("*.zip", "*.npy")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 offset_right = 355.0
@@ -90,19 +91,44 @@ max_value = 10.0
 step = 0.01
 value = 1.0
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
+columns = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
 layout_mode = 2
 text = "Frame"
 
-[node name="spin_frame" type="SpinBox" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="spin_frame" type="SpinBox" parent="PanelContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Frames per second"
+
+[node name="SpinBox" type="SpinBox" parent="PanelContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+value = 30.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="bn_play" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+toggle_mode = true
+button_group = ExtResource("5_lteic")
+text = "Play"
+
+[node name="bn_stop" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("5_lteic")
+text = "Stop"
 
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/bn_load" to="." method="_on_bn_load_pressed"]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/HBoxContainer2/spin_num_layers" to="." method="_on_spin_num_layers_value_changed"]
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/HBoxContainer/slider_gamma" to="." method="_on_slider_gamma_value_changed"]
-[connection signal="value_changed" from="PanelContainer/VBoxContainer/HBoxContainer3/spin_frame" to="." method="_on_spin_frame_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/spin_frame" to="." method="_on_spin_frame_value_changed"]

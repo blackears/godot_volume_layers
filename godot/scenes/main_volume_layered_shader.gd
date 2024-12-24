@@ -129,12 +129,20 @@ func _on_bn_load_pressed():
 	%popup_load_file.popup_centered()
 
 
-func _on_popup_load_file_file_selected(path):
+func _on_popup_load_file_file_selected(path:String):
 	if !FileAccess.file_exists(path):
 		return
 	
-	var tex:ZippedImageArchiveCpuTexture3D = ZippedImageArchiveCpuTexture3D.new()
-	tex.zip_file = path
+	if path.ends_with(".npy"):
+		var tex:NpyImageCpuRFTexture3D = NpyImageCpuRFTexture3D.new()
+		tex.file_path = path
+		tex.frame = %spin_frame.value
+		
+		%VolumeLayeredShader.texture = tex
+	
+	elif path.ends_with(".zip"):
+		var tex:ZippedImageArchiveCpuTexture3D = ZippedImageArchiveCpuTexture3D.new()
+		tex.zip_file = path
 	
 	#var archive:ZippedImageArchive_RF_3D = ZippedImageArchive_RF_3D.new()
 	#archive.zip_file = path
@@ -142,7 +150,7 @@ func _on_popup_load_file_file_selected(path):
 	#var tex:ZippedImageArchiveRFTexture3D = ZippedImageArchiveRFTexture3D.new()
 	#tex.archive = archive
 	
-	%VolumeLayeredShader.texture = tex
+		%VolumeLayeredShader.texture = tex
 
 
 
