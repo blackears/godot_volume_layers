@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxodnrolana07"]
+[gd_scene load_steps=10 format=3 uid="uid://cp5a175w7ut24"]
 
-[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
-[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
-[ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana_zip_layers_cpu.tres" id="3_msc3q"]
-[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
-[ext_resource type="ButtonGroup" uid="uid://iqkw4bdceccp" path="res://scenes/player_buttons.tres" id="5_lteic"]
+[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_s7xpm"]
+[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="2_pgoh2"]
+[ext_resource type="ImageTexture3D" uid="uid://baqcwcckmp88m" path="res://data/npy_noise_4d_cpu.tres" id="3_opl2c"]
+[ext_resource type="Texture2D" uid="uid://c7eai66gyfs6y" path="res://addons/volume_layered_shader/textures/low_values_grtadient.tres" id="4_riru5"]
+[ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="5_c5ftv"]
+[ext_resource type="ButtonGroup" uid="uid://iqkw4bdceccp" path="res://scenes/player_buttons.tres" id="6_o2o2k"]
 
 [sub_resource type="Environment" id="Environment_1nlpu"]
 background_mode = 1
@@ -15,16 +16,17 @@ background_mode = 1
 PanelContainer/styles/panel = SubResource("StyleBoxEmpty_8cm72")
 
 [node name="main" type="Node3D"]
-script = ExtResource("1_1q2j1")
+script = ExtResource("1_s7xpm")
 source_images = "res://art/iguana/Iguana_png.zip"
 
 [node name="VolumeLayeredShader" type="Node3D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_37taj")
-texture = ExtResource("3_msc3q")
-num_layers = 300
-gamma = 2.2
+script = ExtResource("2_pgoh2")
+texture = ExtResource("3_opl2c")
+num_layers = 200
+gamma = 6.0
 color_scalar = 1.363
+gradient = ExtResource("4_riru5")
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
 
 [node name="Marker3D" type="Marker3D" parent="."]
@@ -33,7 +35,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.76632)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1nlpu")
 
-[node name="trackball_tumbler" parent="." instance=ExtResource("3_w87qo")]
+[node name="trackball_tumbler" parent="." instance=ExtResource("5_c5ftv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.52444)
 
 [node name="Camera3D" type="Camera3D" parent="trackball_tumbler"]
@@ -110,7 +112,7 @@ text = "Frames per second"
 [node name="spin_fps" type="SpinBox" parent="PanelContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-value = 4.0
+value = 30.0
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -118,15 +120,21 @@ layout_mode = 2
 [node name="bn_play" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 toggle_mode = true
-button_group = ExtResource("5_lteic")
+button_group = ExtResource("6_o2o2k")
 text = "Play"
 
 [node name="bn_stop" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
 layout_mode = 2
 toggle_mode = true
 button_pressed = true
-button_group = ExtResource("5_lteic")
+button_group = ExtResource("6_o2o2k")
 text = "Stop"
+
+[node name="check_loop" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Loop"
 
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/bn_load" to="." method="_on_bn_load_pressed"]
@@ -135,3 +143,4 @@ text = "Stop"
 [connection signal="value_changed" from="PanelContainer/VBoxContainer/GridContainer/spin_frame" to="." method="_on_spin_frame_value_changed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer4/bn_play" to="." method="_on_bn_play_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer4/bn_stop" to="." method="_on_bn_stop_pressed"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/HBoxContainer4/check_loop" to="." method="_on_check_loop_toggled"]
