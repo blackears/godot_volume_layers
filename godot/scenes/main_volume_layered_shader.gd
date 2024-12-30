@@ -121,6 +121,7 @@ func _ready():
 
 
 
+
 func _on_bn_load_pressed():
 	%popup_load_file.popup_centered()
 
@@ -164,13 +165,10 @@ func _on_spin_frame_value_changed(value: float) -> void:
 		tex.frame = value
 
 var playing:bool = false
-var last_frame_update_time:float
-var updating_frame:bool = false
+var time_since_last_frame:float = 0
 
 func _on_bn_play_pressed() -> void:
 	playing = true
-	last_frame_update_time = Time.get_ticks_msec()
-	
 	pass # Replace with function body.
 
 
@@ -178,42 +176,29 @@ func _on_bn_stop_pressed() -> void:
 	playing = false
 	pass # Replace with function body.
 
-func advance_frame():
-	var tex = %VolumeLayeredShader.texture
-	tex.frame = %spin_frame.value
-	updating_frame = false
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	var tex = %VolumeLayeredShader.texture
-	if !tex && !("frame" in tex):
-		return
-
-	if playing:
-		var cur_time:float = Time.get_ticks_msec()
-		var time_delta:float = cur_time - last_frame_update_time
-		if time_delta >= 1000.0 / %spin_fps.value:
-			last_frame_update_time = cur_time
-			var next_frame:int = %spin_frame.value + 1
-			if %check_loop.pressed:
-				if next_frame >= tex.max_frame:
-					next_frame = 0
-			
-			%spin_frame.value = next_frame
-			if not updating_frame:
-				updating_frame = true
-				call_deferred("advance_frame")
-		
-		#%Timer.timeout = 1.0 / %spin_fps.value
-		#%Timer.start()
-	pass
-
-
-func _on_timer_timeout() -> void:
-	pass # Replace with function body.
-
 
 func _on_check_loop_toggled(toggled_on: bool) -> void:
 	pass # Replace with function body.
+
+func _process(_delta):
+	if playing:
+		time_since_last_frame += _delta
+		
+		var sec_per_frame:float = 1.0 / %spin_fps.value
+		if time_since_last_frame > sec_per_frame:
+			time_since_last_frame = 0
+			
+			var frame:int = %spin_frame.value
+			frame += 1
+
+			var tex = %VolumeLayeredShader.texture
+			
+			if "max_frames" in tex:
+				frame = wrap(frame, 0, tex.max_frames)
+			
+			if "frame" in tex:
+				tex.frame = frame
+			
+			%spin_frame.value = frame
+		
+	pass

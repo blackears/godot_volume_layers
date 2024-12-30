@@ -35,7 +35,7 @@ class_name NpyImageRFTexture3D
 		frame = value
 		reload_file()
 
-var max_frame:int
+var max_frames:int = 1
 
 func _validate_property(property : Dictionary):
 	#Do not write image data to resource file
@@ -46,7 +46,7 @@ func reload_file():
 	var loader:NpyLoader = NpyLoader.new()
 	loader.load_file(file_path)
 
-	max_frame = loader.size_w
+	max_frames = loader.size_w
 		
 	var img_list:Array[Image] = loader.load_image_stack(frame)
 	var size:Vector3i = Vector3i(loader.size_x, loader.size_y, loader.size_z)

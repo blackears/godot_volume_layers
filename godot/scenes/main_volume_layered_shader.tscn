@@ -22,7 +22,7 @@ source_images = "res://art/iguana/Iguana_png.zip"
 unique_name_in_owner = true
 script = ExtResource("3_37taj")
 texture = ExtResource("3_msc3q")
-num_layers = 300
+num_layers = 200
 gamma = 2.2
 color_scalar = 1.363
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
@@ -110,7 +110,7 @@ text = "Frames per second"
 [node name="spin_fps" type="SpinBox" parent="PanelContainer/VBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-value = 4.0
+value = 30.0
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -127,6 +127,12 @@ toggle_mode = true
 button_pressed = true
 button_group = ExtResource("5_lteic")
 text = "Stop"
+
+[node name="check_loop" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Loop"
 
 [connection signal="file_selected" from="popup_load_file" to="." method="_on_popup_load_file_file_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/bn_load" to="." method="_on_bn_load_pressed"]

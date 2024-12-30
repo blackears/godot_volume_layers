@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cp5a175w7ut24"]
+[gd_scene load_steps=10 format=3 uid="uid://bkirc72am4g2r"]
 
 [ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_s7xpm"]
 [ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="2_pgoh2"]
 [ext_resource type="ImageTexture3D" uid="uid://baqcwcckmp88m" path="res://data/npy_noise_4d_cpu.tres" id="3_opl2c"]
-[ext_resource type="Texture2D" uid="uid://c7eai66gyfs6y" path="res://addons/volume_layered_shader/textures/low_values_grtadient.tres" id="4_riru5"]
+[ext_resource type="Texture2D" uid="uid://r1elp0kqouby" path="res://addons/volume_layered_shader/textures/low_values_grtadient.tres" id="4_riru5"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="5_c5ftv"]
 [ext_resource type="ButtonGroup" uid="uid://iqkw4bdceccp" path="res://scenes/player_buttons.tres" id="6_o2o2k"]
 
