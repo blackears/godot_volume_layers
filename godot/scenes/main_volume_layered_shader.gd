@@ -194,7 +194,10 @@ func _process(_delta):
 			var tex = %VolumeLayeredShader.texture
 			
 			if "max_frames" in tex:
-				frame = wrap(frame, 0, tex.max_frames)
+				if %check_loop.button_pressed:
+					frame = wrap(frame, 0, tex.max_frames)
+				else:
+					frame = min(frame, tex.max_frames)
 			
 			if "frame" in tex:
 				tex.frame = frame
