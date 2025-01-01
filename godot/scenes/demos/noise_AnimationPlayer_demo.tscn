@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cskbehatgnxbc"]
 
-[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_2kn2p"]
+[ext_resource type="Script" path="res://scenes/demos/noise_animation_player_demo.gd" id="1_03i3t"]
 [ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="2_6gg1q"]
 [ext_resource type="ImageTexture3D" uid="uid://baqcwcckmp88m" path="res://data/npy_noise_4d_cpu.tres" id="3_wxwpb"]
 [ext_resource type="Texture2D" uid="uid://r1elp0kqouby" path="res://addons/volume_layered_shader/textures/low_values_grtadient.tres" id="4_v1mfp"]
@@ -53,8 +53,7 @@ _data = {
 }
 
 [node name="main" type="Node3D"]
-script = ExtResource("1_2kn2p")
-source_images = "res://art/iguana/Iguana_png.zip"
+script = ExtResource("1_03i3t")
 
 [node name="VolumeLayeredShader" type="Node3D" parent="."]
 unique_name_in_owner = true
