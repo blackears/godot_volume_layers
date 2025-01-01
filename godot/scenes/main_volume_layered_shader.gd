@@ -114,7 +114,8 @@ func _ready():
 	
 	var tex = %VolumeLayeredShader.texture
 	if tex && "frame" in tex:
-		%spin_frame.value = tex.frame
+		if %spin_frame:
+			%spin_frame.value = tex.frame
 		
 	
 	pass # Replace with function body.
