@@ -112,12 +112,6 @@ func _ready():
 	%slider_gamma.value = %VolumeLayeredShader.gamma
 	%spin_num_layers.value = %VolumeLayeredShader.num_layers
 	
-	var tex = %VolumeLayeredShader.texture
-	if tex && "frame" in tex:
-		if %spin_frame:
-			%spin_frame.value = tex.frame
-		
-	
 	pass # Replace with function body.
 
 
@@ -134,7 +128,6 @@ func _on_popup_load_file_file_selected(path:String):
 	if path.ends_with(".npy"):
 		var tex:NpyImageCpuRFTexture3D = NpyImageCpuRFTexture3D.new()
 		tex.file_path = path
-		tex.frame = %spin_frame.value
 		
 		%VolumeLayeredShader.texture = tex
 	
