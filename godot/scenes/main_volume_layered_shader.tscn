@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bxodnrolana07"]
 
-[ext_resource type="Script" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
-[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
+[ext_resource type="Script" uid="uid://c01x1i0jc1dqh" path="res://scenes/main_volume_layered_shader.gd" id="1_1q2j1"]
+[ext_resource type="Script" uid="uid://b5kbkf3467sph" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="3_37taj"]
 [ext_resource type="ImageTexture3D" uid="uid://gweqrs4nsgwa" path="res://data/iguana_zip_layers_cpu.tres" id="3_msc3q"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="3_w87qo"]
 [ext_resource type="ButtonGroup" uid="uid://iqkw4bdceccp" path="res://scenes/player_buttons.tres" id="5_lteic"]

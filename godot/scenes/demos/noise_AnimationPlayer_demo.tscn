@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cskbehatgnxbc"]
 
-[ext_resource type="Script" path="res://scenes/demos/noise_animation_player_demo.gd" id="1_03i3t"]
-[ext_resource type="Script" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="2_6gg1q"]
+[ext_resource type="Script" uid="uid://bhmy566a512pm" path="res://scenes/demos/noise_animation_player_demo.gd" id="1_03i3t"]
+[ext_resource type="Script" uid="uid://b5kbkf3467sph" path="res://addons/volume_layered_shader/scenes/controls/volume_layered_shader.gd" id="2_6gg1q"]
 [ext_resource type="ImageTexture3D" uid="uid://baqcwcckmp88m" path="res://data/npy_noise_4d_cpu.tres" id="3_wxwpb"]
 [ext_resource type="Texture2D" uid="uid://r1elp0kqouby" path="res://addons/volume_layered_shader/textures/low_values_grtadient.tres" id="4_v1mfp"]
 [ext_resource type="PackedScene" uid="uid://bk62samj5dspq" path="res://scenes/controls/trackball_tumbler.tscn" id="5_ue80t"]
@@ -48,8 +48,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2mtww"]
 _data = {
-"RESET": SubResource("Animation_ba23v"),
-"new_animation": SubResource("Animation_dq7xu")
+&"RESET": SubResource("Animation_ba23v"),
+&"new_animation": SubResource("Animation_dq7xu")
 }
 
 [node name="main" type="Node3D"]

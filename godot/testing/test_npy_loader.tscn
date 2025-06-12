@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://btf4586w835wp"]
+
+[ext_resource type="Script" uid="uid://u3f3x5s48jq5" path="res://testing/test_npy_loader.gd" id="1_qpy0o"]
+
+[node name="TestNpyLoader" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qpy0o")
+file = "res://testing/noise_data_4d.npy"
+
+[node name="bn_load_file" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Load file"
+
+[connection signal="pressed" from="bn_load_file" to="." method="_on_bn_load_file_pressed"]
