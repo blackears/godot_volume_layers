@@ -22,9 +22,9 @@ source_images = "res://art/iguana/Iguana_png.zip"
 unique_name_in_owner = true
 script = ExtResource("3_37taj")
 texture = ExtResource("3_msc3q")
-num_layers = 200
-gamma = 2.2
-color_scalar = 1.363
+num_layers = 600
+normal_influence = 1.74
+color_scalar = 1.284
 exclusion_planes = Array[NodePath]([NodePath("../Marker3D"), NodePath("")])
 
 [node name="Marker3D" type="Marker3D" parent="."]

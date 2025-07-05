@@ -30,7 +30,9 @@ const int MAX_EXCLUSION_PLANES = 4;
 
 uniform sampler3D texture_volume : source_color,filter_linear_mipmap,repeat_disable;
 uniform sampler2D gradient: filter_linear_mipmap,repeat_disable;
-uniform float zoom = 2;
+//uniform float zoom = 2;
+uniform float bounding_radius = 1;
+uniform vec3 aabb_size;
 uniform int layers = 2;
 uniform float opacity = 1;
 uniform float gamma = 1;
@@ -40,17 +42,29 @@ uniform vec4[MAX_EXCLUSION_PLANES] exclusion_planes;
 
 varying vec3 pos_local;
 varying vec3 pos_world;
-
+varying float view_radius;
 
 void vertex() {
 	pos_local = VERTEX;
 	pos_world = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	view_radius = length(MODELVIEW_MATRIX * vec4(aabb_size, 0.0));
+	
 }
 
 vec3 isect_plane(vec3 view_origin, vec3 view_dir, vec3 plane_point, vec3 plane_dir)
 {
 	float s = dot((plane_point - view_origin), plane_dir) / dot(view_dir, plane_dir);
 	return s * view_dir + view_origin;
+}
+
+//https://graemephi.github.io/posts/calculating-lod/
+float calc_mipmap_lod(vec2 tex_size, vec2 uv) {
+	vec2 dx = dFdx(tex_size * uv);
+	vec2 dy = dFdy(tex_size * uv);
+	
+	float d = max(length(dx), length(dy));
+	float lod = max(0.0, log2(d));
+	return lod;
 }
 
 
@@ -60,10 +74,14 @@ void fragment() {
 	
 	vec4 col = vec4(0, 0, 0, 0);
 	
+//	float layer_gap = 2.0 * view_radius / float(layers + 2);
+	float layer_gap = view_radius;
+	
 	for (int layer_idx = 0; layer_idx < layers; ++layer_idx)
 	{
 		float layer_frac = float(layer_idx + 1) / float(layers + 1);
-		vec3 plane_origin = model_origin_world + plane_norm * (layer_frac - .5) * 2.0;
+//		vec3 plane_origin = model_origin_world + plane_norm * (layer_frac - .5) * 2.0;
+		vec3 plane_origin = model_origin_world + layer_gap * plane_norm * (layer_frac - .5);
 		
 		vec3 p_world = isect_plane(CAMERA_POSITION_WORLD, pos_world - CAMERA_POSITION_WORLD, plane_origin, plane_norm);
 		
@@ -82,8 +100,10 @@ void fragment() {
 		vec3 p_local = (inv_model_mtx * vec4(p_world, 1.0)).xyz;
 
 		
-		vec3 tex_sample_pt = ((p_local * zoom) / 2.0 + vec3(.5, .5, .5));
+		vec3 tex_sample_pt = (p_local + vec3(.5, .5, .5));
 		vec4 layer_col = texture(texture_volume, tex_sample_pt);
+		if (layer_col.a <= 0.001)
+			continue;
 		if (tex_sample_pt.x < 0.0 || tex_sample_pt.x > 1.0 
 			|| tex_sample_pt.y < 0.0 || tex_sample_pt.y > 1.0 
 			|| tex_sample_pt.z < 0.0 || tex_sample_pt.z > 1.0)

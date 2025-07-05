@@ -60,7 +60,14 @@ class_name VolumeLayers
 		gamma = value
 		rebuild_layers = true
 
-@export_range(0, 1) var opacity:float = 1:
+@export_range(0, 4, .01, "or_greater") var normal_influence:float = 1:
+	set(value):
+		if value == normal_influence:
+			return
+		normal_influence = value
+		rebuild_layers = true
+
+@export_range(0, 2, .01, "or_greater") var opacity:float = 1:
 	get:
 		return opacity
 	set(value):
@@ -136,10 +143,13 @@ func _process(delta):
 	basis = basis * Basis.from_scale(Vector3(x, y, z) / min(x, y, z))
 	mesh_inst.transform = Transform3D(basis)
 	
+	#print("aabb_size ", basis.get_scale())
 	var mat:ShaderMaterial = mesh_inst.get_surface_override_material(0)
 	mat.set_shader_parameter("texture_volume", texture)
+	mat.set_shader_parameter("aabb_size", basis.get_scale())
 	mat.set_shader_parameter("layers", num_layers)
 	mat.set_shader_parameter("opacity", opacity)
+	mat.set_shader_parameter("normal_influence", normal_influence)
 	mat.set_shader_parameter("color_scalar", color_scalar)
 	mat.set_shader_parameter("gamma", gamma)
 	mat.set_shader_parameter("gradient", gradient)
