@@ -28,3 +28,7 @@
 /testing
 /godot/from_client
 /experiments/math_dev/venv
+/.sconsign.dblite
+/src/gen/*.obj
+/src/gen/doc_data.gen.cpp
+/src/*.obj
